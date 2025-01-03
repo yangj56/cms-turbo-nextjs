@@ -1,9 +1,10 @@
 {
-  "name": "my-turborepo",
+  "name": "cms-turbo-nextjs",
   "private": true,
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "generate:types": "turbo generate:types",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

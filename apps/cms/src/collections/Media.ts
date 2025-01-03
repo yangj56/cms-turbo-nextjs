@@ -1,9 +1,9 @@
-import { anyone } from '@/access/anyone'
-import { authenticated } from '@/access/authenticated'
-import type { CollectionConfig } from 'payload'
+import { anyone } from "@/access/anyone";
+import { authenticated } from "@/access/authenticated";
+import type { CollectionConfig } from "payload";
 
 export const Media: CollectionConfig = {
-  slug: 'media',
+  slug: "media",
   access: {
     create: authenticated,
     delete: authenticated,
@@ -12,10 +12,10 @@ export const Media: CollectionConfig = {
   },
   fields: [
     {
-      name: 'alt',
-      type: 'text',
+      name: "alt",
+      type: "text",
       required: true,
     },
   ],
   upload: true,
-}
+};

@@ -2,6 +2,8 @@ import "@repo/ui/src/css/globals.css";
 
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Header } from "./_components/header";
+import { Footer } from "./_components/footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,10 +24,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log("RootLayout");
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+        <div className="flex min-h-screen w-full flex-col items-center">
+          <Header />
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   );

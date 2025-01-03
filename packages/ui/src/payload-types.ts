@@ -12,12 +12,13 @@ export interface Config {
   };
   collections: {
     media: Media;
-    'product-categories': ProductCategory;
-    products: Product;
+    'product-category': ProductCategory;
+    product: Product;
     users: User;
-    heros: Hero;
-    socials: Social;
-    introductions: Introduction;
+    hero: Hero;
+    social: Social;
+    introduction: Introduction;
+    feature: Feature;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -25,12 +26,13 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
-    'product-categories': ProductCategoriesSelect<false> | ProductCategoriesSelect<true>;
-    products: ProductsSelect<false> | ProductsSelect<true>;
+    'product-category': ProductCategorySelect<false> | ProductCategorySelect<true>;
+    product: ProductSelect<false> | ProductSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
-    heros: HerosSelect<false> | HerosSelect<true>;
-    socials: SocialsSelect<false> | SocialsSelect<true>;
-    introductions: IntroductionsSelect<false> | IntroductionsSelect<true>;
+    hero: HeroSelect<false> | HeroSelect<true>;
+    social: SocialSelect<false> | SocialSelect<true>;
+    introduction: IntroductionSelect<false> | IntroductionSelect<true>;
+    feature: FeatureSelect<false> | FeatureSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -88,7 +90,7 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "product-categories".
+ * via the `definition` "product-category".
  */
 export interface ProductCategory {
   id: number;
@@ -102,7 +104,7 @@ export interface ProductCategory {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products".
+ * via the `definition` "product".
  */
 export interface Product {
   id: number;
@@ -178,7 +180,7 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "heros".
+ * via the `definition` "hero".
  */
 export interface Hero {
   id: number;
@@ -191,7 +193,7 @@ export interface Hero {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "socials".
+ * via the `definition` "social".
  */
 export interface Social {
   id: number;
@@ -204,13 +206,25 @@ export interface Social {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "introductions".
+ * via the `definition` "introduction".
  */
 export interface Introduction {
   id: number;
   title: string;
   description: string;
   buttonLabel: string;
+  url: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feature".
+ */
+export interface Feature {
+  id: number;
+  title: string;
+  image: number | Media;
   url: string;
   updatedAt: string;
   createdAt: string;
@@ -227,11 +241,11 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'product-categories';
+        relationTo: 'product-category';
         value: number | ProductCategory;
       } | null)
     | ({
-        relationTo: 'products';
+        relationTo: 'product';
         value: number | Product;
       } | null)
     | ({
@@ -239,16 +253,20 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
-        relationTo: 'heros';
+        relationTo: 'hero';
         value: number | Hero;
       } | null)
     | ({
-        relationTo: 'socials';
+        relationTo: 'social';
         value: number | Social;
       } | null)
     | ({
-        relationTo: 'introductions';
+        relationTo: 'introduction';
         value: number | Introduction;
+      } | null)
+    | ({
+        relationTo: 'feature';
+        value: number | Feature;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -312,9 +330,9 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "product-categories_select".
+ * via the `definition` "product-category_select".
  */
-export interface ProductCategoriesSelect<T extends boolean = true> {
+export interface ProductCategorySelect<T extends boolean = true> {
   title?: T;
   image?: T;
   secondaryImage?: T;
@@ -325,9 +343,9 @@ export interface ProductCategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products_select".
+ * via the `definition` "product_select".
  */
-export interface ProductsSelect<T extends boolean = true> {
+export interface ProductSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   show?: T;
@@ -387,9 +405,9 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "heros_select".
+ * via the `definition` "hero_select".
  */
-export interface HerosSelect<T extends boolean = true> {
+export interface HeroSelect<T extends boolean = true> {
   title?: T;
   image?: T;
   buttonLabel?: T;
@@ -399,9 +417,9 @@ export interface HerosSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "socials_select".
+ * via the `definition` "social_select".
  */
-export interface SocialsSelect<T extends boolean = true> {
+export interface SocialSelect<T extends boolean = true> {
   title?: T;
   image?: T;
   show?: T;
@@ -411,12 +429,23 @@ export interface SocialsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "introductions_select".
+ * via the `definition` "introduction_select".
  */
-export interface IntroductionsSelect<T extends boolean = true> {
+export interface IntroductionSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   buttonLabel?: T;
+  url?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feature_select".
+ */
+export interface FeatureSelect<T extends boolean = true> {
+  title?: T;
+  image?: T;
   url?: T;
   updatedAt?: T;
   createdAt?: T;

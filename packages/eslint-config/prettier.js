@@ -1,12 +1,11 @@
 const config = {
   arrowParens: "always",
-  printWidth: 80,
+  printWidth: 100,
   singleQuote: false,
   jsxSingleQuote: false,
   semi: true,
   trailingComma: "all",
-  tabWidth: 4,
-  // pluginSearchDirs: false,
+  tabWidth: 2,
   importOrder: [
     "^(react/(.*)$)|^(react$)|^(react-native(.*)$)",
     "^(next/(.*)$)|^(next$)",
