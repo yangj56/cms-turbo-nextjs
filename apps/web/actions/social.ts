@@ -2,7 +2,7 @@ import type { Social } from "@repo/ui";
 
 export async function getSocial(): Promise<Social[]> {
   const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/social`;
-
+  console.log(`apiUrl: ${apiUrl}`);
   try {
     const response = await fetch(apiUrl);
 

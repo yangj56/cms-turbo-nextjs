@@ -4,7 +4,7 @@ const nextConfig = {
       remotePatterns: [
         {
           protocol: 'https',
-          hostname: 'honest.cms',
+          hostname: 'cms-turbo-nextjs.onrender.com',
           pathname: '/api/media/**',
         },
         {
