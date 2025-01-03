@@ -1,23 +1,23 @@
-import type { Block } from 'payload'
+import type { Block } from "payload";
 
 export const LabelValue: Block = {
-  slug: 'labelValue',
+  slug: "labelValue",
   labels: {
-    singular: 'Label-Value Pair',
-    plural: 'Label-Value Pairs',
+    singular: "Label-Value Pair",
+    plural: "Label-Value Pairs",
   },
   fields: [
     {
-      name: 'label',
-      type: 'text',
+      name: "label",
+      type: "text",
       required: true,
-      label: 'Label',
+      label: "Label",
     },
     {
-      name: 'value',
-      type: 'text',
+      name: "value",
+      type: "text",
       required: true,
-      label: 'Value',
+      label: "Value",
     },
   ],
-}
+};

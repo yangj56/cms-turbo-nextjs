@@ -1,4 +1,4 @@
-import type { DocumentDefinition } from '@sanity/types';
+import type { DocumentDefinition } from "@sanity/types";
 
 export type CategoryDocumentDefinition = {
   id: string;
