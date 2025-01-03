@@ -3,7 +3,7 @@ import type { Block } from "payload";
 export const LabelValue: Block = {
   slug: "labelValue",
   labels: {
-    singular: "Label-Value Pairs",
+    singular: "Label-Value Pair",
     plural: "Label-Value Pairs",
   },
   fields: [
