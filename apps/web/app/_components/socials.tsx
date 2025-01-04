@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Social, Media } from "../payload-types";
-import { JSX } from "react";
+import type { Social, Media } from "../payload-types";
+import type { JSX } from "react";
 
 type Props = {
   data: Social[];

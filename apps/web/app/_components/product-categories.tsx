@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState, type JSX } from "react";
-import { ProductCategory, Media } from "../payload-types";
+import type { ProductCategory, Media } from "../payload-types";
 
 type Props = {
   data: ProductCategory[];

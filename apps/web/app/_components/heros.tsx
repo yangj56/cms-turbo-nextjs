@@ -3,7 +3,7 @@
 import Image from "next/image";
 import type { JSX } from "react";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Hero, Media } from "../payload-types";
+import type { Hero, Media } from "../payload-types";
 
 type Props = {
   data: Hero[];
