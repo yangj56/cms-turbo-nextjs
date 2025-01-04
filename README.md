@@ -52,7 +52,6 @@ The Payload CMS instance is located in `apps/cms` and provides a powerful admin 
 
 ### Shared Packages
 
-- `packages/ui`: Reusable React components
 - `packages/config`: Shared configuration files
 - `packages/types`: Shared TypeScript types
 
