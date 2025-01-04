@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "start": "turbo start",
     "generate:types": "turbo generate:types",
     "generate:importmap": "turbo generate:importmap",
     "lint": "turbo lint",

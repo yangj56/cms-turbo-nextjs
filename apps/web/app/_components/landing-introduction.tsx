@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { JSX } from "react";
-import { Introduction } from "../payload-types";
+import type { Introduction } from "../payload-types";
 
 type Props = {
   data: Introduction;
@@ -11,9 +11,6 @@ type Props = {
 export const LandingIntroduction = ({ data }: Props): JSX.Element => {
   return (
     <div className="w-full">
-      <Button onClick={() => {
-        //
-      }}>sss</Button>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between">
         <div className="p-8 md:mb-0 md:w-2/5">
           <h2 className="mb-4 text-4xl font-bold">{data.title}</h2>

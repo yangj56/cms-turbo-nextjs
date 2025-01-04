@@ -1,38 +1,38 @@
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 export function PublishButton() {
-  const router = useRouter()
+  const router = useRouter();
 
   const handlePublish = async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_URL}/api/revalidate`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-      })
+      });
 
       if (!response.ok) {
-        throw new Error('Failed to revalidate')
+        throw new Error("Failed to revalidate");
       }
 
       // Refresh the current route
-      router.refresh()
+      router.refresh();
     } catch (error) {
-      console.error('Error publishing:', error)
+      console.error("Error publishing:", error);
     }
-  }
+  };
 
   return (
-    <div className="flex flex-row justify-end items-end w-full">
+    <div className="flex w-full flex-row items-end justify-end">
       <button
         onClick={handlePublish}
-        className="w-[200px] px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+        className="w-[200px] rounded bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
       >
         Publish Changes
       </button>
     </div>
-  )
+  );
 }

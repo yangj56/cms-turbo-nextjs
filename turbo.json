@@ -17,6 +17,10 @@
       "cache": false,
       "persistent": true
     },
+    "start": {
+      "cache": false,
+      "persistent": true
+    },
     "generate:types": {
       "cache": false,
       "persistent": true
@@ -27,7 +31,7 @@
     }
   },
   "globalEnv": [
-    "DATABASE_URI",
-    "PAYLOAD_SECRET"
+    "PAYLOAD_SECRET",
+    "MONGODB_URI"
   ]
 }

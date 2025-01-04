@@ -1,5 +1,5 @@
 // storage-adapter-import-placeholder
-import { sqliteAdapter } from "@payloadcms/db-sqlite";
+import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import path from "path";
@@ -22,9 +22,9 @@ const dirname = path.dirname(filename);
 export default buildConfig({
   admin: {
     components: {
-      beforeDashboard: ['/components/publish#PublishButton'],
+      beforeDashboard: ["/components/publish#PublishButton"],
       logout: {
-        Button: '/components/custom-add-on#CustomDashboard',
+        Button: "/components/custom-add-on#CustomDashboard",
       },
     },
     user: Users.slug,
@@ -38,10 +38,8 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URI || "",
-    },
+  db: mongooseAdapter({
+    url: process.env.MONGODB_URI || "",
   }),
   sharp,
   plugins: [
