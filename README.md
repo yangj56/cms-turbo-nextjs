@@ -29,12 +29,9 @@ A monorepo setup using Turborepo, featuring a Next.js web application and Payloa
 - MongoDB installed and running
 - pnpm (recommended) or yarn
 
-### Installation
-```
-
 The applications will be available at:
-- Web: http://localhost:3000
-- CMS: http://localhost:8000
+- Web: http://localhost:3001
+- CMS: http://localhost:3000
 
 ## 📝 Scripts
 
@@ -59,21 +56,10 @@ The Payload CMS instance is located in `apps/cms` and provides a powerful admin 
 - `packages/config`: Shared configuration files
 - `packages/types`: Shared TypeScript types
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ## 📄 License
-
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👥 Authors
-
-- Your Name - Initial work
 
 ## 🙏 Acknowledgments
 
