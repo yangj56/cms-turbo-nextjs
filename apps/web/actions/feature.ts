@@ -1,4 +1,4 @@
-import { Feature } from "@/app/payload-types";
+import type { Feature } from "@/app/payload-types";
 
 export async function getFeature(): Promise<Feature[]> {
   const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/feature`;

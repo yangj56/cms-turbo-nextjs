@@ -1,4 +1,4 @@
-import { Introduction } from "@/app/payload-types";
+import type { Introduction } from "@/app/payload-types";
 
 export async function getIntroduction(): Promise<Introduction | null> {
   const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/introduction`;

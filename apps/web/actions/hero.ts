@@ -1,7 +1,6 @@
 "use server";
 
-import { Hero } from "@/app/payload-types";
-
+import type { Hero } from "@/app/payload-types";
 
 export async function getHero(): Promise<Hero[] | null> {
   try {

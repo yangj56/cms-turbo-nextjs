@@ -1,4 +1,4 @@
-import { ProductCategory } from "@/app/payload-types";
+import type { ProductCategory } from "@/app/payload-types";
 
 export async function getProductionCategory(): Promise<ProductCategory[]> {
   const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/product-category`;

@@ -7,12 +7,13 @@ export function PublishButton() {
 
   const handlePublish = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_URL}/api/revalidate`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      console.log("revalidate token", `${process.env.NEXT_PUBLIC_WEB_URL}/api/revalidate`);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_WEB_URL}/api/revalidate?token=${process.env.NEXT_PUBLIC_REVALIDATE_TOKEN}`,
+        {
+          method: "POST",
         },
-      });
+      );
 
       if (!response.ok) {
         throw new Error("Failed to revalidate");
@@ -31,7 +32,7 @@ export function PublishButton() {
         onClick={handlePublish}
         className="w-[200px] rounded bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
       >
-        Publish Changes
+        Publish
       </button>
     </div>
   );
