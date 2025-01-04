@@ -4,7 +4,7 @@ const nextConfig = {
       remotePatterns: [
         {
           protocol: 'https',
-          hostname: 'cms-psi-seven.vercel.app/',
+          hostname: 'cms-psi-seven.vercel.app',
           pathname: '/api/media/**',
         },
         {
