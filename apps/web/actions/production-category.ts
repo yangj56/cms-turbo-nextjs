@@ -1,4 +1,4 @@
-import type { ProductCategory } from "@repo/ui";
+import { ProductCategory } from "@/app/payload-types";
 
 export async function getProductionCategory(): Promise<ProductCategory[]> {
   const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/product-category`;
@@ -11,6 +11,7 @@ export async function getProductionCategory(): Promise<ProductCategory[]> {
     }
 
     const data = await response.json();
+    console.log("data", data);
     return data.docs as ProductCategory[];
   } catch (error) {
     console.error("Error fetching categories:", error);

@@ -1,10 +1,11 @@
 "use client";
 
+import type { JSX } from "react";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-export const Header = () => {
+export const Header = (): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {

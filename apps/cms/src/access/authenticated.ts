@@ -1,4 +1,4 @@
-import type { User } from "@repo/ui";
+import { User } from "@/payload-types";
 import type { AccessArgs } from "payload";
 
 type isAuthenticated = (args: AccessArgs<User>) => boolean;

@@ -25,5 +25,3 @@ export function Card({
     </a>
   );
 }
-
-export const sddd = "esdds";

@@ -1,39 +1,39 @@
 "use client";
 
-import type { Feature, Media } from "@repo/ui";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import * as React from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import { useCallback, useEffect, useState, type JSX } from "react";
+import { Feature, Media } from "../payload-types";
 
 type Props = {
   data: Feature[];
 };
 
-export const Features = ({ data }: Props) => {
+export const Features = ({ data }: Props): JSX.Element => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     skipSnaps: false,
     dragFree: true,
   });
 
-  const [canScrollPrev, setCanScrollPrev] = React.useState(false);
-  const [canScrollNext, setCanScrollNext] = React.useState(false);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
 
-  const scrollPrev = React.useCallback(() => {
+  const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
 
-  const scrollNext = React.useCallback(() => {
+  const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  const onSelect = React.useCallback((emblaApi: any) => {
+  const onSelect = useCallback((emblaApi: any) => {
     setCanScrollPrev(emblaApi.canScrollPrev());
     setCanScrollNext(emblaApi.canScrollNext());
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!emblaApi) return;
 
     onSelect(emblaApi);

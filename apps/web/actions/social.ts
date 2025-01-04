@@ -1,4 +1,4 @@
-import type { Social } from "@repo/ui";
+import { Social } from "@/app/payload-types";
 
 export async function getSocial(): Promise<Social[]> {
   const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/social`;

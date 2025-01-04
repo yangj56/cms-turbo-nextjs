@@ -21,6 +21,12 @@ const dirname = path.dirname(filename);
 
 export default buildConfig({
   admin: {
+    components: {
+      beforeDashboard: ['/components/publish#PublishButton'],
+      logout: {
+        Button: '/components/custom-add-on#CustomDashboard',
+      },
+    },
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
@@ -30,7 +36,7 @@ export default buildConfig({
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
-    outputFile: path.resolve(dirname, "../../../packages/ui/src/payload-types.ts"),
+    outputFile: path.resolve(dirname, "payload-types.ts"),
   },
   db: sqliteAdapter({
     client: {

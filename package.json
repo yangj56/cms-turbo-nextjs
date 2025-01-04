@@ -5,6 +5,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "generate:types": "turbo generate:types",
+    "generate:importmap": "turbo generate:importmap",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

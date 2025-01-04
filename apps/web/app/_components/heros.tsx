@@ -1,15 +1,15 @@
 "use client";
 
-import type { Media } from "@repo/ui";
-import type { Hero } from "@repo/ui";
 import Image from "next/image";
+import type { JSX } from "react";
 import { useState, useRef, useEffect, useCallback } from "react";
+import { Hero, Media } from "../payload-types";
 
 type Props = {
   data: Hero[];
 };
 
-export function Heros({ data }: Props) {
+export const Heros = ({ data }: Props): JSX.Element => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -94,4 +94,4 @@ export function Heros({ data }: Props) {
       </div>
     </div>
   );
-}
+};

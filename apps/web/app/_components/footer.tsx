@@ -1,6 +1,7 @@
 import Link from "next/link";
+import type { JSX } from "react";
 
-export const Footer = () => {
+export const Footer = (): JSX.Element => {
   return (
     <footer className="w-full bg-[#353C97] py-12 text-white">
       <div className="mx-auto max-w-7xl px-4">

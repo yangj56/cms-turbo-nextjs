@@ -1,4 +1,4 @@
-import "@repo/ui/src/css/globals.css";
+import "./globals.css";
 
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -23,8 +23,7 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
-  console.log("RootLayout");
+}>): React.ReactNode {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>

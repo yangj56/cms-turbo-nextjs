@@ -1,12 +1,13 @@
-import type { Media, Social } from "@repo/ui";
 import Link from "next/link";
 import Image from "next/image";
+import { Social, Media } from "../payload-types";
+import { JSX } from "react";
 
 type Props = {
   data: Social[];
 };
 
-export const Socials = ({ data }: Props) => {
+export const Socials = ({ data }: Props): JSX.Element => {
   return (
     <div className="mx-auto max-w-7xl px-4 py-16">
       <h2 className="mb-12 text-4xl font-medium">Get Social</h2>

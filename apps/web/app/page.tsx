@@ -9,10 +9,9 @@ import { ProductCategories } from "./_components/product-categories";
 import { Socials } from "./_components/socials";
 import { Features } from "./_components/features";
 import { getFeature } from "@/actions/feature";
-import { sddd } from "@repo/ui";
+import type { JSX } from "react";
 
-export default async function HomePage() {
-  console.log(sddd);
+export default async function HomePage(): Promise<JSX.Element> {
   const heroData = await getHero();
   const socialData = await getSocial();
   const introductionData = await getIntroduction();

@@ -1,4 +1,4 @@
-import type { Feature, ProductCategory } from "@repo/ui";
+import { Feature } from "@/app/payload-types";
 
 export async function getFeature(): Promise<Feature[]> {
   const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/feature`;
@@ -11,7 +11,7 @@ export async function getFeature(): Promise<Feature[]> {
     }
 
     const data = await response.json();
-    return data.docs as ProductCategory[];
+    return data.docs as Feature[];
   } catch (error) {
     console.error("Error fetching feature:", error);
     return [];
