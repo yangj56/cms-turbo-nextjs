@@ -10,6 +10,7 @@ import { Socials } from "./_components/socials";
 import { Features } from "./_components/features";
 import { getFeature } from "@/actions/feature";
 import type { JSX } from "react";
+import { Benefits } from "./_components/benefits";
 
 export default async function HomePage(): Promise<JSX.Element> {
   const heroData = await getHero();
@@ -28,6 +29,7 @@ export default async function HomePage(): Promise<JSX.Element> {
       <div className="container mt-16 space-y-32 divide-y [&>*+*]:pt-32">
         <ProductCategories data={productionCategoryData} />
         <LandingIntroduction data={introductionData} />
+        <Benefits />
         <Socials data={socialData} />
         <Features data={featureData} />
       </div>

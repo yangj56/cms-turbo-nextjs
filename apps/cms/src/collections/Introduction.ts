@@ -16,6 +16,11 @@ export const Introduction: CollectionConfig = {
   },
   fields: [
     {
+      name: "id",
+      type: "text",
+      required: true,
+    },
+    {
       name: "title",
       type: "text",
       required: true,

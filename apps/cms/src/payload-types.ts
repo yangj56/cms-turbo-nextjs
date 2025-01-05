@@ -95,10 +95,8 @@ export interface Media {
 export interface ProductCategory {
   id: string;
   title: string;
+  description: string;
   image: string | Media;
-  secondaryImage?: (string | null) | Media;
-  show?: boolean | null;
-  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -110,7 +108,6 @@ export interface Product {
   id: string;
   title: string;
   description: string;
-  show?: boolean | null;
   category: string | ProductCategory;
   color?:
     | {
@@ -315,6 +312,7 @@ export interface PayloadMigration {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  id?: T;
   alt?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -333,11 +331,10 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "product-category_select".
  */
 export interface ProductCategorySelect<T extends boolean = true> {
+  id?: T;
   title?: T;
+  description?: T;
   image?: T;
-  secondaryImage?: T;
-  show?: T;
-  url?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -346,9 +343,9 @@ export interface ProductCategorySelect<T extends boolean = true> {
  * via the `definition` "product_select".
  */
 export interface ProductSelect<T extends boolean = true> {
+  id?: T;
   title?: T;
   description?: T;
-  show?: T;
   category?: T;
   color?:
     | T
@@ -408,6 +405,7 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "hero_select".
  */
 export interface HeroSelect<T extends boolean = true> {
+  id?: T;
   title?: T;
   image?: T;
   buttonLabel?: T;
@@ -420,6 +418,7 @@ export interface HeroSelect<T extends boolean = true> {
  * via the `definition` "social_select".
  */
 export interface SocialSelect<T extends boolean = true> {
+  id?: T;
   title?: T;
   image?: T;
   show?: T;
@@ -432,6 +431,7 @@ export interface SocialSelect<T extends boolean = true> {
  * via the `definition` "introduction_select".
  */
 export interface IntroductionSelect<T extends boolean = true> {
+  id?: T;
   title?: T;
   description?: T;
   buttonLabel?: T;
@@ -444,6 +444,7 @@ export interface IntroductionSelect<T extends boolean = true> {
  * via the `definition` "feature_select".
  */
 export interface FeatureSelect<T extends boolean = true> {
+  id?: T;
   title?: T;
   image?: T;
   url?: T;

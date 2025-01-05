@@ -16,6 +16,11 @@ export const Social: CollectionConfig = {
   },
   fields: [
     {
+      name: "id",
+      type: "text",
+      required: true,
+    },
+    {
       name: "title",
       type: "text",
       required: true,
@@ -25,11 +30,6 @@ export const Social: CollectionConfig = {
       type: "upload",
       relationTo: "media",
       required: true,
-    },
-    {
-      name: "show",
-      type: "checkbox",
-      defaultValue: false,
     },
     {
       name: "url",

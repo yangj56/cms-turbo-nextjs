@@ -17,6 +17,11 @@ export const Product: CollectionConfig = {
   },
   fields: [
     {
+      name: "id",
+      type: "text",
+      required: true,
+    },
+    {
       name: "title",
       type: "text",
       required: true,
@@ -25,11 +30,6 @@ export const Product: CollectionConfig = {
       name: "description",
       type: "text",
       required: true,
-    },
-    {
-      name: "show",
-      type: "checkbox",
-      defaultValue: false,
     },
     {
       name: "category",
@@ -73,13 +73,30 @@ export const Product: CollectionConfig = {
       relationTo: "media",
     },
     {
+      name: "imageCatalog",
+      type: "array",
+      fields: [
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+        },
+      ],
+    },
+    {
       name: "youtubeUrl",
       type: "text",
       required: true,
     },
     {
-      name: "specificationOverview",
-      type: "richText",
+      name: "specificationOverviewInfo",
+      type: "array",
+      fields: [
+        {
+          name: "data",
+          type: "text",
+        },
+      ],
     },
     {
       name: "labelValuePairs",
