@@ -17,11 +17,6 @@ export const Product: CollectionConfig = {
   },
   fields: [
     {
-      name: "id",
-      type: "text",
-      required: true,
-    },
-    {
       name: "title",
       type: "text",
       required: true,

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import type { Social, Media } from "../payload-types";
+import type { Social, Media } from "@/lib/payload-types";
 import type { JSX } from "react";
 
 type Props = {

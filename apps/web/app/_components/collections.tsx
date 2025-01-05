@@ -1,17 +1,17 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Menu, ChevronLeft, ChevronRight } from "lucide-react";
-import type { Media, ProductCategory } from "../payload-types";
+
 import { PAGINATION_LIMIT } from "@/lib/contant";
-import Image from "next/image";
+import type { Product } from "@/lib/payload-types";
+import { ChevronLeft, ChevronRight, Menu } from "lucide-react";
+import { useEffect, useState } from "react";
 
 type Props = {
-  data: ProductCategory[];
+  data: Product[];
 };
 
 export const CollectionPage = ({ data }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [viewableData, setViewableData] = useState<ProductCategory[]>([]);
+  const [viewableData, setViewableData] = useState<Product[]>([]);
 
   const totalPages = Math.ceil(data.length / PAGINATION_LIMIT);
 
@@ -81,22 +81,12 @@ export const CollectionPage = ({ data }: Props) => {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {viewableData.map((productCategory) => (
             <div key={productCategory.id} className="group">
-              <div className="relative mb-4 aspect-square overflow-hidden bg-gray-100">
-                <Image
-                  src={(productCategory.image as Media).url || ""}
-                  alt={productCategory.title || ""}
-                  width={(productCategory.image as Media).width || 0}
-                  height={(productCategory.image as Media).height || 0}
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
               <h3 className="mb-2 text-lg font-medium">{productCategory.title}</h3>
               <p className="mb-3 text-sm text-gray-600">{productCategory.title}</p>
             </div>
           ))}
         </div>
 
-        {/* Pagination */}
         <div className="mt-12">
           <div className="flex flex-col items-center justify-between sm:flex-row">
             <div className="mb-4 flex justify-center space-x-4 sm:mb-0">

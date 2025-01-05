@@ -1,4 +1,5 @@
-export type PaginatedResponse = {
+export type PaginatedDocs<T> = {
+  docs: T[];
   totalDocs: number;
   limit: number;
   totalPages: number;

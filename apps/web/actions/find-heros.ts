@@ -1,26 +1,22 @@
 "use server";
 
-import type { Hero } from "@/app/payload-types";
+import type { Hero } from "@/lib/payload-types";
 import { PAGINATION_LIMIT } from "@/lib/contant";
-import type { PaginatedResponse } from "@/lib/pagination";
+import type { PaginatedDocs } from "@/lib/types";
 
-type Response = {
-  docs: Hero[];
-} & PaginatedResponse;
-
-export async function findHeros(page = 1, limit = PAGINATION_LIMIT): Promise<Hero[] | null> {
+export async function findHeros(page = 1, limit = PAGINATION_LIMIT): Promise<Hero[]> {
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/hero?limit=${limit}&page=${page}`;
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Failed to fetch heroes: ${response.statusText}`);
     }
 
-    const data = (await response.json()) as Response;
+    const data = (await response.json()) as PaginatedDocs<Hero>;
     return data.docs;
   } catch (error) {
-    console.error("Failed to fetch Hero data:", error);
-    return null;
+    console.error("Error fetching heroes:", error);
+    return [];
   }
 }

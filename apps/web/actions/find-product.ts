@@ -1,23 +1,19 @@
-import type { Product } from "@/app/payload-types";
+"use server";
 
-type Response = {
-  docs: Product[];
-};
+import type { Product } from "@/lib/payload-types";
 
-export async function findProduct(id: string): Promise<Product[]> {
-  const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/product/${id}`;
-
+export async function findProduct(id: string): Promise<Product | null> {
   try {
+    const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/product/${id}`;
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch product: ${response.statusText}`);
     }
 
-    const data = (await response.json()) as Response;
-    return data.docs;
+    return (await response.json()) as Product;
   } catch (error) {
-    console.error("Error fetching products:", error);
-    return [];
+    console.error("Error fetching product:", error);
+    return null;
   }
 }

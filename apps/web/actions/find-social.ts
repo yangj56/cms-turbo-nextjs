@@ -1,24 +1,21 @@
-import type { Social } from "@/app/payload-types";
-import type { PaginatedResponse } from "@/lib/pagination";
+"use server";
 
-type Response = {
-  docs: Social[];
-} & PaginatedResponse;
+import type { Social } from "@/lib/payload-types";
+import type { PaginatedDocs } from "@/lib/types";
 
 export async function findSocials(): Promise<Social[]> {
-  const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/social`;
-  console.log(`apiUrl: ${apiUrl}`);
   try {
+    const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/social`;
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch social data: ${response.statusText}`);
+      throw new Error(`Failed to fetch socials: ${response.statusText}`);
     }
 
-    const data = (await response.json()) as Response;
+    const data = (await response.json()) as PaginatedDocs<Social>;
     return data.docs;
   } catch (error) {
-    console.error("Error fetching social data:", error);
+    console.error("Error fetching socials:", error);
     return [];
   }
 }

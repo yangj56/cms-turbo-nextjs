@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { JSX } from "react";
-import type { Introduction } from "../payload-types";
+import type { Introduction } from "@/lib/payload-types";
 
 type Props = {
   data: Introduction;

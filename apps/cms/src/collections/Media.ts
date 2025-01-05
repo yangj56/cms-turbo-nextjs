@@ -12,14 +12,8 @@ export const Media: CollectionConfig = {
   },
   fields: [
     {
-      name: "id",
-      type: "text",
-      required: true,
-    },
-    {
       name: "alt",
       type: "text",
-      required: true,
     },
   ],
   upload: true,

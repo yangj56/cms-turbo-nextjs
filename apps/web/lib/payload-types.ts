@@ -38,7 +38,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   globals: {};
   globalsSelect: {};
@@ -74,8 +74,8 @@ export interface UserAuthOperations {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
-  alt: string;
+  id: string;
+  alt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -93,12 +93,10 @@ export interface Media {
  * via the `definition` "product-category".
  */
 export interface ProductCategory {
-  id: number;
+  id: string;
   title: string;
-  image: number | Media;
-  secondaryImage?: (number | null) | Media;
-  show?: boolean | null;
-  url: string;
+  description: string;
+  image: string | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -107,42 +105,38 @@ export interface ProductCategory {
  * via the `definition` "product".
  */
 export interface Product {
-  id: number;
+  id: string;
   title: string;
   description: string;
-  show?: boolean | null;
-  category: number | ProductCategory;
+  category: string | ProductCategory;
   color?:
     | {
         color?: string | null;
         colorCode?: string | null;
         images?:
           | {
-              image?: (number | null) | Media;
+              image?: (string | null) | Media;
               id?: string | null;
             }[]
           | null;
         id?: string | null;
       }[]
     | null;
-  datasheet?: (number | null) | Media;
-  instruction?: (number | null) | Media;
+  datasheet?: (string | null) | Media;
+  instruction?: (string | null) | Media;
+  imageCatalog?:
+    | {
+        image?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   youtubeUrl: string;
-  specificationOverview?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  specificationOverviewInfo?:
+    | {
+        data?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   labelValuePairs?:
     | {
         label: string;
@@ -154,7 +148,7 @@ export interface Product {
     | null;
   compatibleProducts?:
     | {
-        product?: (number | null) | Product;
+        product?: (string | null) | Product;
         id?: string | null;
       }[]
     | null;
@@ -166,7 +160,7 @@ export interface Product {
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -183,9 +177,9 @@ export interface User {
  * via the `definition` "hero".
  */
 export interface Hero {
-  id: number;
+  id: string;
   title: string;
-  image: number | Media;
+  image: string | Media;
   buttonLabel: string;
   url: string;
   updatedAt: string;
@@ -196,10 +190,9 @@ export interface Hero {
  * via the `definition` "social".
  */
 export interface Social {
-  id: number;
+  id: string;
   title: string;
-  image: number | Media;
-  show?: boolean | null;
+  image: string | Media;
   url: string;
   updatedAt: string;
   createdAt: string;
@@ -209,7 +202,7 @@ export interface Social {
  * via the `definition` "introduction".
  */
 export interface Introduction {
-  id: number;
+  id: string;
   title: string;
   description: string;
   buttonLabel: string;
@@ -222,9 +215,9 @@ export interface Introduction {
  * via the `definition` "feature".
  */
 export interface Feature {
-  id: number;
+  id: string;
   title: string;
-  image: number | Media;
+  image: string | Media;
   url: string;
   updatedAt: string;
   createdAt: string;
@@ -234,44 +227,44 @@ export interface Feature {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
       } | null)
     | ({
         relationTo: 'product-category';
-        value: number | ProductCategory;
+        value: string | ProductCategory;
       } | null)
     | ({
         relationTo: 'product';
-        value: number | Product;
+        value: string | Product;
       } | null)
     | ({
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       } | null)
     | ({
         relationTo: 'hero';
-        value: number | Hero;
+        value: string | Hero;
       } | null)
     | ({
         relationTo: 'social';
-        value: number | Social;
+        value: string | Social;
       } | null)
     | ({
         relationTo: 'introduction';
-        value: number | Introduction;
+        value: string | Introduction;
       } | null)
     | ({
         relationTo: 'feature';
-        value: number | Feature;
+        value: string | Feature;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -281,10 +274,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -304,7 +297,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -334,10 +327,8 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface ProductCategorySelect<T extends boolean = true> {
   title?: T;
+  description?: T;
   image?: T;
-  secondaryImage?: T;
-  show?: T;
-  url?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -348,7 +339,6 @@ export interface ProductCategorySelect<T extends boolean = true> {
 export interface ProductSelect<T extends boolean = true> {
   title?: T;
   description?: T;
-  show?: T;
   category?: T;
   color?:
     | T
@@ -365,8 +355,19 @@ export interface ProductSelect<T extends boolean = true> {
       };
   datasheet?: T;
   instruction?: T;
+  imageCatalog?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
   youtubeUrl?: T;
-  specificationOverview?: T;
+  specificationOverviewInfo?:
+    | T
+    | {
+        data?: T;
+        id?: T;
+      };
   labelValuePairs?:
     | T
     | {
@@ -422,7 +423,6 @@ export interface HeroSelect<T extends boolean = true> {
 export interface SocialSelect<T extends boolean = true> {
   title?: T;
   image?: T;
-  show?: T;
   url?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -488,4 +488,9 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Auth {
   [k: string]: unknown;
+}
+
+
+declare module 'payload' {
+  export interface GeneratedTypes extends Config {}
 }

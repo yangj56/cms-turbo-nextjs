@@ -75,7 +75,7 @@ export interface UserAuthOperations {
  */
 export interface Media {
   id: string;
-  alt: string;
+  alt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -124,22 +124,19 @@ export interface Product {
     | null;
   datasheet?: (string | null) | Media;
   instruction?: (string | null) | Media;
+  imageCatalog?:
+    | {
+        image?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   youtubeUrl: string;
-  specificationOverview?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  specificationOverviewInfo?:
+    | {
+        data?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   labelValuePairs?:
     | {
         label: string;
@@ -196,7 +193,6 @@ export interface Social {
   id: string;
   title: string;
   image: string | Media;
-  show?: boolean | null;
   url: string;
   updatedAt: string;
   createdAt: string;
@@ -312,7 +308,6 @@ export interface PayloadMigration {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
-  id?: T;
   alt?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -331,7 +326,6 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "product-category_select".
  */
 export interface ProductCategorySelect<T extends boolean = true> {
-  id?: T;
   title?: T;
   description?: T;
   image?: T;
@@ -343,7 +337,6 @@ export interface ProductCategorySelect<T extends boolean = true> {
  * via the `definition` "product_select".
  */
 export interface ProductSelect<T extends boolean = true> {
-  id?: T;
   title?: T;
   description?: T;
   category?: T;
@@ -362,8 +355,19 @@ export interface ProductSelect<T extends boolean = true> {
       };
   datasheet?: T;
   instruction?: T;
+  imageCatalog?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
   youtubeUrl?: T;
-  specificationOverview?: T;
+  specificationOverviewInfo?:
+    | T
+    | {
+        data?: T;
+        id?: T;
+      };
   labelValuePairs?:
     | T
     | {
@@ -405,7 +409,6 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "hero_select".
  */
 export interface HeroSelect<T extends boolean = true> {
-  id?: T;
   title?: T;
   image?: T;
   buttonLabel?: T;
@@ -418,10 +421,8 @@ export interface HeroSelect<T extends boolean = true> {
  * via the `definition` "social_select".
  */
 export interface SocialSelect<T extends boolean = true> {
-  id?: T;
   title?: T;
   image?: T;
-  show?: T;
   url?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -431,7 +432,6 @@ export interface SocialSelect<T extends boolean = true> {
  * via the `definition` "introduction_select".
  */
 export interface IntroductionSelect<T extends boolean = true> {
-  id?: T;
   title?: T;
   description?: T;
   buttonLabel?: T;
@@ -444,7 +444,6 @@ export interface IntroductionSelect<T extends boolean = true> {
  * via the `definition` "feature_select".
  */
 export interface FeatureSelect<T extends boolean = true> {
-  id?: T;
   title?: T;
   image?: T;
   url?: T;
