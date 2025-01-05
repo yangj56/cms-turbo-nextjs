@@ -95,6 +95,7 @@ export interface Media {
 export interface ProductCategory {
   id: string;
   title: string;
+  sku: string;
   description: string;
   image: string | Media;
   updatedAt: string;
@@ -107,11 +108,12 @@ export interface ProductCategory {
 export interface Product {
   id: string;
   title: string;
+  sku: string;
   description: string;
   category: string | ProductCategory;
   color?:
     | {
-        color?: string | null;
+        colorName?: string | null;
         colorCode?: string | null;
         images?:
           | {
@@ -124,12 +126,6 @@ export interface Product {
     | null;
   datasheet?: (string | null) | Media;
   instruction?: (string | null) | Media;
-  imageCatalog?:
-    | {
-        image?: (string | null) | Media;
-        id?: string | null;
-      }[]
-    | null;
   youtubeUrl: string;
   specificationOverviewInfo?:
     | {
@@ -139,12 +135,12 @@ export interface Product {
     | null;
   labelValuePairs?:
     | {
-        label: string;
-        value: string;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'labelValue';
-      }[]
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
     | null;
   compatibleProducts?:
     | {
@@ -327,6 +323,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface ProductCategorySelect<T extends boolean = true> {
   title?: T;
+  sku?: T;
   description?: T;
   image?: T;
   updatedAt?: T;
@@ -338,12 +335,13 @@ export interface ProductCategorySelect<T extends boolean = true> {
  */
 export interface ProductSelect<T extends boolean = true> {
   title?: T;
+  sku?: T;
   description?: T;
   category?: T;
   color?:
     | T
     | {
-        color?: T;
+        colorName?: T;
         colorCode?: T;
         images?:
           | T
@@ -355,12 +353,6 @@ export interface ProductSelect<T extends boolean = true> {
       };
   datasheet?: T;
   instruction?: T;
-  imageCatalog?:
-    | T
-    | {
-        image?: T;
-        id?: T;
-      };
   youtubeUrl?: T;
   specificationOverviewInfo?:
     | T
@@ -368,18 +360,7 @@ export interface ProductSelect<T extends boolean = true> {
         data?: T;
         id?: T;
       };
-  labelValuePairs?:
-    | T
-    | {
-        labelValue?:
-          | T
-          | {
-              label?: T;
-              value?: T;
-              id?: T;
-              blockName?: T;
-            };
-      };
+  labelValuePairs?: T;
   compatibleProducts?:
     | T
     | {

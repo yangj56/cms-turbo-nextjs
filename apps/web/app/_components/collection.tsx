@@ -1,88 +1,85 @@
 "use client";
 
 import { PAGINATION_LIMIT } from "@/lib/contant";
-import type { Product } from "@/lib/payload-types";
-import { ChevronLeft, ChevronRight, Menu } from "lucide-react";
-import { useEffect, useState } from "react";
+import type { Media, Product, ProductCategory } from "@/lib/payload-types";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
 type Props = {
-  data: Product[];
+  products: Product[];
+  category: ProductCategory;
 };
 
-export const CollectionPage = ({ data }: Props) => {
+export const Collection = ({ products, category }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [viewableData, setViewableData] = useState<Product[]>([]);
 
-  const totalPages = Math.ceil(data.length / PAGINATION_LIMIT);
+  console.log(`category`, (category.image as Media).url);
+
+  const totalPages = Math.ceil(products.length / PAGINATION_LIMIT);
 
   useEffect(() => {
     if (currentPage > 0) {
       const indexPage = currentPage - 1;
-      const newViewableData = data.slice(
+      const newViewableData = products.slice(
         indexPage * PAGINATION_LIMIT,
         (indexPage + 1) * PAGINATION_LIMIT,
       );
       setViewableData(newViewableData);
     }
-  }, [currentPage, data]);
+  }, [currentPage, products]);
 
   return (
-    <div className="min-h-screen bg-white">
-      <nav className="bg-[#2A3190] text-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center space-x-8">
-              <img
-                src="/api/placeholder/40/40"
-                alt="Logo"
-                className="h-10 w-10 rounded-full bg-yellow-100"
-              />
-              <div className="hidden space-x-8 md:flex">
-                <a href="#" className="text-white hover:text-gray-200">
-                  Products
-                </a>
-                <a href="#" className="text-white hover:text-gray-200">
-                  About
-                </a>
-                <a href="#" className="text-white hover:text-gray-200">
-                  How to buy?
-                </a>
-              </div>
-            </div>
-            <div className="md:hidden">
-              <Menu className="h-6 w-6" />
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Banner */}
+    <div className="min-h-screen w-full bg-white">
       <div className="relative h-[300px] bg-gray-100 md:h-[400px]">
-        <img
-          src="/api/placeholder/1200/400"
-          alt="Recessed Lighting"
+        <Image
+          src={`${process.env.NEXT_PUBLIC_CMS_URL}${(category.image as Media).url}`}
+          alt={category.title}
           className="h-full w-full object-cover"
+          width={(category.image as Media).width || 1200}
+          height={(category.image as Media).height || 400}
         />
         <div className="absolute inset-0 flex items-center justify-center bg-black/40">
           <h1 className="text-4xl font-light text-white md:text-6xl">Recessed</h1>
         </div>
       </div>
-
-      {/* Collection Grid */}
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {/* Header */}
+      <div className="container mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center justify-between">
           <div className="text-sm text-gray-600">
-            Views per page: <span className="font-medium">24</span>
+            Views per page: <span className="font-medium">{PAGINATION_LIMIT}</span>
           </div>
           <div className="text-sm font-medium">Recessed</div>
         </div>
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {viewableData.map((productCategory) => (
-            <div key={productCategory.id} className="group">
-              <h3 className="mb-2 text-lg font-medium">{productCategory.title}</h3>
-              <p className="mb-3 text-sm text-gray-600">{productCategory.title}</p>
+          {viewableData.map((product) => (
+            <div key={product.id} className="group">
+              <h3 className="mb-2 text-lg font-medium">{product.title}</h3>
+              <p className="mb-3 text-sm text-gray-600">{product.title}</p>
+              <Link
+                href={`/product/${product.id}`}
+                className="group block"
+                title={`View ${product.title} products`}
+                aria-label={`Browse our ${product.title} collection`}
+              >
+                <div className="mb-4 h-[300px] overflow-hidden">
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_CMS_URL}${
+                      (product.color?.[0]?.images?.[0]?.image as Media).url
+                    }`}
+                    alt={`product color ${product.color?.[0]?.colorName}`}
+                    width={(product.color?.[0]?.images?.[0]?.image as Media).width || 800}
+                    height={(product.color?.[0]?.images?.[0]?.image as Media).height || 800}
+                    className="w-full object-cover transition duration-300 ease-in-out group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    priority={true}
+                  />
+                </div>
+                <h3 className="text-xl font-normal">{product.title}</h3>
+                {product.description && <p className="mt-2 text-gray-600">{product.description}</p>}
+              </Link>
             </div>
           ))}
         </div>

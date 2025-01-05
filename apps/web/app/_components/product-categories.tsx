@@ -5,6 +5,7 @@ import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState, type JSX } from "react";
 import type { ProductCategory, Media } from "@/lib/payload-types";
+import Link from "next/link";
 
 type Props = {
   data: ProductCategory[];
@@ -81,21 +82,29 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
         <div className="-ml-6 flex">
           {data.map((item) => (
             <div
-              key={item.title}
+              key={item.id}
               className="min-w-0 flex-[0_0_100%] pl-6 sm:flex-[0_0_50%] lg:flex-[0_0_25%]"
             >
-              <div className="group cursor-pointer">
+              <Link
+                href={`/collection/${item.sku}`}
+                className="group block"
+                title={`View ${item.title} products`}
+                aria-label={`Browse our ${item.title} collection`}
+              >
                 <div className="mb-4 h-[300px] overflow-hidden">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
-                    alt={item.title}
+                    alt={`${item.title} category - ${item.description || "Shop our collection"}`}
                     width={(item.image as Media).width || 800}
                     height={(item.image as Media).height || 800}
                     className="w-full object-cover transition duration-300 ease-in-out group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    priority={true}
                   />
                 </div>
                 <h3 className="text-xl font-normal">{item.title}</h3>
-              </div>
+                {item.description && <p className="mt-2 text-gray-600">{item.description}</p>}
+              </Link>
             </div>
           ))}
         </div>

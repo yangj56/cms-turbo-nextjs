@@ -16,32 +16,64 @@ export const ProductCategory: CollectionConfig = {
   },
   endpoints: [
     {
-      path: "/:id/products",
+      path: "/:sku/products",
       method: "get",
       handler: async (req) => {
-        const id = (await req.routeParams?.id) as string;
-        if (!id) {
-          return Response.json({ error: "id is required" }, { status: 400 });
+        const sku = (await req.routeParams?.sku) as string;
+        if (!sku) {
+          return Response.json({ error: "sku is required" }, { status: 400 });
+        }
+        const category = await req.payload.find({
+          collection: "product-category",
+          where: {
+            sku: {
+              equals: sku,
+            },
+          },
+        });
+        if (!category) {
+          return Response.json({ error: "category not found" }, { status: 404 });
+        }
+        if (!category.docs.length) {
+          return Response.json({ error: "category is empty" }, { status: 404 });
+        }
+        if (category.docs.length > 1) {
+          return Response.json({ error: "category is not unique" }, { status: 404 });
+        }
+
+        const data = category.docs[0];
+        if (!data) {
+          return Response.json({ error: "category missing data" }, { status: 404 });
         }
         const products = await req.payload.find({
           collection: "product",
           where: {
             category: {
-              equals: id,
+              equals: data.id,
             },
           },
           select: {
             color: true,
             title: true,
           },
+          limit: 100,
         });
-        return Response.json(products);
+        return Response.json({
+          products: products.docs,
+          category: data,
+        });
       },
     },
   ],
   fields: [
     {
       name: "title",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "sku",
+      label: "SKU (no space or special characters *unique)",
       type: "text",
       required: true,
     },

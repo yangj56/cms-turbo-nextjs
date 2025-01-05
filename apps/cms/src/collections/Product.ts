@@ -22,6 +22,12 @@ export const Product: CollectionConfig = {
       required: true,
     },
     {
+      name: "sku",
+      label: "SKU (no space or special characters *unique)",
+      type: "text",
+      required: true,
+    },
+    {
       name: "description",
       type: "text",
       required: true,
@@ -37,11 +43,13 @@ export const Product: CollectionConfig = {
       type: "array",
       fields: [
         {
-          name: "color",
+          name: "colorName",
+          label: "Color name",
           type: "text",
         },
         {
           name: "colorCode",
+          label: "Color Code (eg: #000000)",
           type: "text",
         },
         {
@@ -68,17 +76,6 @@ export const Product: CollectionConfig = {
       relationTo: "media",
     },
     {
-      name: "imageCatalog",
-      type: "array",
-      fields: [
-        {
-          name: "image",
-          type: "upload",
-          relationTo: "media",
-        },
-      ],
-    },
-    {
       name: "youtubeUrl",
       type: "text",
       required: true,
@@ -95,9 +92,7 @@ export const Product: CollectionConfig = {
     },
     {
       name: "labelValuePairs",
-      type: "blocks",
-      label: "Label-Value Pairs",
-      blocks: [LabelValue],
+      type: "json",
     },
     {
       name: "compatibleProducts",
