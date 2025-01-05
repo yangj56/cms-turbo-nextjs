@@ -4,7 +4,7 @@ import type { JSX } from "react";
 export const Footer = (): JSX.Element => {
   return (
     <footer className="w-full bg-[#353C97] py-12 text-white">
-      <div className="mx-auto max-w-7xl px-4">
+      <div className="container">
         {/* Desktop Footer */}
         <div className="mb-8 hidden gap-8 md:grid md:grid-cols-4 lg:grid-cols-5">
           {/* Products Column */}
