@@ -20,7 +20,7 @@ interface Props {
 export const ProductDetails = ({ data }: Props) => {
   const [currentColor, setCurrentColor] = useState(data.color?.[0]?.colorName || null);
   const [mainImageIndex, setMainImageIndex] = useState(0);
-  const [isCompatibleProductsOpen, setIsCompatibleProductsOpen] = useState(false);
+  const [isCompatibleProductsOpen, setIsCompatibleProductsOpen] = useState(true);
 
   // Get images for current color
   const getCurrentColorImages = () => {
@@ -46,9 +46,16 @@ export const ProductDetails = ({ data }: Props) => {
     setMainImageIndex((prev) => (prev === currentImages.length - 1 ? 0 : prev + 1));
   };
 
+  const scrollToSpecifications = () => {
+    document.getElementById("specifications")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   return (
-    <div className="flex flex-col items-center">
-      <div className="mx-4 my-8 hidden flex-row gap-8 md:flex">
+    <div className="flex w-full flex-col items-center bg-[#FFFBF5]">
+      <div className="my-8 hidden w-full flex-row gap-8 px-8 md:flex">
         <div className="flex basis-[10%] flex-col gap-4">
           {currentImages.map(
             (image, index) =>
@@ -97,9 +104,9 @@ export const ProductDetails = ({ data }: Props) => {
 
         <div className="basis-[30%] space-y-8">
           <div>
-            <h1 className="text-5xl font-medium">{data.title}</h1>
-            {currentColor && <div className="mt-2 text-lg">{currentColor}</div>}
-            <div className="text-md mt-4 text-gray-600">{data.description}</div>
+            <h1>{data.title}</h1>
+            {currentColor && <h3 className="mt-2">{currentColor}</h3>}
+            <h5 className="mt-4">{data.description}</h5>
           </div>
 
           {data.color && data.color.length > 0 && (
@@ -107,7 +114,8 @@ export const ProductDetails = ({ data }: Props) => {
               <div className="flex gap-2">
                 {data.color.map(
                   (color) =>
-                    color.colorName && (
+                    color.colorName &&
+                    color.colorCode && (
                       <button
                         key={color.id}
                         onClick={() => handleColorChange(color.colorName || null)}
@@ -116,7 +124,7 @@ export const ProductDetails = ({ data }: Props) => {
                             ? "ring-1 ring-black"
                             : "hover:ring-blue hover:ring-1"
                         }`}
-                        style={{ backgroundColor: color.colorCode || "#000" }}
+                        style={{ backgroundColor: color.colorCode }}
                         title={color.colorName}
                       >
                         <span className="sr-only">{color.colorName}</span>
@@ -128,9 +136,9 @@ export const ProductDetails = ({ data }: Props) => {
           )}
 
           {/* Spec Overview */}
-          <div className="rounded border p-4">
-            <h2 className="text-sm font-medium uppercase">Spec Overview</h2>
-            <div className="mt-2 flex flex-row">
+          <div className="border-grey rounded border p-4">
+            <h5 className="font-base uppercase">Spec Overview</h5>
+            <div className="mt-4 flex flex-row pl-2">
               <div className="basis-2/3">
                 <div className="flex flex-row flex-wrap">
                   {data.specificationOverviewInfo?.map((spec) => {
@@ -144,7 +152,13 @@ export const ProductDetails = ({ data }: Props) => {
                 </div>
               </div>
               <div className="basis-1/3">
-                <button className="text-sm text-blue-600 hover:text-blue-700">Full spec</button>
+                <button
+                  onClick={scrollToSpecifications}
+                  className="flex items-center gap-1 border px-2 py-1 text-sm"
+                >
+                  Full spec
+                  <ChevronDownIcon className="h-4 w-4" />
+                </button>
               </div>
             </div>
           </div>
@@ -226,7 +240,7 @@ export const ProductDetails = ({ data }: Props) => {
             <div className="mt-4 text-gray-600">{data.description}</div>
           </div>
           {data.color && data.color.length > 0 && (
-            <div>
+            <div className="mt-8">
               <div className="flex gap-2">
                 {data.color.map(
                   (color) =>
@@ -250,30 +264,41 @@ export const ProductDetails = ({ data }: Props) => {
             </div>
           )}
 
-          <div className="rounded border p-4">
-            <h2 className="text-sm font-medium uppercase">Spec Overview</h2>
-            <div className="mt-2 flex flex-wrap gap-4">
-              {data.specificationOverviewInfo?.map((spec) => (
-                <div key={spec.id} className="text-sm">
-                  {spec.data}
-                </div>
-              ))}
-              <button className="text-sm text-blue-600 hover:text-blue-700">Full spec</button>
+          <div className="mt-4 rounded border p-8">
+            <h5 className="font-normal uppercase">Spec Overview</h5>
+            <div className="flex flex-row justify-between">
+              <div className="mt-4 flex flex-wrap gap-4">
+                {data.specificationOverviewInfo?.map((spec) => {
+                  return (
+                    <div key={spec.id} className="flex flex-row items-center text-sm">
+                      {spec.data}
+                      <div className="px-4 text-xl font-thin text-gray-500">l</div>
+                    </div>
+                  );
+                })}
+              </div>
+              <button
+                onClick={scrollToSpecifications}
+                className="flex items-center gap-1 border px-2 py-1 text-sm"
+              >
+                Full spec
+                <ChevronDownIcon className="h-4 w-4" />
+              </button>
             </div>
           </div>
         </div>
       </div>
-      <div className="container flex flex-col">
+      <div className="container mt-12 flex w-full flex-col">
         {/* Specifications */}
-        <div className="flex flex-col gap-12 md:flex-row md:gap-32">
+        <div id="specifications" className="flex flex-col gap-12 md:flex-row md:gap-32">
           <div className="md:basis-2/3">
-            <h2 className="mb-4 text-center text-xl font-bold uppercase">Specifications</h2>
+            <h4 className="ppercase mb-4 text-center font-base">Specifications</h4>
             <div className="flex flex-col divide-y divide-gray-200">
               {Object.entries(data.labelValuePairs as Record<string, string>).map(
                 ([key, value]) => (
                   <div key={key} className="mb-2 flex flex-row pt-2">
-                    <div className="basis-1/3 font-medium">{key}</div>
-                    <div className="basis-2/3">{value}</div>
+                    <div className="basis-1/2 font-medium md:basis-1/3">{key}</div>
+                    <div className="basis-1/2 md:basis-2/3">{value}</div>
                   </div>
                 ),
               )}
@@ -282,7 +307,7 @@ export const ProductDetails = ({ data }: Props) => {
 
           {/* Downloads */}
           <div className="md:basis-1/3">
-            <h2 className="mb-4 text-center text-xl font-bold uppercase">Downloads</h2>
+            <h4 className="ppercase mb-4 text-center font-base">Downloads</h4>
             <div className="space-y-2">
               {data.datasheet && (
                 <a
@@ -320,55 +345,62 @@ export const ProductDetails = ({ data }: Props) => {
             </div>
           </div>
         </div>
-
-        {/* Compatible Products */}
-        <div>
-          <button
-            className="group flex w-full items-center justify-between py-4 text-xl font-medium uppercase"
-            onClick={() => setIsCompatibleProductsOpen(!isCompatibleProductsOpen)}
-          >
-            <span>View Compatible Products</span>
-            <ChevronDownIcon
-              className={`h-5 w-5 transition-transform ${
-                isCompatibleProductsOpen ? "rotate-180" : ""
-              }`}
-            />
-          </button>
-          {isCompatibleProductsOpen && data.compatibleProducts && (
-            <div className="mt-4 grid grid-cols-2 gap-4">
-              {data.compatibleProducts.map((item) => {
-                const product = item.product as Product;
-                if (!product) return null;
-
-                return (
-                  <Link
-                    key={product.id}
-                    href={`/product/${product.sku}`}
-                    className="group flex items-center gap-4 rounded border p-3 hover:bg-gray-50"
-                  >
-                    <div className="relative h-16 w-16 overflow-hidden rounded">
-                      {product.color?.[0]?.images?.[0]?.image && (
-                        <Image
-                          src={`${process.env.NEXT_PUBLIC_CMS_URL}${
-                            (product.color[0].images[0].image as Media).url
-                          }`}
-                          alt={product.title}
-                          fill
-                          className="object-cover"
-                        />
-                      )}
-                    </div>
-                    <div>
-                      <div className="font-medium">{product.title}</div>
-                      <div className="text-sm text-gray-500">Near • Zigbee</div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          )}
-        </div>
       </div>
+
+      {/* Compatible Products */}
+      {data.compatibleProducts && (
+        <div className="mb-8 mt-8 flex w-full flex-col items-center justify-center gap-4">
+          <hr className="w-full" />
+          <div className="container">
+            <button
+              className="group flex w-full items-center justify-center py-4 text-xl font-medium"
+              onClick={() => setIsCompatibleProductsOpen(!isCompatibleProductsOpen)}
+            >
+              <div className="pr-4 font-base">
+                View <span className="font-bold">Compatible Products</span>
+              </div>
+              <ChevronDownIcon
+                className={`h-5 w-5 transition-transform ${
+                  isCompatibleProductsOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            {isCompatibleProductsOpen && data.compatibleProducts && (
+              <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3">
+                {data.compatibleProducts.map((item) => {
+                  const product = item.product as Product;
+                  if (!product) return null;
+
+                  return (
+                    <Link
+                      key={product.id}
+                      href={`/product/${product.sku}`}
+                      className="group flex items-center gap-4 rounded p-3 hover:bg-gray-50"
+                    >
+                      <div className="relative h-16 w-16 overflow-hidden rounded">
+                        {product.color?.[0]?.images?.[0]?.image && (
+                          <Image
+                            src={`${process.env.NEXT_PUBLIC_CMS_URL}${
+                              (product.color[0].images[0].image as Media).url
+                            }`}
+                            alt={product.title}
+                            fill
+                            className="object-cover"
+                          />
+                        )}
+                      </div>
+                      <div>
+                        <div className="font-medium">{product.title}</div>
+                        <div className="text-sm text-gray-500">Near | Zigbee</div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

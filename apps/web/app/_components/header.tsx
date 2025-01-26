@@ -29,7 +29,7 @@ export const Header = (): JSX.Element => {
 
           {/* Desktop Navigation */}
           <div className="hidden items-center gap-12 md:flex">
-            <Link href="/products" className="text-base font-semibold hover:opacity-80">
+            <Link href="/collection" className="text-base font-semibold hover:opacity-80">
               Products
             </Link>
             <Link href="/about" className="text-base font-semibold hover:opacity-80">

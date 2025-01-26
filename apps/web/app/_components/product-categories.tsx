@@ -91,7 +91,7 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
                 title={`View ${item.title} products`}
                 aria-label={`Browse our ${item.title} collection`}
               >
-                <div className="mb-4 h-[300px] overflow-hidden">
+                <div className="mb-4 h-[400px] overflow-hidden">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
                     alt={item.title}
