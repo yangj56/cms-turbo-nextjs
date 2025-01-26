@@ -11,9 +11,9 @@ type Props = {
 export const LandingIntroduction = ({ data }: Props): JSX.Element => {
   return (
     <div className="w-full">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-20 md:flex-row md:items-center md:justify-between">
         <div className="p-8 md:mb-0 md:w-2/5">
-          <h2 className="mb-4 text-4xl font-medium">{data.title}</h2>
+          <h2 className="mb-4">{data.title}</h2>
           <Link href={data.url} className="mt-8 inline-block border border-black px-16 py-4">
             {data.buttonLabel}
           </Link>

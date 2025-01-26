@@ -8,8 +8,6 @@ export default async function Page({ params }: { params: Promise<{ sku: string }
   const sku = (await params).sku;
   const data = await findProductsByCategorySku(sku);
 
-  console.log(`data`, data);
-
   if (!data) {
     return notFound();
   }

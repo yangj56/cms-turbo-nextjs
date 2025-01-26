@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
+
 import type { Metadata } from "next";
 import { Header } from "./_components/header";
 import { Footer } from "./_components/footer";
@@ -22,12 +23,14 @@ export default function RootLayout({
 }>): React.ReactNode {
   return (
     <html lang="en">
-      <body className={poppins.variable}>
-        <div className="flex min-h-screen w-full flex-col items-center">
-          <Header />
-          {children}
-          <Footer />
-        </div>
+      <body>
+        <main className={`${poppins.className} font-sans font-normal`}>
+          <div className="flex min-h-screen w-full flex-col items-center">
+            <Header />
+            {children}
+            <Footer />
+          </div>
+        </main>
       </body>
     </html>
   );

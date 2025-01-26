@@ -13,29 +13,29 @@ export const Header = (): JSX.Element => {
   };
 
   return (
-    <header className="w-full bg-[#353C97] text-white">
-      <div className="mx-auto max-w-7xl px-4">
-        <nav className="flex h-16 items-center justify-between">
+    <header className="flex w-full items-center justify-center bg-primary text-white">
+      <div className="container w-full">
+        <nav className="my-4 flex items-center justify-between gap-12 md:justify-start">
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
               src="/honestlighting.png"
               alt="Honest Lighting"
-              width={40}
-              height={40}
+              width={70}
+              height={70}
               className="rounded-full"
             />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden items-center space-x-8 md:flex">
-            <Link href="/products" className="hover:opacity-80">
+          <div className="hidden items-center gap-12 md:flex">
+            <Link href="/products" className="text-base font-semibold hover:opacity-80">
               Products
             </Link>
-            <Link href="/about" className="hover:opacity-80">
+            <Link href="/about" className="text-base font-semibold hover:opacity-80">
               About
             </Link>
-            <Link href="/how-to-buy" className="hover:opacity-80">
+            <Link href="/how-to-buy" className="text-base font-semibold hover:opacity-80">
               How to buy?
             </Link>
           </div>

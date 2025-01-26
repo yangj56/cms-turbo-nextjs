@@ -58,21 +58,16 @@ export const Heros = ({ data }: Props): JSX.Element => {
 
           {/* Content Overlay */}
           <div className="absolute inset-0 bg-black/20">
-            <div className="mx-auto flex h-full w-full flex-col items-center justify-center text-center">
-              <h2
-                className="${index !== currentIndex && 
-                'translate-y-4 opacity-0'} mb-6 translate-y-0
-                transform text-6xl
-                font-bold text-white opacity-100 transition-all duration-1000 ease-in-out"
-              >
+            <div className="mx-auto flex h-full w-full flex-col items-center justify-center gap-12 text-center">
+              <h2 className="text-6xl text-white opacity-100 transition-all duration-1000 ease-in-out">
                 {item.title}
               </h2>
               <button
-                className="${index !== currentIndex && 'translate-y-4 
-                opacity-0'} translate-y-0 transform border border-white 
-                bg-transparent px-8
-                py-3 text-white
-                opacity-100 transition-all duration-1000 ease-in-out hover:bg-white hover:text-black"
+                className="transform border border-white 
+                bg-transparent px-10
+                py-4 text-xl
+                text-white 
+                opacity-100 transition-all duration-1000 ease-in-out hover:bg-accent hover:text-black"
               >
                 Learn more
               </button>
@@ -82,16 +77,18 @@ export const Heros = ({ data }: Props): JSX.Element => {
       ))}
 
       {/* Bullet Navigation */}
-      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-2">
-        {data.map((_, index) => (
-          <button
-            key={index}
-            className={`h-2 w-2 rounded-full transition-all duration-300
+      {data.length > 1 && (
+        <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+          {data.map((_, index) => (
+            <button
+              key={index}
+              className={`h-2 w-2 rounded-full transition-all duration-300
               ${currentIndex === index ? "w-8 bg-white" : "bg-white/50 hover:bg-white/75"}`}
-            onClick={() => handleBulletClick(index)}
-          />
-        ))}
-      </div>
+              onClick={() => handleBulletClick(index)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

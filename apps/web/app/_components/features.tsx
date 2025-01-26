@@ -47,11 +47,11 @@ export const Features = ({ data }: Props): JSX.Element => {
   }, [emblaApi, onSelect]);
 
   return (
-    <div className="w-full px-4">
+    <div className="w-full">
       {/* Header section with navigation buttons */}
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h2 className="text-4xl font-normal">Featured in</h2>
+          <h2>Featured in</h2>
         </div>
         <div className="flex gap-2">
           <button

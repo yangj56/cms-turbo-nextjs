@@ -1,9 +1,9 @@
 import React from "react";
-import { Search, ShoppingCart, Menu, ArrowRight, Sun, Zap, Heart } from "lucide-react";
+import { Sun, Zap, Heart } from "lucide-react";
 
 export const Benefits = () => {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <div className="w-full">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         <div className="p-6 text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">

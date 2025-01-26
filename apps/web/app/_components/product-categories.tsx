@@ -48,12 +48,12 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
   }, [emblaApi, onSelect]);
 
   return (
-    <div className="w-full px-4">
+    <div className="w-full">
       {/* Header section with navigation buttons */}
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h2 className="text-4xl font-normal">Shop by Category</h2>
-          <a href="/products" className="mt-2 inline-block text-lg hover:underline">
+          <h2>Shop by Category</h2>
+          <a href="/products" className="mt-4 inline-block text-lg font-base hover:underline">
             Explore all products &gt;
           </a>
         </div>
@@ -94,16 +94,14 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
                 <div className="mb-4 h-[300px] overflow-hidden">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
-                    alt={`${item.title} category - ${item.description || "Shop our collection"}`}
+                    alt={item.title}
+                    className="h-full w-full object-cover"
                     width={(item.image as Media).width || 800}
                     height={(item.image as Media).height || 800}
-                    className="w-full object-cover transition duration-300 ease-in-out group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    priority={true}
+                    priority={false}
                   />
                 </div>
-                <h3 className="text-xl font-normal">{item.title}</h3>
-                {item.description && <p className="mt-2 text-gray-600">{item.description}</p>}
+                <h5 className="font-normal">{item.title}</h5>
               </Link>
             </div>
           ))}

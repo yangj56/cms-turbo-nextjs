@@ -9,8 +9,8 @@ type Props = {
 
 export const Socials = ({ data }: Props): JSX.Element => {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16">
-      <h2 className="mb-12 text-4xl font-medium">Get Social</h2>
+    <div className="w-full">
+      <h2 className="mb-12">Get Social</h2>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {data.map((item) => (
