@@ -102,41 +102,38 @@ export const ProductDetails = ({ data }: Props) => {
           </AnimatePresence>
         </div>
 
-        <div className="basis-[30%] space-y-8">
-          <div>
-            <h1>{data.title}</h1>
-            {currentColor && <h3 className="mt-2">{currentColor}</h3>}
-            <h5 className="mt-4">{data.description}</h5>
-          </div>
+        <div className="basis-[30%]">
+          <h1 className="mt-4">{data.title}</h1>
+          {currentColor && <h3 className="mt-4">{currentColor}</h3>}
 
           {data.color && data.color.length > 0 && (
-            <div>
-              <div className="flex gap-2">
-                {data.color.map(
-                  (color) =>
-                    color.colorName &&
-                    color.colorCode && (
-                      <button
-                        key={color.id}
-                        onClick={() => handleColorChange(color.colorName || null)}
-                        className={`relative h-8 w-8 border border-black ${
-                          currentColor === color.colorName
-                            ? "ring-1 ring-black"
-                            : "hover:ring-blue hover:ring-1"
-                        }`}
-                        style={{ backgroundColor: color.colorCode }}
-                        title={color.colorName}
-                      >
-                        <span className="sr-only">{color.colorName}</span>
-                      </button>
-                    ),
-                )}
-              </div>
+            <div className="mt-4 flex gap-2">
+              {data.color.map(
+                (color) =>
+                  color.colorName &&
+                  color.colorCode && (
+                    <button
+                      key={color.id}
+                      onClick={() => handleColorChange(color.colorName || null)}
+                      className={`relative h-8 w-8 border border-border ${
+                        currentColor === color.colorName
+                          ? "ring-[0.1px] ring-border"
+                          : "hover:ring-blue hover:ring-[0.1px]"
+                      }`}
+                      style={{ backgroundColor: color.colorCode }}
+                      title={color.colorName}
+                    >
+                      <span className="sr-only">{color.colorName}</span>
+                    </button>
+                  ),
+              )}
             </div>
           )}
 
+          <div className="mt-8 text-sm">{data.description}</div>
+
           {/* Spec Overview */}
-          <div className="border-grey rounded border p-4">
+          <div className="border-grey mt-8 rounded border p-4">
             <h5 className="font-base uppercase">Spec Overview</h5>
             <div className="mt-4 flex flex-row pl-2">
               <div className="basis-2/3">
