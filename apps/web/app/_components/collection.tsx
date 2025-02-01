@@ -17,8 +17,6 @@ export const Collection = ({ products, category }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [viewableData, setViewableData] = useState<Product[]>([]);
 
-  console.log(`category`, (category.image as Media).url);
-
   const totalPages = Math.ceil(products.length / PAGINATION_LIMIT);
 
   useEffect(() => {
@@ -44,7 +42,7 @@ export const Collection = ({ products, category }: Props) => {
           priority={true}
         />
         <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-          <h1 className="text-4xl font-light text-white md:text-6xl">Recessed</h1>
+          <h1 className="text-4xl font-light text-white md:text-6xl">{category.title}</h1>
         </div>
       </div>
       <div className="flex w-full flex-col items-center justify-center">

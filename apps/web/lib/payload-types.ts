@@ -23,7 +23,11 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    'product-category': {
+      relatedProduct: 'product';
+    };
+  };
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
     'product-category': ProductCategorySelect<false> | ProductCategorySelect<true>;
@@ -98,6 +102,10 @@ export interface ProductCategory {
   sku: string;
   description: string;
   image: string | Media;
+  relatedProduct?: {
+    docs?: (string | Product)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -326,6 +334,7 @@ export interface ProductCategorySelect<T extends boolean = true> {
   sku?: T;
   description?: T;
   image?: T;
+  relatedProduct?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -16,6 +16,22 @@ export const ProductCategory: CollectionConfig = {
   },
   endpoints: [
     {
+      path: "/header",
+      method: "get",
+      handler: async (req) => {
+        const category = await req.payload.find({
+          collection: "product-category",
+          limit: 100,
+          select: {
+            title: true,
+            sku: true,
+            relatedProduct: true,
+          },
+        });
+        return Response.json(category.docs);
+      },
+    },
+    {
       path: "/:sku/products",
       method: "get",
       handler: async (req) => {
@@ -87,6 +103,12 @@ export const ProductCategory: CollectionConfig = {
       type: "upload",
       relationTo: "media",
       required: true,
+    },
+    {
+      name: "relatedProduct",
+      type: "join",
+      collection: "product",
+      on: "category",
     },
   ],
 };
