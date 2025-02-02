@@ -2,16 +2,18 @@
 
 import type { Media, Product } from "@/lib/payload-types";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronDownIcon,
-  PlayCircleIcon,
-  DownloadIcon,
-} from "lucide-react";
+import { ChevronDownIcon, PlayCircleIcon, DownloadIcon } from "lucide-react";
 import Link from "next/link";
+import type { CarouselApi } from "@/components/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/carousel";
 
 interface Props {
   data: Product;
@@ -21,13 +23,24 @@ export const ProductDetails = ({ data }: Props) => {
   const [currentColor, setCurrentColor] = useState(data.color?.[0]?.colorName || null);
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [isCompatibleProductsOpen, setIsCompatibleProductsOpen] = useState(true);
+  const [api, setApi] = useState<CarouselApi>();
 
+  useEffect(() => {
+    if (!api) return;
+
+    api.on("settle", (e) => {
+      setMainImageIndex(e.selectedScrollSnap());
+    });
+  }, [api]);
+
+  const length = data.specificationOverviewInfo?.length || 0;
   // Get images for current color
   const getCurrentColorImages = () => {
     if (!currentColor || !data.color) return [];
 
     const colorData = data.color.find((c) => c.colorName === currentColor);
-    return colorData?.images?.map((item) => item.image) || [];
+    const data2 = colorData?.images?.map((item) => item.image) || [];
+    return data2.filter((item) => !!item);
   };
 
   const currentImages = getCurrentColorImages();
@@ -36,14 +49,6 @@ export const ProductDetails = ({ data }: Props) => {
   const handleColorChange = (colorName: string | null) => {
     setCurrentColor(colorName);
     setMainImageIndex(0);
-  };
-
-  const handlePrevImage = () => {
-    setMainImageIndex((prev) => (prev === 0 ? currentImages.length - 1 : prev - 1));
-  };
-
-  const handleNextImage = () => {
-    setMainImageIndex((prev) => (prev === currentImages.length - 1 ? 0 : prev + 1));
   };
 
   const scrollToSpecifications = () => {
@@ -63,7 +68,11 @@ export const ProductDetails = ({ data }: Props) => {
                 <button
                   key={index}
                   onClick={() => setMainImageIndex(index)}
-                  className={`relative aspect-square w-full overflow-hidden transition-shadow duration-200`}
+                  className={`relative aspect-square overflow-hidden rounded-sm transition-shadow duration-200 ${
+                    mainImageIndex === index
+                      ? "ring-1 ring-blue-500 ring-offset-1"
+                      : "hover:ring-1 hover:ring-gray-300"
+                  }`}
                 >
                   <Image
                     src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
@@ -103,7 +112,7 @@ export const ProductDetails = ({ data }: Props) => {
         </div>
 
         <div className="basis-[30%]">
-          <h1 className="mt-4">{data.title}</h1>
+          <h2 className="mt-4 font-semibold">{data.title}</h2>
           {currentColor && <h3 className="mt-4">{currentColor}</h3>}
 
           {data.color && data.color.length > 0 && (
@@ -138,11 +147,13 @@ export const ProductDetails = ({ data }: Props) => {
             <div className="mt-4 flex flex-row pl-2">
               <div className="basis-2/3">
                 <div className="flex flex-row flex-wrap">
-                  {data.specificationOverviewInfo?.map((spec) => {
+                  {data.specificationOverviewInfo?.map((spec, index) => {
                     return (
                       <div key={spec.id} className="flex flex-row items-center text-sm">
                         {spec.data}
-                        <div className="px-4 text-xl font-thin text-gray-500">l</div>
+                        {index !== length - 1 && (
+                          <div className="px-4 text-xl font-thin text-gray-500">l</div>
+                        )}
                       </div>
                     );
                   })}
@@ -162,48 +173,27 @@ export const ProductDetails = ({ data }: Props) => {
         </div>
       </div>
       <div className="mx-4 my-8 flex flex-col gap-8 md:hidden">
-        <AnimatePresence mode="wait">
-          {currentImages[mainImageIndex] && (
-            <motion.div
-              key={`${currentColor}-${mainImageIndex}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.1 }}
-              className="relative aspect-square overflow-hidden rounded-sm"
-            >
-              <Image
-                src={`${process.env.NEXT_PUBLIC_CMS_URL}${
-                  (currentImages[mainImageIndex] as Media).url
-                }`}
-                alt={`${data.title} in ${currentColor || ""}`}
-                fill
-                className="object-cover"
-                priority
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Mobile Navigation Buttons */}
-        {currentImages.length > 1 && (
-          <div className="absolute inset-0 flex items-center justify-between p-4">
-            <button
-              onClick={handlePrevImage}
-              className="rounded-full bg-white/80 p-2 text-gray-900 backdrop-blur-sm transition hover:bg-white/90"
-              aria-label="Previous image"
-            >
-              <ChevronLeftIcon className="h-6 w-6" />
-            </button>
-            <button
-              onClick={handleNextImage}
-              className="rounded-full bg-white/80 p-2 text-gray-900 backdrop-blur-sm transition hover:bg-white/90"
-              aria-label="Next image"
-            >
-              <ChevronRightIcon className="h-6 w-6" />
-            </button>
-          </div>
-        )}
+        <Carousel className="w-full" setApi={setApi}>
+          <CarouselContent>
+            {currentImages.map((image, index) => (
+              <CarouselItem key={index}>
+                <div className="relative aspect-square w-full overflow-hidden rounded-sm">
+                  {image && (
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
+                      alt={`${data.title} in ${currentColor || ""}`}
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  )}
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="left-2" />
+          <CarouselNext className="right-2" />
+        </Carousel>
 
         {/* Mobile Thumbnails */}
         <div className="mt-4 grid grid-cols-4 gap-4">
@@ -212,10 +202,14 @@ export const ProductDetails = ({ data }: Props) => {
               image && (
                 <button
                   key={index}
-                  onClick={() => setMainImageIndex(index)}
+                  onClick={() => {
+                    if (!api) return;
+                    api.scrollTo(index);
+                    setMainImageIndex(index);
+                  }}
                   className={`relative aspect-square overflow-hidden rounded-sm transition-shadow duration-200 ${
                     mainImageIndex === index
-                      ? "ring-2 ring-blue-500 ring-offset-2"
+                      ? "ring-1 ring-blue-500 ring-offset-1"
                       : "hover:ring-1 hover:ring-gray-300"
                   }`}
                 >
@@ -232,7 +226,7 @@ export const ProductDetails = ({ data }: Props) => {
 
         <div>
           <div>
-            <h1 className="text-4xl font-bold">{data.title}</h1>
+            <h2 className="font-semibold">{data.title}</h2>
             {currentColor && <div className="mt-2 text-xl">{currentColor}</div>}
             <div className="mt-4 text-gray-600">{data.description}</div>
           </div>
@@ -247,8 +241,8 @@ export const ProductDetails = ({ data }: Props) => {
                         onClick={() => handleColorChange(color.colorName || null)}
                         className={`relative h-8 w-8 ${
                           currentColor === color.colorName
-                            ? "ring-2 ring-blue-500 ring-offset-2"
-                            : "hover:ring-1 hover:ring-gray-300"
+                            ? "ring-1 ring-blue-500 ring-offset-1"
+                            : "ring-1 ring-gray-300 hover:ring-1 hover:ring-gray-300"
                         }`}
                         style={{ backgroundColor: color.colorCode || "#000" }}
                         title={color.colorName}
@@ -265,11 +259,13 @@ export const ProductDetails = ({ data }: Props) => {
             <h5 className="font-normal uppercase">Spec Overview</h5>
             <div className="flex flex-row justify-between">
               <div className="mt-4 flex flex-wrap gap-4">
-                {data.specificationOverviewInfo?.map((spec) => {
+                {data.specificationOverviewInfo?.map((spec, index) => {
                   return (
                     <div key={spec.id} className="flex flex-row items-center text-sm">
                       {spec.data}
-                      <div className="px-4 text-xl font-thin text-gray-500">l</div>
+                      {index !== length - 1 && (
+                        <div className="px-4 text-xl font-thin text-gray-500">l</div>
+                      )}
                     </div>
                   );
                 })}

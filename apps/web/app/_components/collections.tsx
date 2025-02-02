@@ -33,7 +33,9 @@ export const Collections = ({ categories }: Props) => {
                         priority={false}
                       />
                     </div>
-                    <h4 className="mt-4 line-clamp-2 min-h-[3rem] font-bold">{category.title}</h4>
+                    <h4 className="mt-4 line-clamp-2 min-h-[3rem] font-semibold">
+                      {category.title}
+                    </h4>
                     {category.description && (
                       <div className="mt-2 line-clamp-2 min-h-[3rem] text-sm">
                         {category.description}

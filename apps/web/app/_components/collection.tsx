@@ -75,7 +75,9 @@ export const Collection = ({ products, category }: Props) => {
                         priority={false}
                       />
                     </div>
-                    <h4 className="mt-4 line-clamp-2 min-h-[3rem] font-bold">{product.title}</h4>
+                    <h4 className="mt-4 line-clamp-2 min-h-[3rem] text-sm font-semibold">
+                      {product.title}
+                    </h4>
                     {product.description && (
                       <div className="mt-2 line-clamp-2 min-h-[3rem] text-sm">
                         {product.description}
