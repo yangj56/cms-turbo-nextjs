@@ -22,7 +22,7 @@ export const LandingIntroduction = ({ data }: Props): JSX.Element => {
           </Link>
         </div>
         <div className="md:w-3/5">
-          <p className="text-2xl font-light">{data.description}</p>
+          <p className="text-xl font-thin">{data.description}</p>
         </div>
       </div>
     </div>

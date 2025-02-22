@@ -6,53 +6,53 @@ export const Footer = (): JSX.Element => {
     <footer className="flex w-full items-center justify-center bg-primary pb-12 pt-4 text-white">
       <div className="w-full p-4 md:p-16">
         {/* Desktop Footer */}
-        <div className="mb-8 grid grid-cols-2 gap-x-4 gap-y-20 p-4 md:grid-cols-4 md:p-0 lg:grid-cols-6">
+        <div className="mb-8 grid grid-cols-1 gap-x-4 gap-y-20 p-4 sm:grid-cols-2 md:grid-cols-3 md:p-0 lg:grid-cols-6">
           {/* Products Column */}
           <div className="col-span-1">
-            <h3 className="text-md mb-8 font-medium">Products</h3>
-            <ul className="space-y-2">
+            <h3 className="text-md mb-8 font-normal">Products</h3>
+            <ul className="space-y-1">
               <li>
-                <Link href="/products" className="text-sm hover:opacity-80">
+                <Link href="/products" className="text-sm font-thin hover:opacity-80">
                   Shop All
                 </Link>
               </li>
               <li>
-                <Link href="/products/recessed" className="text-sm hover:opacity-80">
+                <Link href="/products/recessed" className="text-sm font-thin hover:opacity-80">
                   Recessed
                 </Link>
               </li>
               <li>
-                <Link href="/products/linear" className="text-sm hover:opacity-80">
+                <Link href="/products/linear" className="text-sm font-thin hover:opacity-80">
                   Linear
                 </Link>
               </li>
               <li>
-                <Link href="/products/strip-lights" className="text-sm hover:opacity-80">
+                <Link href="/products/strip-lights" className="text-sm font-thin hover:opacity-80">
                   Strip Lights
                 </Link>
               </li>
               <li>
-                <Link href="/products/surface" className="text-sm hover:opacity-80">
+                <Link href="/products/surface" className="text-sm font-thin hover:opacity-80">
                   Surface
                 </Link>
               </li>
               <li>
-                <Link href="/products/wall" className="text-sm hover:opacity-80">
+                <Link href="/products/wall" className="text-sm font-thin hover:opacity-80">
                   Wall
                 </Link>
               </li>
               <li>
-                <Link href="/products/magnetic" className="text-sm hover:opacity-80">
+                <Link href="/products/magnetic" className="text-sm font-thin hover:opacity-80">
                   Magnetic System
                 </Link>
               </li>
               <li>
-                <Link href="/products/floor" className="text-sm hover:opacity-80">
+                <Link href="/products/floor" className="text-sm font-thin hover:opacity-80">
                   Floor
                 </Link>
               </li>
               <li>
-                <Link href="/products/outdoor" className="text-sm hover:opacity-80">
+                <Link href="/products/outdoor" className="text-sm font-thin hover:opacity-80">
                   Outdoor
                 </Link>
               </li>
@@ -61,20 +61,20 @@ export const Footer = (): JSX.Element => {
 
           {/* About Column */}
           <div className="col-span-1">
-            <h3 className="text-md mb-8 font-medium">About</h3>
+            <h3 className="text-md mb-8 font-normal">About</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/about/near" className="text-sm hover:opacity-80">
+                <Link href="/about/near" className="text-sm font-thin hover:opacity-80">
                   Near
                 </Link>
               </li>
               <li>
-                <Link href="/about/honest-lighting" className="text-sm hover:opacity-80">
+                <Link href="/about/honest-lighting" className="text-sm font-thin hover:opacity-80">
                   Honest Lighting
                 </Link>
               </li>
               <li>
-                <Link href="/about/founder" className="text-sm hover:opacity-80">
+                <Link href="/about/founder" className="text-sm font-thin hover:opacity-80">
                   Our Founder
                 </Link>
               </li>
@@ -83,36 +83,24 @@ export const Footer = (): JSX.Element => {
 
           {/* Contact Us Column */}
           <div className="col-span-1">
-            <h3 className="text-md mb-8 font-medium">Contact Us</h3>
+            <h3 className="text-md mb-8 font-normal">Contact Us</h3>
             <ul className="space-y-2">
               <li>
-                <span className="text-sm">Whatsapp us: +65 9727 1719</span>
+                <span className="text-sm font-thin">Whatsapp us: +65 9727 1719</span>
               </li>
               <li>
-                <span className="text-sm">Email us: support@near.sg</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal Column */}
-          <div className="col-span-1">
-            <h3 className="text-md mb-8 font-medium">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/terms" className="text-sm hover:opacity-80">
-                  Terms of sale
-                </Link>
+                <span className="text-sm font-thin">Email us: support@near.sg</span>
               </li>
             </ul>
           </div>
 
           {/* Get Connected Column */}
           <div className="col-span-1 flex flex-col items-start md:col-span-1 md:items-start lg:col-span-2 lg:items-end">
-            <h3 className="text-md mb-8 font-medium">Get Connected</h3>
-            <div className="flex space-x-4">
+            <h3 className="text-md mb-8 font-normal">Follow Us</h3>
+            <div className="flex gap-8">
               <a
                 href="https://facebook.com"
-                className="text-sm hover:opacity-80"
+                className="text-sm font-thin hover:opacity-80"
                 aria-label="Facebook"
               >
                 <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
@@ -121,7 +109,7 @@ export const Footer = (): JSX.Element => {
               </a>
               <a
                 href="https://instagram.com"
-                className="text-sm hover:opacity-80"
+                className="text-sm font-thin hover:opacity-80"
                 aria-label="Instagram"
               >
                 <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
@@ -130,7 +118,7 @@ export const Footer = (): JSX.Element => {
               </a>
               <a
                 href="https://youtube.com"
-                className="text-sm hover:opacity-80"
+                className="text-sm font-thin hover:opacity-80"
                 aria-label="YouTube"
               >
                 <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
@@ -142,7 +130,7 @@ export const Footer = (): JSX.Element => {
         </div>
         {/* Copyright */}
         <div className="mt-8 border-t border-white/20 pt-8">
-          <p className="text-sm">© Honest Lighting</p>
+          <p className="text-sm font-bold">© Honest Lighting</p>
         </div>
       </div>
     </footer>

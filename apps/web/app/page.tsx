@@ -38,7 +38,7 @@ export default async function HomePage(): Promise<JSX.Element> {
         <LandingIntroduction data={introduction} />
         <Benefits />
         <HomeCarousel label="Get Social" data={socials} />
-        <HomeCarousel label="Featured in" data={features} />
+        {/* <HomeCarousel label="Featured in" data={features} /> */}
       </div>
     </>
   );

@@ -50,12 +50,12 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
             <Link href="/collection" className="text-base font-semibold hover:opacity-80">
               Products
             </Link>
-            <Link href="/about" className="text-base font-semibold hover:opacity-80">
+            {/* <Link href="/about" className="text-base font-semibold hover:opacity-80">
               About
             </Link>
             <Link href="/how-to-buy" className="text-base font-semibold hover:opacity-80">
               How to buy?
-            </Link>
+            </Link> */}
           </div>
 
           {/* Mobile Menu Button */}

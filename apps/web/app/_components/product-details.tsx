@@ -269,17 +269,17 @@ export const ProductDetails = ({ data }: Props) => {
           {displayOverview()}
         </div>
       </div>
-      <div className="container mt-12 flex w-full flex-col">
+      <div className="container mt-2 flex w-full flex-col md:mt-8">
         {/* Specifications */}
         <div id="specifications" className="flex flex-col gap-12 md:flex-row md:gap-32">
           <div className="md:basis-2/3">
-            <h4 className="ppercase mb-4 text-center font-base">Specifications</h4>
+            <h4 className="mb-4 text-center text-sm font-medium uppercase">Specifications</h4>
             <div className="flex flex-col divide-y divide-gray-200">
               {Object.entries(data.labelValuePairs as Record<string, string>).map(
                 ([key, value]) => (
                   <div key={key} className="mb-2 flex flex-row pt-2">
-                    <div className="basis-1/2 font-medium md:basis-1/3">{key}</div>
-                    <div className="basis-1/2 md:basis-2/3">{value}</div>
+                    <div className="basis-1/2 text-sm md:basis-1/3">{key}</div>
+                    <div className="basis-1/2 text-sm font-light md:basis-2/3">{value}</div>
                   </div>
                 ),
               )}
@@ -288,7 +288,7 @@ export const ProductDetails = ({ data }: Props) => {
 
           {/* Downloads */}
           <div className="md:basis-1/3">
-            <h4 className="ppercase mb-4 text-center font-base">Downloads</h4>
+            <h4 className="mb-4 text-center text-sm font-medium uppercase">Downloads</h4>
             <div className="space-y-2">
               {data.datasheet && (
                 <a
@@ -319,7 +319,7 @@ export const ProductDetails = ({ data }: Props) => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span>YouTube Tutorial</span>
+                  <span className="text-sm font-medium">YouTube Tutorial</span>
                   <PlayCircleIcon className="h-5 w-5" />
                 </a>
               )}
@@ -337,50 +337,60 @@ export const ProductDetails = ({ data }: Props) => {
               className="group flex w-full items-center justify-center py-4 text-xl font-medium"
               onClick={() => setIsCompatibleProductsOpen(!isCompatibleProductsOpen)}
             >
-              <div className="pr-4 font-base">
+              <div className="text-md pr-4 font-base">
                 View <span className="font-bold">Compatible Products</span>
               </div>
               <ChevronDownIcon
-                className={`h-5 w-5 transition-transform ${
+                className={`h-5 w-5 transition-transform duration-300 ${
                   isCompatibleProductsOpen ? "rotate-180" : ""
                 }`}
               />
             </button>
-            {isCompatibleProductsOpen && data.compatibleProducts && (
-              <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3">
-                {data.compatibleProducts.map((item) => {
-                  const product = item.product as Product;
-                  if (!product) return null;
+            <AnimatePresence>
+              {isCompatibleProductsOpen && data.compatibleProducts && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="overflow-hidden"
+                >
+                  <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3">
+                    {data.compatibleProducts.map((item) => {
+                      const product = item.product as Product;
+                      if (!product) return null;
 
-                  return (
-                    <Link
-                      key={product.id}
-                      href={`/product/${product.sku}`}
-                      className="group flex items-center gap-4 rounded p-3 hover:bg-gray-50"
-                    >
-                      <div className="relative h-16 w-16 overflow-hidden rounded">
-                        {product.color?.[0]?.images?.[0]?.image && (
-                          <Image
-                            src={`${process.env.NEXT_PUBLIC_CMS_URL}${
-                              (product.color[0].images[0].image as Media).url
-                            }`}
-                            alt={product.title}
-                            fill
-                            className="object-cover"
-                            placeholder="blur"
-                            blurDataURL={BLUR_DATA}
-                          />
-                        )}
-                      </div>
-                      <div>
-                        <div className="font-medium">{product.title}</div>
-                        <div className="text-sm text-gray-500">Near | Zigbee</div>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
+                      return (
+                        <Link
+                          key={product.id}
+                          href={`/product/${product.sku}`}
+                          className="group flex items-center gap-4 rounded p-3 hover:bg-gray-50"
+                        >
+                          <div className="relative h-16 w-16 overflow-hidden rounded">
+                            {product.color?.[0]?.images?.[0]?.image && (
+                              <Image
+                                src={`${process.env.NEXT_PUBLIC_CMS_URL}${
+                                  (product.color[0].images[0].image as Media).url
+                                }`}
+                                alt={product.title}
+                                fill
+                                className="object-cover"
+                                placeholder="blur"
+                                blurDataURL={BLUR_DATA}
+                              />
+                            )}
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium">{product.title}</div>
+                            <div className="text-xs text-gray-500">Near | Zigbee</div>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       )}
