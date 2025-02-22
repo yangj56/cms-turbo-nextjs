@@ -14,6 +14,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/carousel";
+import { BLUR_DATA } from "@/lib/contant";
 
 interface Props {
   data: Product;
@@ -58,6 +59,37 @@ export const ProductDetails = ({ data }: Props) => {
     });
   };
 
+  const displayOverview = () => {
+    return (
+      <div className="mt-4 rounded border p-4">
+        <h5 className="text-sm uppercase">Spec Overview</h5>
+        <div className="flex flex-row justify-between">
+          <div className="mt-2 flex basis-3/5 flex-row flex-wrap">
+            {data.specificationOverviewInfo?.map((spec, index) => {
+              return (
+                <div key={spec.id} className="flex flex-row items-center text-sm">
+                  {spec.data}
+                  {index !== length - 1 && (
+                    <div className="px-2 text-xl font-thin text-gray-500">l</div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-2 flex basis-2/5 justify-end">
+            <button
+              onClick={scrollToSpecifications}
+              className="flex h-[30px] flex-row items-center gap-1 border px-2 text-sm"
+            >
+              <ChevronDownIcon className="h-4 w-4" />
+              Full spec
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="flex w-full flex-col items-center bg-[#FFFBF5]">
       <div className="my-8 hidden w-full flex-row gap-8 px-8 md:flex">
@@ -70,7 +102,7 @@ export const ProductDetails = ({ data }: Props) => {
                   onClick={() => setMainImageIndex(index)}
                   className={`relative aspect-square overflow-hidden rounded-sm transition-shadow duration-200 ${
                     mainImageIndex === index
-                      ? "ring-1 ring-blue-500 ring-offset-1"
+                      ? "ring-muted-foreground-500 ring-1 ring-offset-1"
                       : "hover:ring-1 hover:ring-gray-300"
                   }`}
                 >
@@ -79,6 +111,8 @@ export const ProductDetails = ({ data }: Props) => {
                     alt={`${data.title} in ${currentColor || ""} view ${index + 1}`}
                     fill
                     className="object-cover"
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA}
                   />
                 </button>
               ),
@@ -86,7 +120,7 @@ export const ProductDetails = ({ data }: Props) => {
         </div>
 
         {/* Main Image Column */}
-        <div className="basis-[50%]">
+        <div className="basis-[40%]">
           <AnimatePresence mode="wait">
             {currentImages[mainImageIndex] && (
               <motion.div
@@ -105,13 +139,15 @@ export const ProductDetails = ({ data }: Props) => {
                   fill
                   className="object-cover"
                   priority
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA}
                 />
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        <div className="basis-[30%]">
+        <div className="basis-[40%]">
           <h2 className="mt-4 font-semibold">{data.title}</h2>
           {currentColor && <h3 className="mt-4">{currentColor}</h3>}
 
@@ -127,7 +163,7 @@ export const ProductDetails = ({ data }: Props) => {
                       className={`relative h-8 w-8 border border-border ${
                         currentColor === color.colorName
                           ? "ring-[0.1px] ring-border"
-                          : "hover:ring-blue hover:ring-[0.1px]"
+                          : "hover:ring-[0.1px] hover:ring-muted-foreground"
                       }`}
                       style={{ backgroundColor: color.colorCode }}
                       title={color.colorName}
@@ -141,35 +177,7 @@ export const ProductDetails = ({ data }: Props) => {
 
           <div className="mt-8 text-sm">{data.description}</div>
 
-          {/* Spec Overview */}
-          <div className="border-grey mt-8 rounded border p-4">
-            <h5 className="font-base uppercase">Spec Overview</h5>
-            <div className="mt-4 flex flex-row pl-2">
-              <div className="basis-2/3">
-                <div className="flex flex-row flex-wrap">
-                  {data.specificationOverviewInfo?.map((spec, index) => {
-                    return (
-                      <div key={spec.id} className="flex flex-row items-center text-sm">
-                        {spec.data}
-                        {index !== length - 1 && (
-                          <div className="px-4 text-xl font-thin text-gray-500">l</div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              <div className="basis-1/3">
-                <button
-                  onClick={scrollToSpecifications}
-                  className="flex items-center gap-1 border px-2 py-1 text-sm"
-                >
-                  Full spec
-                  <ChevronDownIcon className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-          </div>
+          {displayOverview()}
         </div>
       </div>
       <div className="mx-4 my-8 flex flex-col gap-8 md:hidden">
@@ -185,6 +193,8 @@ export const ProductDetails = ({ data }: Props) => {
                       fill
                       className="object-cover"
                       priority
+                      placeholder="blur"
+                      blurDataURL={BLUR_DATA}
                     />
                   )}
                 </div>
@@ -209,7 +219,7 @@ export const ProductDetails = ({ data }: Props) => {
                   }}
                   className={`relative aspect-square overflow-hidden rounded-sm transition-shadow duration-200 ${
                     mainImageIndex === index
-                      ? "ring-1 ring-blue-500 ring-offset-1"
+                      ? "ring-muted-foreground-500 ring-1 ring-offset-1"
                       : "hover:ring-1 hover:ring-gray-300"
                   }`}
                 >
@@ -218,6 +228,8 @@ export const ProductDetails = ({ data }: Props) => {
                     alt={`${data.title} in ${currentColor || ""} view ${index + 1}`}
                     fill
                     className="object-cover"
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA}
                   />
                 </button>
               ),
@@ -228,10 +240,9 @@ export const ProductDetails = ({ data }: Props) => {
           <div>
             <h2 className="font-semibold">{data.title}</h2>
             {currentColor && <div className="mt-2 text-xl">{currentColor}</div>}
-            <div className="mt-4 text-gray-600">{data.description}</div>
           </div>
           {data.color && data.color.length > 0 && (
-            <div className="mt-8">
+            <div className="mt-4">
               <div className="flex gap-2">
                 {data.color.map(
                   (color) =>
@@ -239,9 +250,9 @@ export const ProductDetails = ({ data }: Props) => {
                       <button
                         key={color.id}
                         onClick={() => handleColorChange(color.colorName || null)}
-                        className={`relative h-8 w-8 ${
+                        className={`relative h-[20px] w-[20px] ${
                           currentColor === color.colorName
-                            ? "ring-1 ring-blue-500 ring-offset-1"
+                            ? "ring-muted-foreground-500 ring-1 ring-offset-1"
                             : "ring-1 ring-gray-300 hover:ring-1 hover:ring-gray-300"
                         }`}
                         style={{ backgroundColor: color.colorCode || "#000" }}
@@ -254,31 +265,8 @@ export const ProductDetails = ({ data }: Props) => {
               </div>
             </div>
           )}
-
-          <div className="mt-4 rounded border p-8">
-            <h5 className="font-normal uppercase">Spec Overview</h5>
-            <div className="flex flex-row justify-between">
-              <div className="mt-4 flex flex-wrap gap-4">
-                {data.specificationOverviewInfo?.map((spec, index) => {
-                  return (
-                    <div key={spec.id} className="flex flex-row items-center text-sm">
-                      {spec.data}
-                      {index !== length - 1 && (
-                        <div className="px-4 text-xl font-thin text-gray-500">l</div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-              <button
-                onClick={scrollToSpecifications}
-                className="flex items-center gap-1 border px-2 py-1 text-sm"
-              >
-                Full spec
-                <ChevronDownIcon className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
+          <div className="mt-8 text-sm">{data.description}</div>
+          {displayOverview()}
         </div>
       </div>
       <div className="container mt-12 flex w-full flex-col">
@@ -379,6 +367,8 @@ export const ProductDetails = ({ data }: Props) => {
                             alt={product.title}
                             fill
                             className="object-cover"
+                            placeholder="blur"
+                            blurDataURL={BLUR_DATA}
                           />
                         )}
                       </div>

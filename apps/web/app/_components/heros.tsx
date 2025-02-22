@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { JSX } from "react";
 import { useState, useRef, useEffect, useCallback } from "react";
 import type { Hero, Media } from "@/lib/payload-types";
+import { BLUR_DATA } from "@/lib/contant";
 
 type Props = {
   data: Hero[];
@@ -54,18 +55,20 @@ export const Heros = ({ data }: Props): JSX.Element => {
             width={(item.image as Media).width || 1920}
             height={(item.image as Media).height || 1080}
             priority={true}
+            placeholder="blur"
+            blurDataURL={BLUR_DATA}
           />
 
           {/* Content Overlay */}
           <div className="absolute inset-0 bg-black/20">
             <div className="mx-auto flex h-full w-full flex-col items-center justify-center gap-12 text-center">
-              <h2 className="text-6xl text-white opacity-100 transition-all duration-1000 ease-in-out">
+              <h2 className="p-4 text-5xl text-white opacity-100 transition-all duration-1000 ease-in-out">
                 {item.title}
               </h2>
               <button
                 className="transform border border-white 
                 bg-transparent px-10
-                py-4 text-xl
+                py-4 text-lg
                 text-white 
                 opacity-100 transition-all duration-1000 ease-in-out hover:bg-accent hover:text-black"
               >

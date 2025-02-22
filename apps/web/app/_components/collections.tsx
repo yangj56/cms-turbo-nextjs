@@ -1,5 +1,6 @@
 "use client";
 
+import { BLUR_DATA } from "@/lib/contant";
 import type { Media, ProductCategory } from "@/lib/payload-types";
 import Image from "next/image";
 import Link from "next/link";
@@ -31,6 +32,8 @@ export const Collections = ({ categories }: Props) => {
                         width={(category.image as Media).width || 1200}
                         height={(category.image as Media).height || 400}
                         priority={false}
+                        placeholder="blur"
+                        blurDataURL={BLUR_DATA}
                       />
                     </div>
                     <h4 className="mt-4 line-clamp-2 min-h-[3rem] font-semibold">

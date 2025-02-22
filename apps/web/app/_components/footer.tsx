@@ -3,8 +3,8 @@ import type { JSX } from "react";
 
 export const Footer = (): JSX.Element => {
   return (
-    <footer className="flex w-full items-center justify-center bg-primary py-12 text-white">
-      <div className="container">
+    <footer className="flex w-full items-center justify-center bg-primary pb-12 pt-4 text-white">
+      <div className="w-full p-4 md:p-16">
         {/* Desktop Footer */}
         <div className="mb-8 grid grid-cols-2 gap-x-4 gap-y-20 p-4 md:grid-cols-4 md:p-0 lg:grid-cols-6">
           {/* Products Column */}
@@ -85,8 +85,12 @@ export const Footer = (): JSX.Element => {
           <div className="col-span-1">
             <h3 className="text-md mb-8 font-medium">Contact Us</h3>
             <ul className="space-y-2">
-              <li>Whatsapp us: +65 9727 1719</li>
-              <li>Email us: support@near.sg</li>
+              <li>
+                <span className="text-sm">Whatsapp us: +65 9727 1719</span>
+              </li>
+              <li>
+                <span className="text-sm">Email us: support@near.sg</span>
+              </li>
             </ul>
           </div>
 

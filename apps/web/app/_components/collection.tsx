@@ -1,6 +1,6 @@
 "use client";
 
-import { PAGINATION_LIMIT } from "@/lib/contant";
+import { BLUR_DATA, PAGINATION_LIMIT } from "@/lib/contant";
 import type { Media, Product, ProductCategory } from "@/lib/payload-types";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -30,6 +30,13 @@ export const Collection = ({ products, category }: Props) => {
     }
   }, [currentPage, products]);
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }, 0);
+  };
+
   return (
     <div className="min-h-screen w-full bg-white">
       <div className="relative h-[70vh]">
@@ -40,6 +47,8 @@ export const Collection = ({ products, category }: Props) => {
           width={(category.image as Media).width || 1200}
           height={(category.image as Media).height || 400}
           priority={true}
+          placeholder="blur"
+          blurDataURL={BLUR_DATA}
         />
         <div className="absolute inset-0 flex items-center justify-center bg-black/40">
           <h1 className="text-4xl font-light text-white md:text-6xl">{category.title}</h1>
@@ -73,6 +82,8 @@ export const Collection = ({ products, category }: Props) => {
                         width={(product.color?.[0]?.images?.[0]?.image as Media).width || 1200}
                         height={(product.color?.[0]?.images?.[0]?.image as Media).height || 400}
                         priority={false}
+                        placeholder="blur"
+                        blurDataURL={BLUR_DATA}
                       />
                     </div>
                     <h4 className="mt-4 line-clamp-2 min-h-[3rem] text-sm font-semibold">
@@ -84,19 +95,21 @@ export const Collection = ({ products, category }: Props) => {
                       </div>
                     )}
                   </Link>
-                  {product.color &&
-                    product.color?.map((color) => {
-                      if (!color.colorCode) {
-                        return null;
-                      }
-                      return (
-                        <div
-                          className={cn("mt-2", "border-grey h-8 w-8 border")}
-                          style={{ backgroundColor: color.colorCode }}
-                          key={color.id}
-                        ></div>
-                      );
-                    })}
+                  <div className="flex flex-row gap-2">
+                    {product.color &&
+                      product.color?.map((color) => {
+                        if (!color.colorCode) {
+                          return null;
+                        }
+                        return (
+                          <div
+                            className={cn("mt-2", "border-grey h-8 w-8 border")}
+                            style={{ backgroundColor: color.colorCode }}
+                            key={color.id}
+                          ></div>
+                        );
+                      })}
+                  </div>
                 </div>
               );
             })}
@@ -107,16 +120,18 @@ export const Collection = ({ products, category }: Props) => {
               <div className="mb-4 flex justify-center space-x-4 sm:mb-0">
                 <button
                   className="flex items-center bg-gray-100 px-6 py-2 transition-colors hover:bg-gray-200"
-                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                  onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
+                  aria-label="Previous page"
                 >
                   <ChevronLeft className="mr-2 h-4 w-4" />
                   Prev
                 </button>
                 <button
                   className="flex items-center bg-gray-100 px-6 py-2 transition-colors hover:bg-gray-200"
-                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                  onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                   disabled={currentPage === totalPages}
+                  aria-label="Next page"
                 >
                   Next
                   <ChevronRight className="ml-2 h-4 w-4" />
@@ -126,12 +141,14 @@ export const Collection = ({ products, category }: Props) => {
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                   <button
                     key={page}
-                    onClick={() => setCurrentPage(page)}
+                    onClick={() => handlePageChange(page)}
                     className={`flex h-8 w-8 items-center justify-center ${
                       currentPage === page
                         ? "bg-gray-900 text-white"
                         : "bg-gray-100 text-gray-900 hover:bg-gray-200"
                     }`}
+                    aria-label={`Go to page ${page}`}
+                    aria-current={currentPage === page ? "page" : undefined}
                   >
                     {page}
                   </button>

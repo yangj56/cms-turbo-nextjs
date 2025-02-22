@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { ProductCategory } from "@/lib/payload-types";
+import { BLUR_DATA } from "@/lib/contant";
 
 export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,7 +30,7 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
 
   return (
     <header className="flex h-[100px] w-full items-center justify-center bg-primary text-white">
-      <div className="container w-full">
+      <div className="w-full p-4 md:p-16">
         <nav className="my-4 flex items-center justify-between gap-12 md:justify-start">
           {/* Logo */}
           <Link href="/" className="flex items-center">
@@ -39,6 +40,8 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
               width={70}
               height={70}
               className="rounded-full"
+              placeholder="blur"
+              blurDataURL={BLUR_DATA}
             />
           </Link>
 

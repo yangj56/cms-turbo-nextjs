@@ -4,15 +4,23 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState, type JSX } from "react";
-import type { ProductCategory, Media } from "@/lib/payload-types";
-import Link from "next/link";
+import type { Media } from "@/lib/payload-types";
 import { BLUR_DATA } from "@/lib/contant";
+import Link from "next/link";
 
 type Props = {
-  data: ProductCategory[];
+  label: string;
+  data: {
+    id: string;
+    title: string;
+    image: string | Media;
+    url: string;
+    updatedAt: string;
+    createdAt: string;
+  }[];
 };
 
-export const ProductCategories = ({ data }: Props): JSX.Element => {
+export const HomeCarousel = ({ label, data }: Props): JSX.Element => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     skipSnaps: false,
@@ -60,14 +68,11 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
   }, [emblaApi, onSelect, data.length]);
 
   return (
-    <div className="flex w-full flex-col items-center">
+    <div className="w-full">
       {/* Header section with navigation buttons */}
-      <div className="mb-8 flex w-full items-center justify-between">
+      <div className="mb-8 flex items-center justify-between">
         <div>
-          <h3>Shop by Category</h3>
-          <a href="/products" className="mt-1 inline-block text-sm hover:underline">
-            Explore all products &gt;
-          </a>
+          <h3>{label}</h3>
         </div>
         {shouldShowNavigation && (
           <div className="flex gap-2">
@@ -96,29 +101,23 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
         <div className="-ml-6 flex">
           {data.map((item) => (
             <div
-              key={item.id}
+              key={item.title}
               className="min-w-0 flex-[0_0_50%] pl-6 md:flex-[0_0_33%] lg:flex-[0_0_25%]"
             >
-              <Link
-                href={`/collection/${item.sku}`}
-                className="group block"
-                title={`View ${item.title} products`}
-                aria-label={`Browse our ${item.title} collection`}
-              >
-                <div className="mb-4 h-[250px] overflow-hidden sm:h-[300px]">
+              <div className="group cursor-pointer">
+                <div className="relative mb-4">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
                     alt={item.title}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     width={(item.image as Media).width || 800}
                     height={(item.image as Media).height || 800}
-                    priority={false}
+                    className="h-auto w-full"
                     placeholder="blur"
                     blurDataURL={BLUR_DATA}
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   />
                 </div>
-                <h5 className="font-normal">{item.title}</h5>
-              </Link>
+              </div>
             </div>
           ))}
         </div>
