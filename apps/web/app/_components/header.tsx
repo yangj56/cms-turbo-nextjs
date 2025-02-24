@@ -102,7 +102,7 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
                 <path d="M9 5l7 7-7 7" />
               </svg>
             </button>
-            <Link
+            {/* <Link
               href="/about"
               className="flex items-center justify-between border-b border-gray-200 px-8 py-4 hover:bg-gray-50"
               onClick={() => setIsMenuOpen(false)}
@@ -137,7 +137,7 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
               >
                 <path d="M9 5l7 7-7 7" />
               </svg>
-            </Link>
+            </Link> */}
           </div>
         </div>
 

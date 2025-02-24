@@ -12,55 +12,40 @@ export const Footer = (): JSX.Element => {
             <h3 className="text-md mb-8 font-normal">Products</h3>
             <ul className="space-y-1">
               <li>
-                <Link href="/products" className="text-sm font-thin hover:opacity-80">
+                <Link href="/collection" className="text-sm font-thin hover:opacity-80">
                   Shop All
                 </Link>
               </li>
               <li>
-                <Link href="/products/recessed" className="text-sm font-thin hover:opacity-80">
+                <Link href="/collection/recessed" className="text-sm font-thin hover:opacity-80">
                   Recessed
                 </Link>
               </li>
               <li>
-                <Link href="/products/linear" className="text-sm font-thin hover:opacity-80">
+                <Link href="/collection/linear" className="text-sm font-thin hover:opacity-80">
                   Linear
                 </Link>
               </li>
               <li>
-                <Link href="/products/strip-lights" className="text-sm font-thin hover:opacity-80">
-                  Strip Lights
+                <Link href="/collection/bulbs" className="text-sm font-thin hover:opacity-80">
+                  Bulbs
                 </Link>
               </li>
               <li>
-                <Link href="/products/surface" className="text-sm font-thin hover:opacity-80">
+                <Link href="/collection/surface" className="text-sm font-thin hover:opacity-80">
                   Surface
                 </Link>
               </li>
               <li>
-                <Link href="/products/wall" className="text-sm font-thin hover:opacity-80">
-                  Wall
-                </Link>
-              </li>
-              <li>
-                <Link href="/products/magnetic" className="text-sm font-thin hover:opacity-80">
-                  Magnetic System
-                </Link>
-              </li>
-              <li>
-                <Link href="/products/floor" className="text-sm font-thin hover:opacity-80">
-                  Floor
-                </Link>
-              </li>
-              <li>
-                <Link href="/products/outdoor" className="text-sm font-thin hover:opacity-80">
-                  Outdoor
+                <Link href="/collection/track" className="text-sm font-thin hover:opacity-80">
+                  Track
                 </Link>
               </li>
             </ul>
           </div>
 
           {/* About Column */}
-          <div className="col-span-1">
+          {/* <div className="col-span-1">
             <h3 className="text-md mb-8 font-normal">About</h3>
             <ul className="space-y-2">
               <li>
@@ -79,7 +64,7 @@ export const Footer = (): JSX.Element => {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Contact Us Column */}
           <div className="col-span-1">
@@ -99,7 +84,7 @@ export const Footer = (): JSX.Element => {
             <h3 className="text-md mb-8 font-normal">Follow Us</h3>
             <div className="flex gap-8">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/honestlighting"
                 className="text-sm font-thin hover:opacity-80"
                 aria-label="Facebook"
               >
@@ -108,7 +93,7 @@ export const Footer = (): JSX.Element => {
                 </svg>
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/honestlighting/"
                 className="text-sm font-thin hover:opacity-80"
                 aria-label="Instagram"
               >
@@ -117,7 +102,7 @@ export const Footer = (): JSX.Element => {
                 </svg>
               </a>
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/@nearlighting"
                 className="text-sm font-thin hover:opacity-80"
                 aria-label="YouTube"
               >
