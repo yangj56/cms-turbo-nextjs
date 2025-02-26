@@ -1,6 +1,7 @@
 import { findProduct } from "@/actions/find-product";
 import { findProducts } from "@/actions/find-products";
 import { ProductDetails } from "@/app/_components/product-details";
+import { ALL_PRODUCTS_LIMIT } from "@/lib/contant";
 import type { Product } from "@/lib/payload-types";
 import { notFound } from "next/navigation";
 
@@ -22,7 +23,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 }
 
 export async function generateStaticParams() {
-  const products: Product[] = await findProducts();
+  const products: Product[] = await findProducts(1, ALL_PRODUCTS_LIMIT);
   return products.map((product) => ({
     id: product.id,
   }));

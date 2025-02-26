@@ -1,11 +1,12 @@
 "use server";
 
+import { PAGINATION_LIMIT } from "@/lib/contant";
 import type { Product } from "@/lib/payload-types";
 import type { PaginatedDocs } from "@/lib/types";
 
-export async function findProducts(): Promise<Product[]> {
+export async function findProducts(page = 1, limit = PAGINATION_LIMIT): Promise<Product[]> {
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/products/all`;
+    const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/product?limit=${limit}&page=${page}`;
     const response = await fetch(apiUrl);
 
     if (!response.ok) {

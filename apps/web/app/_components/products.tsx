@@ -8,6 +8,15 @@ import { useState } from "react";
 import { Pagination } from "./pagingation";
 import { cn } from "@/lib/utils";
 import { parseAsString, useQueryStates, parseAsInteger } from "nuqs";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./select";
 
 const ITEMS_PER_PAGE = 24;
 const ITEMS_PER_PAGE_BIG = 48;
@@ -30,9 +39,6 @@ export const Products = ({ products }: Props) => {
   );
   const { collection, limit, page } = tabParams;
 
-  console.log(tabParams);
-  console.log(products[0]);
-
   const offset = page * limit;
   let filteredProducts: Product[] = products;
   if (collection) {
@@ -46,6 +52,26 @@ export const Products = ({ products }: Props) => {
   return (
     <div className="container mx-auto px-4">
       <div className="mb-6 flex items-center justify-between">
+        <Select>
+          <SelectTrigger
+            className="w-[180px]"
+            onClick={(e) => {
+              console.log(e);
+            }}
+          >
+            <SelectValue placeholder="Select a fruit" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              <SelectItem value="apple">Apple</SelectItem>
+              <SelectItem value="banana">Banana</SelectItem>
+              <SelectItem value="blueberry">Blueberry</SelectItem>
+              <SelectItem value="grapes">Grapes</SelectItem>
+              <SelectItem value="pineapple">Pineapple</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
         <p className="text-sm text-gray-600">
           Displaying {offset + 1} - {Math.min(offset + ITEMS_PER_PAGE, products.length)} of{" "}
           {products.length} results
@@ -108,10 +134,14 @@ export const Products = ({ products }: Props) => {
       </div>
 
       <div className="mt-8">
-        {/* <Pagination
+        <Pagination
           pageCount={pageCount}
-          onPageChange={({ selected }) => setCurrentPage(selected)}
-        /> */}
+          onPageChange={({ selected }) =>
+            setTabParams({
+              page: selected,
+            })
+          }
+        />
       </div>
     </div>
   );
