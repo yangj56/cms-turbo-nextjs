@@ -27,14 +27,19 @@ export const Hero: CollectionConfig = {
       required: true,
     },
     {
+      name: "description",
+      type: "textarea",
+      required: false,
+    },
+    {
       name: "buttonLabel",
       type: "text",
-      required: true,
+      required: false,
     },
     {
       name: "url",
       type: "text",
-      required: true,
+      required: false,
     },
   ],
 };
