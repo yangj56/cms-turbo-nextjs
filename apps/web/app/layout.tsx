@@ -31,7 +31,7 @@ export default async function RootLayout({
           <div className="flex min-h-screen w-full flex-col items-center">
             <Header data={data} />
             <NuqsAdapter>{children}</NuqsAdapter>
-            <Footer />
+            <Footer data={data} />
           </div>
         </main>
       </body>

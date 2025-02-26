@@ -92,33 +92,37 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
       </div>
 
       {/* Carousel */}
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="-ml-6 flex">
+      <div className="w-full overflow-hidden" ref={emblaRef}>
+        <div className="-mr-4 ml-0 flex sm:-mr-6">
           {data.map((item) => (
             <div
               key={item.id}
-              className="min-w-0 flex-[0_0_50%] pl-6 md:flex-[0_0_33%] lg:flex-[0_0_25%]"
+              className="min-w-0 flex-[0_0_85%] sm:flex-[0_0_50%] md:flex-[0_0_33.333%] lg:flex-[0_0_25%]"
             >
-              <Link
-                href={`/collection/${item.sku}`}
-                className="group block"
-                title={`View ${item.title} products`}
-                aria-label={`Browse our ${item.title} collection`}
-              >
-                <div className="mb-4 h-[250px] overflow-hidden sm:h-[300px]">
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
-                    alt={item.title}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    width={(item.image as Media).width || 800}
-                    height={(item.image as Media).height || 800}
-                    priority={false}
-                    placeholder="blur"
-                    blurDataURL={BLUR_DATA}
-                  />
-                </div>
-                <h5 className="font-normal">{item.title}</h5>
-              </Link>
+              <div className="mr-4 sm:mr-6">
+                <Link
+                  href={`/products?collection=${item.sku}`}
+                  className="group block"
+                  title={`View ${item.title} products`}
+                  aria-label={`Browse our ${item.title} collection`}
+                >
+                  <div className="mb-3 aspect-square w-full overflow-hidden rounded-lg">
+                    <div className="relative h-full w-full">
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
+                        alt={item.title}
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        fill
+                        sizes="(max-width: 640px) 85vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        priority={false}
+                        placeholder="blur"
+                        blurDataURL={BLUR_DATA}
+                      />
+                    </div>
+                  </div>
+                  <h5 className="text-sm font-normal sm:text-base">{item.title}</h5>
+                </Link>
+              </div>
             </div>
           ))}
         </div>

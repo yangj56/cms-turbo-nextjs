@@ -6,7 +6,6 @@ import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState, type JSX } from "react";
 import type { Media } from "@/lib/payload-types";
 import { BLUR_DATA } from "@/lib/contant";
-import Link from "next/link";
 
 type Props = {
   label: string;
@@ -97,25 +96,28 @@ export const HomeCarousel = ({ label, data }: Props): JSX.Element => {
       </div>
 
       {/* Carousel */}
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="-ml-6 flex">
+      <div className="w-full overflow-hidden" ref={emblaRef}>
+        <div className="-mr-4 ml-0 flex sm:-mr-6">
           {data.map((item) => (
             <div
               key={item.title}
-              className="min-w-0 flex-[0_0_50%] pl-6 md:flex-[0_0_33%] lg:flex-[0_0_25%]"
+              className="min-w-0 flex-[0_0_85%] sm:flex-[0_0_50%] md:flex-[0_0_33.333%] lg:flex-[0_0_25%]"
             >
-              <div className="group cursor-pointer">
-                <div className="relative mb-4">
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
-                    alt={item.title}
-                    width={(item.image as Media).width || 800}
-                    height={(item.image as Media).height || 800}
-                    className="h-auto w-full"
-                    placeholder="blur"
-                    blurDataURL={BLUR_DATA}
-                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  />
+              <div className="mr-4 sm:mr-6">
+                <div className="group cursor-pointer">
+                  <div className="mb-3 aspect-square w-full overflow-hidden rounded-lg">
+                    <div className="relative h-full w-full">
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
+                        alt={item.title}
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        fill
+                        sizes="(max-width: 640px) 85vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        placeholder="blur"
+                        blurDataURL={BLUR_DATA}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

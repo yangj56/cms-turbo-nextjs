@@ -44,18 +44,12 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
             {data.map((category) => (
               <Link
                 key={category.id}
-                href={`/collection/${category.sku}`}
+                href={`/products?collection=${category.sku}`}
                 className="text-base font-semibold hover:opacity-80"
               >
                 {category.title}
               </Link>
             ))}
-            {/* <Link href="/about" className="text-base font-semibold hover:opacity-80">
-              About
-            </Link>
-            <Link href="/how-to-buy" className="text-base font-semibold hover:opacity-80">
-              How to buy?
-            </Link> */}
           </div>
 
           {/* Mobile Menu Button */}
@@ -91,7 +85,7 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
                 {data?.map((category) => (
                   <Link
                     key={category.id}
-                    href={`/collection/${category.sku}`}
+                    href={`/products?collection=${category.sku}`}
                     className="flex items-center justify-between pt-4 font-light hover:opacity-80"
                     onClick={() => {
                       setIsMenuOpen(false);
@@ -112,7 +106,7 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
                   </Link>
                 ))}
                 <Link
-                  href="/collection"
+                  href="/products"
                   className="flex items-center justify-between pt-4 font-light hover:opacity-80"
                   onClick={() => {
                     setIsMenuOpen(false);

@@ -11,7 +11,7 @@ type Props = {
 export const LandingIntroduction = ({ data }: Props): JSX.Element => {
   return (
     <div className="w-full">
-      <div className="flex flex-col gap-20 md:my-16 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-8 md:my-16 md:flex-row md:items-center md:justify-between">
         <div className="md:mb-0 md:w-2/5">
           <h2 className="mb-4">{data.title}</h2>
           {data.url && data.buttonLabel && (

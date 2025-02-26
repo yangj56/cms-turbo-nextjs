@@ -1,7 +1,8 @@
+import type { ProductCategory } from "@/lib/payload-types";
 import Link from "next/link";
 import type { JSX } from "react";
 
-export const Footer = (): JSX.Element => {
+export const Footer = ({ data }: { data: ProductCategory[] }): JSX.Element => {
   return (
     <footer className="flex w-full items-center justify-center bg-primary pb-12 pt-4 text-white">
       <div className="w-full p-4 md:p-16">
@@ -12,59 +13,22 @@ export const Footer = (): JSX.Element => {
             <h3 className="text-md mb-8 font-normal">Products</h3>
             <ul className="space-y-1">
               <li>
-                <Link href="/collection" className="text-sm font-thin hover:opacity-80">
+                <Link href="/products" className="text-sm font-thin hover:opacity-80">
                   Shop All
                 </Link>
               </li>
-              <li>
-                <Link href="/collection/recessed" className="text-sm font-thin hover:opacity-80">
-                  Recessed
-                </Link>
-              </li>
-              <li>
-                <Link href="/collection/linear" className="text-sm font-thin hover:opacity-80">
-                  Linear
-                </Link>
-              </li>
-              <li>
-                <Link href="/collection/bulbs" className="text-sm font-thin hover:opacity-80">
-                  Bulbs
-                </Link>
-              </li>
-              <li>
-                <Link href="/collection/surface" className="text-sm font-thin hover:opacity-80">
-                  Surface
-                </Link>
-              </li>
-              <li>
-                <Link href="/collection/track" className="text-sm font-thin hover:opacity-80">
-                  Track
-                </Link>
-              </li>
+              {data.map((category) => (
+                <li key={category.id}>
+                  <Link
+                    href={`/products?collection=${category.sku}`}
+                    className="text-sm font-thin hover:opacity-80"
+                  >
+                    {category.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
-
-          {/* About Column */}
-          {/* <div className="col-span-1">
-            <h3 className="text-md mb-8 font-normal">About</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/about/near" className="text-sm font-thin hover:opacity-80">
-                  Near
-                </Link>
-              </li>
-              <li>
-                <Link href="/about/honest-lighting" className="text-sm font-thin hover:opacity-80">
-                  Honest Lighting
-                </Link>
-              </li>
-              <li>
-                <Link href="/about/founder" className="text-sm font-thin hover:opacity-80">
-                  Our Founder
-                </Link>
-              </li>
-            </ul>
-          </div> */}
 
           {/* Contact Us Column */}
           <div className="col-span-1">
@@ -80,7 +44,7 @@ export const Footer = (): JSX.Element => {
           </div>
 
           {/* Get Connected Column */}
-          <div className="col-span-1 flex flex-col items-start md:col-span-1 md:items-start lg:col-span-2 lg:items-end">
+          <div className="col-span-1 flex flex-col items-start md:col-span-1 md:items-start lg:col-span-4 lg:items-end">
             <h3 className="text-md mb-8 font-normal">Follow Us</h3>
             <div className="flex gap-8">
               <a

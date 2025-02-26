@@ -11,6 +11,9 @@ import { Heros } from "./_components/heros";
 import { LandingIntroduction } from "./_components/landing-introduction";
 import { ProductCategories } from "./_components/product-categories";
 
+export const dynamic = "force-static";
+export const revalidate = 60;
+
 export default async function HomePage(): Promise<JSX.Element> {
   const [heros, socials, introduction, productCategories, features] = await Promise.all([
     findHeros(),

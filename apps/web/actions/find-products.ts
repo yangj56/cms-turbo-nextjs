@@ -7,7 +7,9 @@ import type { PaginatedDocs } from "@/lib/types";
 export async function findProducts(page = 1, limit = PAGINATION_LIMIT): Promise<Product[]> {
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/product?limit=${limit}&page=${page}`;
-    const response = await fetch(apiUrl);
+    const response = await fetch(apiUrl, {
+      cache: "force-cache",
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch product: ${response.statusText}`);
