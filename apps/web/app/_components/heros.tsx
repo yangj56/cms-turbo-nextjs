@@ -61,19 +61,31 @@ export const Heros = ({ data }: Props): JSX.Element => {
 
           {/* Content Overlay */}
           <div className="absolute inset-0 bg-black/20">
-            <div className="mx-auto flex h-full w-full flex-col items-center justify-center gap-12 text-center">
+            <div className="mx-auto flex h-full w-full flex-col items-center justify-center gap-8 text-center">
               <h2 className="p-4 text-5xl text-white opacity-100 transition-all duration-1000 ease-in-out">
                 {item.title}
               </h2>
-              <button
-                className="transform border border-white 
+              {item.description && (
+                <p className="text-xl text-white opacity-100 transition-all duration-1000 ease-in-out">
+                  {item.description}
+                </p>
+              )}
+              {item.buttonLabel && item.url && (
+                <button
+                  className="transform border border-white 
                 bg-transparent px-10
                 py-4 text-lg
                 text-white 
                 opacity-100 transition-all duration-1000 ease-in-out hover:bg-accent hover:text-black"
-              >
-                Learn more
-              </button>
+                  onClick={() => {
+                    if (item.url) {
+                      window.open(item.url, "_blank");
+                    }
+                  }}
+                >
+                  {item.buttonLabel}
+                </button>
+              )}
             </div>
           </div>
         </div>

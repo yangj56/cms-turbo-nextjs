@@ -22,7 +22,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 }
 
 export async function generateStaticParams() {
-  const products: Product[] = await findProducts(1, 200);
+  const products: Product[] = await findProducts();
   return products.map((product) => ({
     id: product.id,
   }));

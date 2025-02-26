@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Footer } from "./_components/footer";
 import { Header } from "./_components/header";
 import { findProductHeader } from "@/actions/find-product-header";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -29,7 +30,7 @@ export default async function RootLayout({
         <main className={`${poppins.className} font-sans font-normal`}>
           <div className="flex min-h-screen w-full flex-col items-center">
             <Header data={data} />
-            {children}
+            <NuqsAdapter>{children}</NuqsAdapter>
             <Footer />
           </div>
         </main>

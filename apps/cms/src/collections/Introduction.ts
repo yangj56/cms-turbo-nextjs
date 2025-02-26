@@ -28,12 +28,12 @@ export const Introduction: CollectionConfig = {
     {
       name: "buttonLabel",
       type: "text",
-      required: true,
+      required: false,
     },
     {
       name: "url",
       type: "text",
-      required: true,
+      required: false,
     },
   ],
 };

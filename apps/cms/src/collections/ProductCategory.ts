@@ -96,7 +96,7 @@ export const ProductCategory: CollectionConfig = {
     {
       name: "description",
       type: "text",
-      required: true,
+      required: false,
     },
     {
       name: "image",

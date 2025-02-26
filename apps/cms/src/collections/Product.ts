@@ -14,6 +14,29 @@ export const Product: CollectionConfig = {
   admin: {
     useAsTitle: "title",
   },
+  endpoints: [
+    {
+      path: "/all",
+      method: "get",
+      handler: async (req) => {
+        const products = await req.payload.find({
+          collection: "product",
+          limit: 5000,
+          select: {
+            title: true,
+            sku: true,
+            description: true,
+            category: true,
+            color: true,
+            images: true,
+          },
+        });
+        return Response.json({
+          products: products.docs,
+        });
+      },
+    },
+  ],
   fields: [
     {
       name: "title",

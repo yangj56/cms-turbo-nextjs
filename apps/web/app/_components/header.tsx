@@ -9,11 +9,9 @@ import { BLUR_DATA } from "@/lib/contant";
 
 export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isProductMenuOpen, setIsProductMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    setIsProductMenuOpen(false);
   };
 
   useEffect(() => {
@@ -23,10 +21,6 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
       document.body.style.overflow = "";
     }
   }, [isMenuOpen]);
-
-  const toggleProductMenu = () => {
-    setIsProductMenuOpen(!isProductMenuOpen);
-  };
 
   return (
     <header className="flex h-[100px] w-full items-center justify-center bg-primary text-white">
@@ -47,9 +41,15 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
 
           {/* Desktop Navigation */}
           <div className="hidden items-center gap-12 md:flex">
-            <Link href="/collection" className="text-base font-semibold hover:opacity-80">
-              Products
-            </Link>
+            {data.map((category) => (
+              <Link
+                key={category.id}
+                href={`/collection/${category.sku}`}
+                className="text-base font-semibold hover:opacity-80"
+              >
+                {category.title}
+              </Link>
+            ))}
             {/* <Link href="/about" className="text-base font-semibold hover:opacity-80">
               About
             </Link>
@@ -85,107 +85,36 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
           } md:hidden`}
         >
           <div className="flex flex-col">
-            <button
-              onClick={toggleProductMenu}
-              className="flex w-full items-center justify-between border-b border-gray-200 px-8 py-4 hover:bg-gray-50"
-            >
-              <span>Products</span>
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-            {/* <Link
-              href="/about"
-              className="flex items-center justify-between border-b border-gray-200 px-8 py-4 hover:bg-gray-50"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <span>About</span>
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-            <Link
-              href="/how-to-buy"
-              className="flex items-center justify-between border-b border-gray-200 px-8 py-4 hover:bg-gray-50"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <span>How to buy</span>
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path d="M9 5l7 7-7 7" />
-              </svg>
-            </Link> */}
-          </div>
-        </div>
-
-        {/* Products Slide-in Menu */}
-        <div
-          className={`fixed right-0 top-[100px] z-50 h-full w-full transform bg-white text-black transition-transform duration-300 ease-in-out ${
-            isProductMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-        >
-          <div className="flex flex-col">
-            <div className="relative flex items-center justify-center border-b border-gray-200 px-4 py-4">
-              <button onClick={toggleProductMenu} className="absolute left-4">
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <span className="text-lg">Products</span>
-            </div>
-
             <div className="mt-6 px-8">
-              <h3 className="mb-4 text-lg font-normal">Category</h3>
-              <div className="flex flex-col space-y-4">
+              <h3 className="mb-4 text-lg font-normal">Collections</h3>
+              <div className="flex flex-col space-y-4 divide-y divide-gray-200">
                 {data?.map((category) => (
                   <Link
                     key={category.id}
                     href={`/collection/${category.sku}`}
-                    className="font-light hover:opacity-80"
+                    className="flex items-center justify-between pt-4 font-light hover:opacity-80"
                     onClick={() => {
-                      setIsProductMenuOpen(false);
                       setIsMenuOpen(false);
                     }}
                   >
-                    {category.title}
+                    <span>{category.title}</span>
+                    <svg
+                      className="ml-1 h-4 w-4"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path d="M9 5l7 7-7 7" />
+                    </svg>
                   </Link>
                 ))}
                 <Link
                   href="/collection"
-                  className="text-md flex items-center font-normal"
+                  className="flex items-center justify-between pt-4 font-light hover:opacity-80"
                   onClick={() => {
-                    setIsProductMenuOpen(false);
                     setIsMenuOpen(false);
                   }}
                 >

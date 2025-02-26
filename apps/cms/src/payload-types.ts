@@ -100,7 +100,7 @@ export interface ProductCategory {
   id: string;
   title: string;
   sku: string;
-  description: string;
+  description?: string | null;
   image: string | Media;
   relatedProduct?: {
     docs?: (string | Product)[] | null;
@@ -184,8 +184,9 @@ export interface Hero {
   id: string;
   title: string;
   image: string | Media;
-  buttonLabel: string;
-  url: string;
+  description?: string | null;
+  buttonLabel?: string | null;
+  url?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -209,8 +210,8 @@ export interface Introduction {
   id: string;
   title: string;
   description: string;
-  buttonLabel: string;
-  url: string;
+  buttonLabel?: string | null;
+  url?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -401,6 +402,7 @@ export interface UsersSelect<T extends boolean = true> {
 export interface HeroSelect<T extends boolean = true> {
   title?: T;
   image?: T;
+  description?: T;
   buttonLabel?: T;
   url?: T;
   updatedAt?: T;

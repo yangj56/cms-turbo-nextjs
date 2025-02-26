@@ -36,7 +36,6 @@ export default async function HomePage(): Promise<JSX.Element> {
       <div className="container mb-20 mt-12 space-y-20 divide-y [&>*+*]:pt-12">
         <ProductCategories data={productCategories} />
         <LandingIntroduction data={introduction} />
-        <Benefits />
         <HomeCarousel label="Get Social" data={socials} />
         {/* <HomeCarousel label="Featured in" data={features} /> */}
       </div>
