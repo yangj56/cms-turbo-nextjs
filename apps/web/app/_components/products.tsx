@@ -90,17 +90,24 @@ export const Products = ({ products }: Props) => {
                 aria-label={`Browse our ${product.title} collection`}
               >
                 <div className="relative aspect-square w-full overflow-hidden">
+                  {/* Placeholder that shows while image is loading */}
+                  <div className="absolute inset-0 animate-pulse bg-gray-200" />
                   <Image
                     src={`${process.env.NEXT_PUBLIC_CMS_URL}${
                       (selectedColorData?.images?.[0]?.image as Media).url
                     }`}
                     alt={`${product.title} in ${selectedColorData?.colorName || ""}`}
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-cover opacity-0 transition-all duration-300 group-hover:scale-105"
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     priority={false}
                     placeholder="blur"
                     blurDataURL={BLUR_DATA}
+                    loading="eager"
+                    onLoadingComplete={(image) => {
+                      // This will make the image visible once loaded
+                      image.classList.replace("opacity-0", "opacity-100");
+                    }}
                   />
                   {/* Translucent overlay that appears on hover */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-0 p-4 text-center text-white opacity-0 transition-all duration-300 group-hover:bg-opacity-60 group-hover:opacity-100">

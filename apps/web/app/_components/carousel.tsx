@@ -107,14 +107,19 @@ export const HomeCarousel = ({ label, data }: Props): JSX.Element => {
                 <div className="group cursor-pointer">
                   <div className="mb-3 aspect-square w-full overflow-hidden rounded-lg">
                     <div className="relative h-full w-full">
+                      <div className="absolute inset-0 animate-pulse bg-gray-200" />
                       <Image
                         src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
                         alt={item.title}
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="object-cover opacity-0 transition-all duration-300 group-hover:scale-105"
                         fill
                         sizes="(max-width: 640px) 85vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                         placeholder="blur"
                         blurDataURL={BLUR_DATA}
+                        loading="eager"
+                        onLoadingComplete={(image) => {
+                          image.classList.replace("opacity-0", "opacity-100");
+                        }}
                       />
                     </div>
                   </div>
