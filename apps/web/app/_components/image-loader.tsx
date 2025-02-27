@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { ImageProps } from "next/image";
 import Image from "next/image";
+import { BLUR_DATA } from "@/lib/contant";
 
 export const ImageLoader = (props: ImageProps) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,7 +17,7 @@ export const ImageLoader = (props: ImageProps) => {
           <div
             className="absolute inset-0 animate-pulse bg-gray-100"
             style={{
-              backgroundImage: props.blurDataURL ? `url(${props.blurDataURL})` : "none",
+              backgroundImage: BLUR_DATA,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -24,7 +25,13 @@ export const ImageLoader = (props: ImageProps) => {
             <span className="sr-only">Loading image...</span>
           </div>
         )}
-        <Image {...props} onLoad={() => setIsLoading(false)} alt={props.alt || "honest lighting"} />
+        <Image
+          {...props}
+          onLoad={() => {
+            setIsLoading(false);
+          }}
+          alt={props.alt || "honest lighting"}
+        />
       </div>
     );
   }
@@ -42,7 +49,7 @@ export const ImageLoader = (props: ImageProps) => {
         <div
           className="absolute inset-0 animate-pulse bg-gray-100"
           style={{
-            backgroundImage: props.blurDataURL ? `url(${props.blurDataURL})` : "none",
+            backgroundImage: BLUR_DATA,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -50,7 +57,14 @@ export const ImageLoader = (props: ImageProps) => {
           <span className="sr-only">Loading image...</span>
         </div>
       )}
-      <Image {...props} onLoad={() => setIsLoading(false)} alt={props.alt || "honest lighting"} />
+      <Image
+        loading="lazy"
+        {...props}
+        onLoad={() => {
+          setIsLoading(false);
+        }}
+        alt={props.alt || "honest lighting"}
+      />
     </div>
   );
 };

@@ -113,9 +113,7 @@ export const ProductDetails = ({ data }: Props) => {
                     alt={`${data.title} in ${currentColor || ""} view ${index + 1}`}
                     fill
                     className="object-cover transition-all duration-300"
-                    placeholder="blur"
-                    blurDataURL={BLUR_DATA}
-                    loading="eager"
+                    priority={true}
                   />
                 </button>
               ),
@@ -142,9 +140,7 @@ export const ProductDetails = ({ data }: Props) => {
                   alt={`${data.title} in ${currentColor || ""}`}
                   fill
                   className="object-cover transition-all duration-300"
-                  priority
-                  placeholder="blur"
-                  blurDataURL={BLUR_DATA}
+                  priority={true}
                 />
               </motion.div>
             )}
@@ -197,9 +193,7 @@ export const ProductDetails = ({ data }: Props) => {
                         alt={`${data.title} in ${currentColor || ""}`}
                         fill
                         className="object-cover transition-all duration-300"
-                        priority
-                        placeholder="blur"
-                        blurDataURL={BLUR_DATA}
+                        priority={true}
                       />
                     </>
                   )}
@@ -234,9 +228,7 @@ export const ProductDetails = ({ data }: Props) => {
                     alt={`${data.title} in ${currentColor || ""} view ${index + 1}`}
                     fill
                     className="object-cover transition-all duration-300"
-                    placeholder="blur"
-                    blurDataURL={BLUR_DATA}
-                    loading="eager"
+                    priority={true}
                   />
                 </button>
               ),
@@ -382,9 +374,7 @@ export const ProductDetails = ({ data }: Props) => {
                                 alt={product.title}
                                 fill
                                 className="object-cover transition-all duration-300"
-                                placeholder="blur"
-                                blurDataURL={BLUR_DATA}
-                                loading="eager"
+                                priority={true}
                               />
                             )}
                           </div>

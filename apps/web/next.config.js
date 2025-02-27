@@ -28,6 +28,7 @@ const nextConfig = {
           pathname: '/api/media/**',
         },
       ],
+      minimumCacheTTL: 60, // Increase cache TTL to reduce requests
     },
   };
 export default nextConfig;

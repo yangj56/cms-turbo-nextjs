@@ -89,7 +89,7 @@ export const Products = ({ products }: Props) => {
                 title={`View ${product.title} products`}
                 aria-label={`Browse our ${product.title} collection`}
               >
-                <div className="relative aspect-square w-full overflow-hidden">
+                <div className="relative aspect-square w-full overflow-hidden rounded-sm">
                   <ImageLoader
                     src={`${process.env.NEXT_PUBLIC_CMS_URL}${
                       (selectedColorData?.images?.[0]?.image as Media).url
@@ -98,13 +98,10 @@ export const Products = ({ products }: Props) => {
                     className="object-cover transition-all duration-300 group-hover:scale-105"
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority={false}
-                    placeholder="blur"
-                    blurDataURL={BLUR_DATA}
-                    loading="eager"
+                    loading="lazy"
                   />
                   {/* Translucent overlay that appears on hover */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-0 p-4 text-center text-white opacity-0 transition-all duration-300 group-hover:bg-opacity-30 group-hover:opacity-100">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-0 p-4 text-center text-white opacity-0 transition-all duration-300 hover:bg-opacity-30 hover:opacity-100">
                     <h3 className="mb-2 text-lg font-bold">{product.title}</h3>
                     {selectedColorData?.colorName && (
                       <p className="text-sm">{selectedColorData.colorName}</p>

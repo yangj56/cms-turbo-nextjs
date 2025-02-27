@@ -106,7 +106,7 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
                   title={`View ${item.title} products`}
                   aria-label={`Browse our ${item.title} collection`}
                 >
-                  <div className="mb-3 aspect-square w-full overflow-hidden rounded-lg">
+                  <div className="mb-3 aspect-square w-full overflow-hidden rounded-sm">
                     <div className="relative h-full w-full">
                       <ImageLoader
                         src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
@@ -114,9 +114,6 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
                         className="object-cover transition-all duration-300 group-hover:scale-105"
                         fill
                         sizes="(max-width: 640px) 85vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        priority={false}
-                        placeholder="blur"
-                        blurDataURL={BLUR_DATA}
                         loading="lazy"
                       />
                     </div>
