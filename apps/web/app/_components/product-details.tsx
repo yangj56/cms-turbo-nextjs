@@ -15,6 +15,7 @@ import {
   CarouselPrevious,
 } from "@/components/carousel";
 import { BLUR_DATA } from "@/lib/contant";
+import { ImageLoader } from "./image-loader";
 
 interface Props {
   data: Product;
@@ -107,18 +108,14 @@ export const ProductDetails = ({ data }: Props) => {
                   }`}
                 >
                   {/* Placeholder that shows while image is loading */}
-                  <div className="absolute inset-0 animate-pulse bg-gray-200" />
-                  <Image
+                  <ImageLoader
                     src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
                     alt={`${data.title} in ${currentColor || ""} view ${index + 1}`}
                     fill
-                    className="object-cover opacity-0 transition-all duration-300"
+                    className="object-cover transition-all duration-300"
                     placeholder="blur"
                     blurDataURL={BLUR_DATA}
                     loading="eager"
-                    onLoadingComplete={(image) => {
-                      image.classList.replace("opacity-0", "opacity-100");
-                    }}
                   />
                 </button>
               ),
@@ -138,20 +135,16 @@ export const ProductDetails = ({ data }: Props) => {
                 className="relative aspect-square overflow-hidden"
               >
                 {/* Placeholder that shows while image is loading */}
-                <div className="absolute inset-0 animate-pulse bg-gray-200" />
-                <Image
+                <ImageLoader
                   src={`${process.env.NEXT_PUBLIC_CMS_URL}${
                     (currentImages[mainImageIndex] as Media).url
                   }`}
                   alt={`${data.title} in ${currentColor || ""}`}
                   fill
-                  className="object-cover opacity-0 transition-all duration-300"
+                  className="object-cover transition-all duration-300"
                   priority
                   placeholder="blur"
                   blurDataURL={BLUR_DATA}
-                  onLoadingComplete={(image) => {
-                    image.classList.replace("opacity-0", "opacity-100");
-                  }}
                 />
               </motion.div>
             )}
@@ -199,19 +192,14 @@ export const ProductDetails = ({ data }: Props) => {
                 <div className="relative aspect-square w-full overflow-hidden rounded-sm">
                   {image && (
                     <>
-                      {/* Placeholder that shows while image is loading */}
-                      <div className="absolute inset-0 animate-pulse bg-gray-200" />
-                      <Image
+                      <ImageLoader
                         src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
                         alt={`${data.title} in ${currentColor || ""}`}
                         fill
-                        className="object-cover opacity-0 transition-all duration-300"
+                        className="object-cover transition-all duration-300"
                         priority
                         placeholder="blur"
                         blurDataURL={BLUR_DATA}
-                        onLoadingComplete={(image) => {
-                          image.classList.replace("opacity-0", "opacity-100");
-                        }}
                       />
                     </>
                   )}
@@ -241,19 +229,14 @@ export const ProductDetails = ({ data }: Props) => {
                       : "hover:ring-1 hover:ring-gray-300"
                   }`}
                 >
-                  {/* Placeholder that shows while image is loading */}
-                  <div className="absolute inset-0 animate-pulse bg-gray-200" />
-                  <Image
+                  <ImageLoader
                     src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
                     alt={`${data.title} in ${currentColor || ""} view ${index + 1}`}
                     fill
-                    className="object-cover opacity-0 transition-all duration-300"
+                    className="object-cover transition-all duration-300"
                     placeholder="blur"
                     blurDataURL={BLUR_DATA}
                     loading="eager"
-                    onLoadingComplete={(image) => {
-                      image.classList.replace("opacity-0", "opacity-100");
-                    }}
                   />
                 </button>
               ),
@@ -392,24 +375,17 @@ export const ProductDetails = ({ data }: Props) => {
                         >
                           <div className="relative h-16 w-16 overflow-hidden rounded">
                             {product.color?.[0]?.images?.[0]?.image && (
-                              <>
-                                {/* Placeholder that shows while image is loading */}
-                                <div className="absolute inset-0 animate-pulse bg-gray-200" />
-                                <Image
-                                  src={`${process.env.NEXT_PUBLIC_CMS_URL}${
-                                    (product.color[0].images[0].image as Media).url
-                                  }`}
-                                  alt={product.title}
-                                  fill
-                                  className="object-cover opacity-0 transition-all duration-300"
-                                  placeholder="blur"
-                                  blurDataURL={BLUR_DATA}
-                                  loading="eager"
-                                  onLoadingComplete={(image) => {
-                                    image.classList.replace("opacity-0", "opacity-100");
-                                  }}
-                                />
-                              </>
+                              <ImageLoader
+                                src={`${process.env.NEXT_PUBLIC_CMS_URL}${
+                                  (product.color[0].images[0].image as Media).url
+                                }`}
+                                alt={product.title}
+                                fill
+                                className="object-cover transition-all duration-300"
+                                placeholder="blur"
+                                blurDataURL={BLUR_DATA}
+                                loading="eager"
+                              />
                             )}
                           </div>
                           <div>

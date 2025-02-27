@@ -1,12 +1,12 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState, type JSX } from "react";
 import type { ProductCategory, Media } from "@/lib/payload-types";
 import Link from "next/link";
 import { BLUR_DATA } from "@/lib/contant";
+import { ImageLoader } from "./image-loader";
 
 type Props = {
   data: ProductCategory[];
@@ -108,22 +108,17 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
                 >
                   <div className="mb-3 aspect-square w-full overflow-hidden rounded-lg">
                     <div className="relative h-full w-full">
-                      <div className="absolute inset-0 animate-pulse bg-gray-200" />
-                      <Image
+                      <ImageLoader
                         src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
                         alt={item.title}
-                        className="object-cover opacity-0 transition-all duration-300 group-hover:scale-105"
+                        className="object-cover transition-all duration-300 group-hover:scale-105"
                         fill
                         sizes="(max-width: 640px) 85vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                         priority={false}
                         placeholder="blur"
                         blurDataURL={BLUR_DATA}
-                        loading="eager"
-                        onLoadingComplete={(image) => {
-                          image.classList.replace("opacity-0", "opacity-100");
-                        }}
+                        loading="lazy"
                       />
-                      {/* Placeholder that shows while image is loading */}
                     </div>
                   </div>
                   <h5 className="text-sm font-normal sm:text-base">{item.title}</h5>

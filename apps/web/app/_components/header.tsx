@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { ProductCategory } from "@/lib/payload-types";
 import { BLUR_DATA } from "@/lib/contant";
+import { ImageLoader } from "./image-loader";
 
 export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,7 +29,7 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
         <nav className="my-4 flex items-center justify-between gap-12 md:justify-start">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <Image
+            <ImageLoader
               src="/honestlighting.png"
               alt="Honest Lighting"
               width={70}
