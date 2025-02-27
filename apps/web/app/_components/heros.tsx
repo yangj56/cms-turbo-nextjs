@@ -5,7 +5,6 @@ import type { JSX } from "react";
 import { useState, useRef, useEffect, useCallback } from "react";
 import type { Hero, Media } from "@/lib/payload-types";
 import { BLUR_DATA } from "@/lib/contant";
-import { ImageLoader } from "./image-loader";
 
 type Props = {
   data: Hero[];
@@ -49,7 +48,7 @@ export const Heros = ({ data }: Props): JSX.Element => {
           className={`absolute h-full w-full transition-all duration-1000 ease-in-out
             ${index === currentIndex ? "opacity-100" : "opacity-0"}`}
         >
-          <ImageLoader
+          <Image
             src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
             alt={item.title}
             className="h-full w-full object-cover"
