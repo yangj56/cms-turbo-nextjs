@@ -1,6 +1,5 @@
 "use client";
 
-import { BLUR_DATA } from "@/lib/contant";
 import type { Media, Product, ProductCategory } from "@/lib/payload-types";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -9,8 +8,8 @@ import { Pagination } from "./pagingation";
 import { useState } from "react";
 import { ImageLoader } from "./image-loader";
 
-const ITEMS_PER_PAGE = 1;
-const ITEMS_PER_PAGE_BIG = 8;
+const ITEMS_PER_PAGE = 24;
+const ITEMS_PER_PAGE_BIG = 48;
 
 type Props = {
   products: Product[];
