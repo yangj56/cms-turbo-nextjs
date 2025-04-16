@@ -100,6 +100,7 @@ export interface ProductCategory {
   id: string;
   title: string;
   sku: string;
+  sequence?: number | null;
   description?: string | null;
   image: string | Media;
   relatedProduct?: {
@@ -134,7 +135,8 @@ export interface Product {
     | null;
   datasheet?: (string | null) | Media;
   instruction?: (string | null) | Media;
-  youtubeUrl: string;
+  youtubeUrl?: string | null;
+  sequence?: number | null;
   specificationOverviewInfo?:
     | {
         data?: string | null;
@@ -333,6 +335,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface ProductCategorySelect<T extends boolean = true> {
   title?: T;
   sku?: T;
+  sequence?: T;
   description?: T;
   image?: T;
   relatedProduct?: T;
@@ -364,6 +367,7 @@ export interface ProductSelect<T extends boolean = true> {
   datasheet?: T;
   instruction?: T;
   youtubeUrl?: T;
+  sequence?: T;
   specificationOverviewInfo?:
     | T
     | {

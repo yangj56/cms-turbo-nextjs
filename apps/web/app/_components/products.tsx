@@ -73,7 +73,7 @@ export const Products = ({ products }: Props) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
+      <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 md:grid-cols-3">
         {currentProducts.map((product) => {
           // Find the selected color or default to the first color
           const selectedColorCode = selectedColors[product.id];
@@ -88,7 +88,7 @@ export const Products = ({ products }: Props) => {
                 title={`View ${product.title} products`}
                 aria-label={`Browse our ${product.title} collection`}
               >
-                <div className="relative aspect-square w-full overflow-hidden rounded-sm">
+                <div className="relative aspect-square w-full overflow-hidden">
                   <ImageLoader
                     src={`${process.env.NEXT_PUBLIC_CMS_URL}${
                       (selectedColorData?.images?.[0]?.image as Media).url
@@ -101,13 +101,13 @@ export const Products = ({ products }: Props) => {
                   />
                   {/* Translucent overlay that appears on hover */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-0 p-4 text-center text-white opacity-0 transition-all duration-300 hover:bg-opacity-30 hover:opacity-100">
-                    <h3 className="mb-2 text-lg font-bold">{product.title}</h3>
+                    <h3 className="mb-2 text-xl font-bold">{product.title}</h3>
                     {selectedColorData?.colorName && (
                       <p className="text-sm">{selectedColorData.colorName}</p>
                     )}
                   </div>
                 </div>
-                <h4 className="mt-4 line-clamp-1 text-sm font-semibold">{product.title}</h4>
+                <h4 className="mt-2 line-clamp-1 text-lg font-semibold">{product.title}</h4>
               </Link>
               <div className="flex flex-row gap-2">
                 {product.color &&

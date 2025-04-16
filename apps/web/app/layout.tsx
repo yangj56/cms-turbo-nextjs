@@ -24,14 +24,34 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>): Promise<React.ReactNode> {
   const data = await findProductHeader();
+
+  const sortedData = data.sort((a, b) => {
+    // If both items have sequence, sort by sequence
+    if (
+      a.sequence !== undefined &&
+      b.sequence !== undefined &&
+      a.sequence !== null &&
+      b.sequence !== null
+    ) {
+      return b.sequence - a.sequence;
+    }
+
+    // If only one has sequence, prioritize the item with sequence
+    if (a.sequence !== undefined) return -1;
+    if (b.sequence !== undefined) return 1;
+
+    // If neither has sequence, sort by another criteria (e.g., title or date)
+    return a.title.localeCompare(b.title);
+  });
+
   return (
     <html lang="en">
       <body>
         <main className={`${poppins.className} font-sans font-normal`}>
           <div className="flex min-h-screen w-full flex-col items-center">
-            <Header data={data} />
+            <Header data={sortedData} />
             <NuqsAdapter>{children}</NuqsAdapter>
-            <Footer data={data} />
+            <Footer data={sortedData} />
           </div>
         </main>
       </body>

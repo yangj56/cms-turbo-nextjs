@@ -26,6 +26,7 @@ export const ProductCategory: CollectionConfig = {
             title: true,
             sku: true,
             relatedProduct: true,
+            sequence: true,
           },
         });
         return Response.json(category.docs);
@@ -92,6 +93,11 @@ export const ProductCategory: CollectionConfig = {
       label: "SKU (no space or special characters *unique)",
       type: "text",
       required: true,
+    },
+    {
+      name: "sequence",
+      type: "number",
+      required: false,
     },
     {
       name: "description",

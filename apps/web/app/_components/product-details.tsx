@@ -4,7 +4,7 @@ import type { Media, Product } from "@/lib/payload-types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDownIcon, PlayCircleIcon, DownloadIcon } from "lucide-react";
+import { ChevronDownIcon, PlayCircleIcon, DownloadIcon, ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import type { CarouselApi } from "@/components/carousel";
 import {
@@ -16,6 +16,8 @@ import {
 } from "@/components/carousel";
 import { BLUR_DATA } from "@/lib/contant";
 import { ImageLoader } from "./image-loader";
+import { Button } from "@/components/button";
+import { cn } from "@/lib/utils";
 
 interface Props {
   data: Product;
@@ -121,7 +123,31 @@ export const ProductDetails = ({ data }: Props) => {
         </div>
 
         {/* Main Image Column */}
-        <div className="basis-[40%]">
+        <div className="relative basis-[40%]">
+          <Button
+            variant={"secondary"}
+            size={"icon"}
+            className={cn("absolute left-1 top-1/2 z-10 h-10 w-10 -translate-y-1/2 rounded-full")}
+            disabled={mainImageIndex === 0}
+            onClick={() => {
+              if (mainImageIndex === 0) return;
+              setMainImageIndex(mainImageIndex - 1);
+            }}
+          >
+            <ArrowLeft className="h-8 w-8" />
+          </Button>
+          <Button
+            variant={"secondary"}
+            size={"icon"}
+            className={cn("absolute right-1 top-1/2 z-10 h-10 w-10 -translate-y-1/2 rounded-full")}
+            disabled={mainImageIndex === currentImages.length - 1}
+            onClick={() => {
+              if (mainImageIndex === currentImages.length - 1) return;
+              setMainImageIndex(mainImageIndex + 1);
+            }}
+          >
+            <ArrowRight className="h-8 w-8" />
+          </Button>
           <AnimatePresence mode="wait">
             {currentImages[mainImageIndex] && (
               <motion.div
@@ -318,7 +344,7 @@ export const ProductDetails = ({ data }: Props) => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span className="text-sm font-medium">YouTube Tutorial</span>
+                  <span>YouTube Tutorial</span>
                   <PlayCircleIcon className="h-5 w-5" />
                 </a>
               )}
@@ -362,7 +388,7 @@ export const ProductDetails = ({ data }: Props) => {
                       return (
                         <Link
                           key={product.id}
-                          href={`/product/${product.sku}`}
+                          href={`/product/${product.id}`}
                           className="group flex items-center gap-4 rounded p-3 hover:bg-gray-50"
                         >
                           <div className="relative h-16 w-16 overflow-hidden rounded">

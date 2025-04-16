@@ -13,9 +13,28 @@ export default async function Page() {
     return notFound();
   }
 
+  const sortedData = data.sort((a, b) => {
+    // If both items have sequence, sort by sequence
+    if (
+      a.sequence !== undefined &&
+      b.sequence !== undefined &&
+      a.sequence !== null &&
+      b.sequence !== null
+    ) {
+      return b.sequence - a.sequence;
+    }
+
+    // If only one has sequence, prioritize the item with sequence
+    if (a.sequence !== undefined) return -1;
+    if (b.sequence !== undefined) return 1;
+
+    // If neither has sequence, sort by another criteria (e.g., title or date)
+    return a.title.localeCompare(b.title);
+  });
+
   return (
     <>
-      <Products products={data} />
+      <Products products={sortedData} />
     </>
   );
 }

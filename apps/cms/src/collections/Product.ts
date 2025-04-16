@@ -77,7 +77,12 @@ export const Product: CollectionConfig = {
     {
       name: "youtubeUrl",
       type: "text",
-      required: true,
+      required: false,
+    },
+    {
+      name: "sequence",
+      type: "number",
+      required: false,
     },
     {
       name: "specificationOverviewInfo",
