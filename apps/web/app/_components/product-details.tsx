@@ -297,19 +297,21 @@ export const ProductDetails = ({ data }: Props) => {
       <div className="container mt-2 flex w-full flex-col md:mt-8">
         {/* Specifications */}
         <div id="specifications" className="flex flex-col gap-12 md:flex-row md:gap-32">
-          <div className="md:basis-2/3">
-            <h4 className="mb-4 text-center text-sm font-medium uppercase">Specifications</h4>
-            <div className="flex flex-col divide-y divide-gray-200">
-              {Object.entries(data.labelValuePairs as Record<string, string>).map(
-                ([key, value]) => (
-                  <div key={key} className="mb-2 flex flex-row pt-2">
-                    <div className="basis-1/2 text-sm md:basis-1/3">{key}</div>
-                    <div className="basis-1/2 text-sm font-light md:basis-2/3">{value}</div>
-                  </div>
-                ),
-              )}
+          {data.labelValuePairs && (
+            <div className="md:basis-2/3">
+              <h4 className="mb-4 text-center text-sm font-medium uppercase">Specifications</h4>
+              <div className="flex flex-col divide-y divide-gray-200">
+                {Object.entries(data.labelValuePairs as Record<string, string>).map(
+                  ([key, value]) => (
+                    <div key={key} className="mb-2 flex flex-row pt-2">
+                      <div className="basis-1/2 text-sm md:basis-1/3">{key}</div>
+                      <div className="basis-1/2 text-sm font-light md:basis-2/3">{value}</div>
+                    </div>
+                  ),
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Downloads */}
           <div className="md:basis-1/3">

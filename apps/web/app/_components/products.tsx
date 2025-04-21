@@ -79,7 +79,10 @@ export const Products = ({ products }: Props) => {
           const selectedColorCode = selectedColors[product.id];
           const selectedColorData =
             product.color?.find((c) => c.colorCode === selectedColorCode) || product.color?.[0];
-
+          const image = selectedColorData?.images?.[0]?.image;
+          if (!image) {
+            return null;
+          }
           return (
             <div key={product.id} className="group">
               <Link
