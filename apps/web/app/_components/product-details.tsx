@@ -231,6 +231,7 @@ export const ProductDetails = ({ data }: Props) => {
             <div className="mt-4 flex gap-2">
               {data.color.map(
                 (color) =>
+                  color &&
                   color.colorName &&
                   color.colorCode && (
                     <button
@@ -401,6 +402,7 @@ export const ProductDetails = ({ data }: Props) => {
                   <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3">
                     {data.compatibleProducts.map((item) => {
                       const product = item.product as Product;
+                      if (!product) return null;
                       const image = product.color?.[0]?.images?.[0]?.image as Media;
                       if (
                         !product ||
@@ -412,8 +414,9 @@ export const ProductDetails = ({ data }: Props) => {
                         !product.color[0].images[0].image ||
                         !image ||
                         !image.url
-                      )
+                      ) {
                         return null;
+                      }
 
                       return (
                         <Link
