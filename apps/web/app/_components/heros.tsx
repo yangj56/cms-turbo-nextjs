@@ -12,6 +12,8 @@ type Props = {
 
 export const Heros = ({ data }: Props): JSX.Element => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const startTimer = useCallback(() => {
@@ -52,9 +54,19 @@ export const Heros = ({ data }: Props): JSX.Element => {
             className={`absolute h-full w-full transition-all duration-1000 ease-in-out
             ${index === currentIndex ? "opacity-100" : "opacity-0"}`}
           >
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
+                <div className="h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-gray-600">
+                  <span className="sr-only">Loading image...</span>
+                </div>
+              </div>
+            )}
             <Image
               src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
               alt={item.title}
+              onLoad={() => {
+                setIsLoading(false);
+              }}
               className="h-full w-full object-cover"
               width={(item.image as Media).width || 1920}
               height={(item.image as Media).height || 1080}

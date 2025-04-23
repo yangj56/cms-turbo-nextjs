@@ -96,10 +96,11 @@ export const Products = ({ products }: Props) => {
           const selectedColorCode = selectedColors[product.id];
           const selectedColorData =
             product.color?.find((c) => c.colorCode === selectedColorCode) || product.color?.[0];
-          const image = selectedColorData?.images?.[0]?.image as Media;
+          let image = selectedColorData?.images?.[0]?.image as Media;
           if (!image) {
-            return null;
+            image = product.color?.[0]?.images?.[0]?.image as Media;
           }
+
           return (
             <div key={product.id}>
               <Link

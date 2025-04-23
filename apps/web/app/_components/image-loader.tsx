@@ -14,15 +14,10 @@ export const ImageLoader = (props: ImageProps) => {
     return (
       <div className="relative h-full w-full">
         {isLoading && (
-          <div
-            className="absolute inset-0 animate-pulse bg-gray-100"
-            style={{
-              backgroundImage: BLUR_DATA,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            <span className="sr-only">Loading image...</span>
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-gray-600">
+              <span className="sr-only">Loading image...</span>
+            </div>
           </div>
         )}
         <Image
@@ -46,15 +41,10 @@ export const ImageLoader = (props: ImageProps) => {
       }}
     >
       {isLoading && (
-        <div
-          className="absolute inset-0 animate-pulse bg-gray-100"
-          style={{
-            backgroundImage: BLUR_DATA,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <span className="sr-only">Loading image...</span>
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-gray-600">
+            <span className="sr-only">Loading image...</span>
+          </div>
         </div>
       )}
       <Image
