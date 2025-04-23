@@ -16,7 +16,7 @@ export async function findProducts(page = 1, limit = PAGINATION_LIMIT): Promise<
     }
 
     const data = (await response.json()) as PaginatedDocs<Product>;
-    return data.docs;
+    return data.docs ?? [];
   } catch (error) {
     console.error("Error fetching products:", error);
     return [];

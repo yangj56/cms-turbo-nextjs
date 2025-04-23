@@ -63,6 +63,7 @@ export const ProductDetails = ({ data }: Props) => {
   };
 
   const displayOverview = () => {
+    if (!data.specificationOverviewInfo || data.specificationOverviewInfo.length === 0) return null;
     return (
       <div className="mt-4 rounded border p-4">
         <h5 className="text-sm uppercase">Spec Overview</h5>
@@ -93,61 +94,82 @@ export const ProductDetails = ({ data }: Props) => {
     );
   };
 
+  const displayDownloads = () => {
+    if (!data.datasheet && !data.instruction && !data.youtubeUrl) return null;
+    return (
+      <div className="md:basis-1/3">
+        <h4 className="mb-4 text-center text-sm font-medium uppercase">Downloads</h4>
+        <div className="space-y-2">
+          {data.datasheet && (
+            <a
+              href={`${process.env.NEXT_PUBLIC_CMS_URL}${(data.datasheet as Media).url}`}
+              className="flex items-center justify-between rounded border p-3 hover:bg-gray-50"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Datasheet</span>
+              <DownloadIcon className="h-5 w-5" />
+            </a>
+          )}
+          {data.instruction && (
+            <a
+              href={`${process.env.NEXT_PUBLIC_CMS_URL}${(data.instruction as Media).url}`}
+              className="flex items-center justify-between rounded border p-3 hover:bg-gray-50"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Instruction</span>
+              <DownloadIcon className="h-5 w-5" />
+            </a>
+          )}
+          {data.youtubeUrl && (
+            <a
+              href={data.youtubeUrl}
+              className="flex items-center justify-between rounded border p-3 hover:bg-gray-50"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>YouTube Tutorial</span>
+              <PlayCircleIcon className="h-5 w-5" />
+            </a>
+          )}
+        </div>
+      </div>
+    );
+  };
   return (
     <div className="flex w-full flex-col items-center bg-[#FFFBF5]">
       <div className="my-8 hidden w-full flex-row gap-8 px-8 md:flex">
         <div className="flex basis-[10%] flex-col gap-4">
-          {currentImages.map(
-            (image, index) =>
-              image && (
-                <button
-                  key={index}
-                  onClick={() => setMainImageIndex(index)}
-                  className={`relative aspect-square overflow-hidden rounded-sm transition-shadow duration-200 ${
-                    mainImageIndex === index
-                      ? "ring-muted-foreground-500 ring-1 ring-offset-1"
-                      : "hover:ring-1 hover:ring-gray-300"
-                  }`}
-                >
-                  {/* Placeholder that shows while image is loading */}
-                  <ImageLoader
-                    src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
-                    alt={`${data.title} in ${currentColor || ""} view ${index + 1}`}
-                    fill
-                    className="object-cover transition-all duration-300"
-                    priority={true}
-                  />
-                </button>
-              ),
-          )}
+          {currentImages.map((image, index) => {
+            if (!image) {
+              return null;
+            }
+            return (
+              <button
+                key={index}
+                onClick={() => setMainImageIndex(index)}
+                className={`relative aspect-square overflow-hidden rounded-sm transition-shadow duration-200 ${
+                  mainImageIndex === index
+                    ? "ring-muted-foreground-500 ring-1 ring-offset-1"
+                    : "hover:ring-1 hover:ring-gray-300"
+                }`}
+              >
+                {/* Placeholder that shows while image is loading */}
+                <ImageLoader
+                  src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
+                  alt={`${data.title} in ${currentColor || ""} view ${index + 1}`}
+                  fill
+                  className="object-cover transition-all duration-300"
+                  priority={true}
+                />
+              </button>
+            );
+          })}
         </div>
 
         {/* Main Image Column */}
         <div className="relative basis-[40%]">
-          <Button
-            variant={"secondary"}
-            size={"icon"}
-            className={cn("absolute left-1 top-1/2 z-10 h-10 w-10 -translate-y-1/2 rounded-full")}
-            disabled={mainImageIndex === 0}
-            onClick={() => {
-              if (mainImageIndex === 0) return;
-              setMainImageIndex(mainImageIndex - 1);
-            }}
-          >
-            <ArrowLeft className="h-8 w-8" />
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"icon"}
-            className={cn("absolute right-1 top-1/2 z-10 h-10 w-10 -translate-y-1/2 rounded-full")}
-            disabled={mainImageIndex === currentImages.length - 1}
-            onClick={() => {
-              if (mainImageIndex === currentImages.length - 1) return;
-              setMainImageIndex(mainImageIndex + 1);
-            }}
-          >
-            <ArrowRight className="h-8 w-8" />
-          </Button>
           <AnimatePresence mode="wait">
             {currentImages[mainImageIndex] && (
               <motion.div
@@ -158,6 +180,34 @@ export const ProductDetails = ({ data }: Props) => {
                 transition={{ duration: 0.1 }}
                 className="relative aspect-square overflow-hidden"
               >
+                <Button
+                  variant={"secondary"}
+                  size={"icon"}
+                  className={cn(
+                    "absolute left-1 top-1/2 z-10 h-10 w-10 -translate-y-1/2 rounded-full",
+                  )}
+                  disabled={mainImageIndex === 0}
+                  onClick={() => {
+                    if (mainImageIndex === 0) return;
+                    setMainImageIndex(mainImageIndex - 1);
+                  }}
+                >
+                  <ArrowLeft className="h-8 w-8" />
+                </Button>
+                <Button
+                  variant={"secondary"}
+                  size={"icon"}
+                  className={cn(
+                    "absolute right-1 top-1/2 z-10 h-10 w-10 -translate-y-1/2 rounded-full",
+                  )}
+                  disabled={mainImageIndex === currentImages.length - 1}
+                  onClick={() => {
+                    if (mainImageIndex === currentImages.length - 1) return;
+                    setMainImageIndex(mainImageIndex + 1);
+                  }}
+                >
+                  <ArrowRight className="h-8 w-8" />
+                </Button>
                 {/* Placeholder that shows while image is loading */}
                 <ImageLoader
                   src={`${process.env.NEXT_PUBLIC_CMS_URL}${
@@ -209,23 +259,24 @@ export const ProductDetails = ({ data }: Props) => {
       <div className="mx-4 my-8 flex flex-col gap-8 md:hidden">
         <Carousel className="w-full" setApi={setApi}>
           <CarouselContent>
-            {currentImages.map((image, index) => (
-              <CarouselItem key={index}>
-                <div className="relative aspect-square w-full overflow-hidden rounded-sm">
-                  {image && (
-                    <>
-                      <ImageLoader
-                        src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
-                        alt={`${data.title} in ${currentColor || ""}`}
-                        fill
-                        className="object-cover transition-all duration-300"
-                        priority={true}
-                      />
-                    </>
-                  )}
-                </div>
-              </CarouselItem>
-            ))}
+            {currentImages.map((image, index) => {
+              if (!image) {
+                return null;
+              }
+              return (
+                <CarouselItem key={index}>
+                  <div className="relative aspect-square w-full overflow-hidden rounded-sm">
+                    <ImageLoader
+                      src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
+                      alt={`${data.title} in ${currentColor || ""}`}
+                      fill
+                      className="object-cover transition-all duration-300"
+                      priority={true}
+                    />
+                  </div>
+                </CarouselItem>
+              );
+            })}
           </CarouselContent>
           <CarouselPrevious className="left-2" />
           <CarouselNext className="right-2" />
@@ -233,32 +284,34 @@ export const ProductDetails = ({ data }: Props) => {
 
         {/* Mobile Thumbnails */}
         <div className="mt-4 grid grid-cols-4 gap-4">
-          {currentImages.map(
-            (image, index) =>
-              image && (
-                <button
-                  key={index}
-                  onClick={() => {
-                    if (!api) return;
-                    api.scrollTo(index);
-                    setMainImageIndex(index);
-                  }}
-                  className={`relative aspect-square overflow-hidden rounded-sm transition-shadow duration-200 ${
-                    mainImageIndex === index
-                      ? "ring-muted-foreground-500 ring-1 ring-offset-1"
-                      : "hover:ring-1 hover:ring-gray-300"
-                  }`}
-                >
-                  <ImageLoader
-                    src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
-                    alt={`${data.title} in ${currentColor || ""} view ${index + 1}`}
-                    fill
-                    className="object-cover transition-all duration-300"
-                    priority={true}
-                  />
-                </button>
-              ),
-          )}
+          {currentImages.map((image, index) => {
+            if (!image) {
+              return null;
+            }
+            return (
+              <button
+                key={index}
+                onClick={() => {
+                  if (!api) return;
+                  api.scrollTo(index);
+                  setMainImageIndex(index);
+                }}
+                className={`relative aspect-square overflow-hidden rounded-sm transition-shadow duration-200 ${
+                  mainImageIndex === index
+                    ? "ring-muted-foreground-500 ring-1 ring-offset-1"
+                    : "hover:ring-1 hover:ring-gray-300"
+                }`}
+              >
+                <ImageLoader
+                  src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
+                  alt={`${data.title} in ${currentColor || ""} view ${index + 1}`}
+                  fill
+                  className="object-cover transition-all duration-300"
+                  priority={true}
+                />
+              </button>
+            );
+          })}
         </div>
 
         <div>
@@ -314,49 +367,12 @@ export const ProductDetails = ({ data }: Props) => {
           )}
 
           {/* Downloads */}
-          <div className="md:basis-1/3">
-            <h4 className="mb-4 text-center text-sm font-medium uppercase">Downloads</h4>
-            <div className="space-y-2">
-              {data.datasheet && (
-                <a
-                  href={`${process.env.NEXT_PUBLIC_CMS_URL}${(data.datasheet as Media).url}`}
-                  className="flex items-center justify-between rounded border p-3 hover:bg-gray-50"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span>Datasheet</span>
-                  <DownloadIcon className="h-5 w-5" />
-                </a>
-              )}
-              {data.instruction && (
-                <a
-                  href={`${process.env.NEXT_PUBLIC_CMS_URL}${(data.instruction as Media).url}`}
-                  className="flex items-center justify-between rounded border p-3 hover:bg-gray-50"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span>Instruction</span>
-                  <DownloadIcon className="h-5 w-5" />
-                </a>
-              )}
-              {data.youtubeUrl && (
-                <a
-                  href={data.youtubeUrl}
-                  className="flex items-center justify-between rounded border p-3 hover:bg-gray-50"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span>YouTube Tutorial</span>
-                  <PlayCircleIcon className="h-5 w-5" />
-                </a>
-              )}
-            </div>
-          </div>
+          {displayDownloads()}
         </div>
       </div>
 
       {/* Compatible Products */}
-      {data.compatibleProducts && (
+      {data.compatibleProducts && data.compatibleProducts.length > 0 && (
         <div className="mb-8 mt-8 flex w-full flex-col items-center justify-center gap-4">
           <hr className="w-full" />
           <div className="container">
@@ -385,7 +401,19 @@ export const ProductDetails = ({ data }: Props) => {
                   <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3">
                     {data.compatibleProducts.map((item) => {
                       const product = item.product as Product;
-                      if (!product) return null;
+                      const image = product.color?.[0]?.images?.[0]?.image as Media;
+                      if (
+                        !product ||
+                        !product.title ||
+                        !product.color ||
+                        !product.color[0] ||
+                        !product.color[0].images ||
+                        !product.color[0].images[0] ||
+                        !product.color[0].images[0].image ||
+                        !image ||
+                        !image.url
+                      )
+                        return null;
 
                       return (
                         <Link
@@ -394,17 +422,13 @@ export const ProductDetails = ({ data }: Props) => {
                           className="group flex items-center gap-4 rounded p-3 hover:bg-gray-50"
                         >
                           <div className="relative h-16 w-16 overflow-hidden rounded">
-                            {product.color?.[0]?.images?.[0]?.image && (
-                              <ImageLoader
-                                src={`${process.env.NEXT_PUBLIC_CMS_URL}${
-                                  (product.color[0].images[0].image as Media).url
-                                }`}
-                                alt={product.title}
-                                fill
-                                className="object-cover transition-all duration-300"
-                                priority={true}
-                              />
-                            )}
+                            <ImageLoader
+                              src={`${process.env.NEXT_PUBLIC_CMS_URL}${image.url}`}
+                              alt={product.title}
+                              fill
+                              className="object-cover transition-all duration-300"
+                              priority={true}
+                            />
                           </div>
                           <div>
                             <div className="text-sm font-medium">{product.title}</div>

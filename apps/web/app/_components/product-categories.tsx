@@ -65,9 +65,12 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
       <div className="mb-8 flex w-full items-center justify-between">
         <div>
           <h3>Shop by Category</h3>
-          <a href="/products" className="mt-1 inline-block text-sm hover:underline">
+          <Link
+            href="/products"
+            className="relative mt-1 inline-block text-sm after:absolute after:bottom-[-4px] after:left-0 after:h-[1px] after:w-0 after:bg-black after:transition-all after:duration-300 hover:after:w-full"
+          >
             Explore all products &gt;
-          </a>
+          </Link>
         </div>
         {shouldShowNavigation && (
           <div className="flex gap-2">
@@ -94,35 +97,42 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
       {/* Carousel */}
       <div className="w-full overflow-hidden" ref={emblaRef}>
         <div className="-mr-4 ml-0 flex sm:-mr-6">
-          {data.map((item) => (
-            <div
-              key={item.id}
-              className="min-w-0 flex-[0_0_85%] sm:flex-[0_0_50%] md:flex-[0_0_33.333%] lg:flex-[0_0_25%]"
-            >
-              <div className="mr-4 sm:mr-6">
-                <Link
-                  href={`/products?collection=${item.sku}`}
-                  className="group block"
-                  title={`View ${item.title} products`}
-                  aria-label={`Browse our ${item.title} collection`}
-                >
-                  <div className="mb-3 aspect-square w-full overflow-hidden rounded-sm">
-                    <div className="relative h-full w-full">
-                      <ImageLoader
-                        src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
-                        alt={item.title}
-                        className="object-cover transition-all duration-300 group-hover:scale-105"
-                        fill
-                        sizes="(max-width: 640px) 85vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        loading="lazy"
-                      />
+          {data.map((item) => {
+            if (!item || !item.image) {
+              return null;
+            }
+            return (
+              <div
+                key={item.id}
+                className="min-w-0 flex-[0_0_85%] sm:flex-[0_0_50%] md:flex-[0_0_33.333%] lg:flex-[0_0_25%]"
+              >
+                <div className="mr-4 sm:mr-6">
+                  <Link
+                    href={`/products?collection=${item.sku}`}
+                    className="group block"
+                    title={`View ${item.title} products`}
+                    aria-label={`Browse our ${item.title} collection`}
+                  >
+                    <div className="mb-3 aspect-square w-full overflow-hidden rounded-sm">
+                      <div className="relative h-full w-full">
+                        <ImageLoader
+                          src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
+                          alt={item.title}
+                          className="object-cover transition-all duration-1000 group-hover:scale-110"
+                          fill
+                          sizes="(max-width: 640px) 85vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                          loading="lazy"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <h5 className="text-sm font-normal sm:text-base">{item.title}</h5>
-                </Link>
+                    <h5 className="relative inline-block text-sm font-normal after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full sm:text-base">
+                      {item.title}
+                    </h5>
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ export async function findProductCategories(
     }
 
     const data = (await response.json()) as PaginatedDocs<ProductCategory>;
-    return data.docs;
+    return data.docs ?? [];
   } catch (error) {
     console.error("Error fetching product categories:", error);
     return [];

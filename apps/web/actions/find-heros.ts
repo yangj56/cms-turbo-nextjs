@@ -14,7 +14,7 @@ export async function findHeros(page = 1, limit = PAGINATION_LIMIT): Promise<Her
     }
 
     const data = (await response.json()) as PaginatedDocs<Hero>;
-    return data.docs;
+    return data.docs ?? [];
   } catch (error) {
     console.error("Error fetching heroes:", error);
     return [];

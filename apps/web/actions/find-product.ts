@@ -11,7 +11,8 @@ export async function findProduct(id: string): Promise<Product | null> {
       throw new Error(`Failed to fetch product: ${response.statusText}`);
     }
 
-    return (await response.json()) as Product;
+    const result = (await response.json()) as Product;
+    return result || null;
   } catch (error) {
     console.error("Error fetching product:", error);
     return null;

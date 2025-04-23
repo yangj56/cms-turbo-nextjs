@@ -14,7 +14,7 @@ export async function findFeatures(page = 1, limit = PAGINATION_LIMIT): Promise<
     }
 
     const data = (await response.json()) as PaginatedDocs<Feature>;
-    return data.docs;
+    return data.docs ?? [];
   } catch (error) {
     console.error("Error fetching features:", error);
     return [];

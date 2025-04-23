@@ -31,8 +31,8 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
             <Image
               src="/honestlighting.png"
               alt="Honest Lighting"
-              width={70}
-              height={70}
+              width={50}
+              height={50}
               className="rounded-full"
               placeholder="blur"
               blurDataURL={BLUR_DATA}
@@ -45,7 +45,7 @@ export const Header = ({ data }: { data: ProductCategory[] }): JSX.Element => {
               <Link
                 key={category.id}
                 href={`/products?collection=${category.sku}`}
-                className="text-base font-semibold hover:opacity-80"
+                className="relative text-base font-normal after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 after:ease-in-out hover:opacity-100 hover:after:w-full"
               >
                 {category.title}
               </Link>

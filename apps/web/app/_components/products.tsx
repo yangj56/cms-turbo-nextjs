@@ -53,38 +53,55 @@ export const Products = ({ products }: Props) => {
   return (
     <div className="container mx-auto mb-8 mt-4 px-4">
       <div className="mb-6 flex items-center justify-between">
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-black">
           Displaying {offset + 1} - {Math.min(offset + limit, filteredProducts.length)} of{" "}
           {filteredProducts.length} results
         </p>
         <div className="flex items-center gap-2">
           <span className="text-sm">View per page:</span>
-          <select
-            className="rounded border p-1 text-sm"
-            onChange={(e) => {
-              e.preventDefault();
-              setTabParams({ limit: parseInt(e.target.value), page: 0 });
-            }}
-            value={limit}
-          >
-            <option value={ITEMS_PER_PAGE}>{ITEMS_PER_PAGE}</option>
-            <option value={ITEMS_PER_PAGE_BIG}>{ITEMS_PER_PAGE_BIG}</option>
-          </select>
+          <div className="relative">
+            <select
+              className="appearance-none bg-transparent pr-6 text-sm focus:outline-none"
+              onChange={(e) => {
+                e.preventDefault();
+                setTabParams({ limit: parseInt(e.target.value), page: 0 });
+              }}
+              value={limit}
+            >
+              <option value={ITEMS_PER_PAGE}>{ITEMS_PER_PAGE}</option>
+              <option value={ITEMS_PER_PAGE_BIG}>{ITEMS_PER_PAGE_BIG}</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
+              <svg
+                className="h-4 w-4 text-black"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="3"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 md:grid-cols-3">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-3">
         {currentProducts.map((product) => {
           // Find the selected color or default to the first color
           const selectedColorCode = selectedColors[product.id];
           const selectedColorData =
             product.color?.find((c) => c.colorCode === selectedColorCode) || product.color?.[0];
-          const image = selectedColorData?.images?.[0]?.image;
+          const image = selectedColorData?.images?.[0]?.image as Media;
           if (!image) {
             return null;
           }
           return (
-            <div key={product.id} className="group">
+            <div key={product.id}>
               <Link
                 href={`/product/${product.id}`}
                 className="group block"
@@ -92,16 +109,16 @@ export const Products = ({ products }: Props) => {
                 aria-label={`Browse our ${product.title} collection`}
               >
                 <div className="relative aspect-square w-full overflow-hidden">
-                  <ImageLoader
-                    src={`${process.env.NEXT_PUBLIC_CMS_URL}${
-                      (selectedColorData?.images?.[0]?.image as Media).url
-                    }`}
-                    alt={`${product.title} in ${selectedColorData?.colorName || ""}`}
-                    className="object-cover transition-all duration-300 group-hover:scale-105"
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    loading="lazy"
-                  />
+                  <div key={image.url} className="absolute inset-0 animate-fadeIn">
+                    <ImageLoader
+                      src={`${process.env.NEXT_PUBLIC_CMS_URL}${image.url}`}
+                      alt={`${product.title} in ${selectedColorData?.colorName || ""}`}
+                      className="object-cover transition-all duration-1000 group-hover:scale-110"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      loading="lazy"
+                    />
+                  </div>
                   {/* Translucent overlay that appears on hover */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-0 p-4 text-center text-white opacity-0 transition-all duration-300 hover:bg-opacity-30 hover:opacity-100">
                     <h3 className="mb-2 text-xl font-bold">{product.title}</h3>
@@ -127,7 +144,7 @@ export const Products = ({ products }: Props) => {
                           }
                         }}
                         className={cn(
-                          "border-grey mt-2 h-8 w-8 rounded border",
+                          "border-grey mt-2 h-6 w-6 border",
                           selectedColors[product.id] === color.colorCode &&
                             "ring-1 ring-gray-300 ring-offset-1",
                           index === 0 &&

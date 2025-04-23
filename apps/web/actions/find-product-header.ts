@@ -10,7 +10,8 @@ export async function findProductHeader(): Promise<ProductCategory[]> {
     if (!response.ok) {
       throw new Error(`Failed to fetch product header: ${response.statusText}`);
     }
-    return (await response.json()) as ProductCategory[];
+    const result = (await response.json()) as ProductCategory[];
+    return result ?? [];
   } catch (error) {
     console.error("Error fetching product header:", error);
     return [];

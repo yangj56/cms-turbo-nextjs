@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Poppins } from "next/font/google";
+import { Nunito } from "next/font/google";
 
 import type { Metadata } from "next";
 import { Footer } from "./_components/footer";
@@ -7,10 +7,10 @@ import { Header } from "./_components/header";
 import { findProductHeader } from "@/actions/find-product-header";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
-const poppins = Poppins({
+const nunito = Nunito({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-poppins",
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-nunito",
 });
 
 export const metadata: Metadata = {
@@ -47,7 +47,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <main className={`${poppins.className} font-sans font-normal`}>
+        <main className={`${nunito.className} font-sans font-normal`}>
           <div className="flex min-h-screen w-full flex-col items-center">
             <Header data={sortedData} />
             <NuqsAdapter>{children}</NuqsAdapter>

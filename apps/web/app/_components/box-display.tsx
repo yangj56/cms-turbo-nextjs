@@ -47,6 +47,9 @@ const BoxItem = ({
     createdAt: string;
   };
 }) => {
+  if (!item || !item.image) {
+    return null;
+  }
   const content = (
     <div className="aspect-square w-full overflow-hidden rounded-sm">
       <div className="relative h-full w-full">
