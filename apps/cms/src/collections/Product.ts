@@ -20,27 +20,34 @@ export const Product: CollectionConfig = {
       method: "get",
       handler: async (req) => {
         const { query, page, limit } = req.query;
-        console.log(`1query`, query);
-        console.log(`1page`, page);
-        console.log(`limit`, limit);
+
+        // Convert query parameters to proper types
+        const searchQuery = Array.isArray(query) ? query[0] : query;
+        const pageNumber = Array.isArray(page)
+          ? parseInt(page[0], 10)
+          : parseInt(page as string, 10);
+        const limitNumber = Array.isArray(limit)
+          ? parseInt(limit[0], 10)
+          : parseInt(limit as string, 10);
+
         const searchResults = await req.payload.find({
           collection: "product",
           where: {
             and: [
               {
                 title: {
-                  like: query as string,
+                  like: searchQuery as string,
                 },
               },
               {
                 sku: {
-                  like: query as string,
+                  like: searchQuery as string,
                 },
               },
             ],
           },
-          limit: limit as number,
-          page: page as number,
+          limit: isNaN(limitNumber) ? 10 : limitNumber,
+          page: isNaN(pageNumber) ? 1 : pageNumber,
           sort: ["sequence:desc", "title:asc"],
           select: {
             title: true,
@@ -51,6 +58,7 @@ export const Product: CollectionConfig = {
             color: true,
           },
         });
+
         return Response.json(searchResults);
       },
     },

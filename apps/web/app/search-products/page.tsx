@@ -3,13 +3,19 @@ import type { Product } from "@/lib/payload-types";
 import { SearchProducts } from "../_components/search-products";
 import { queryParamToNumber, queryParamToString } from "@/lib/utils";
 
-export default async function Page(params: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
-  const result = await params.searchParams;
-  const query = queryParamToString(result.query);
-  const queryPage = queryParamToNumber(result.page);
-  const queryLimit = queryParamToNumber(result.limit);
+type PageProps = {
+  searchParams: Promise<{
+    query: string | string[] | undefined;
+    page: string | string[] | undefined;
+    limit: string | string[] | undefined;
+  }>;
+};
+
+export default async function Page({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const query = queryParamToString(params.query);
+  const queryPage = queryParamToNumber(params.page);
+  const queryLimit = queryParamToNumber(params.limit);
 
   const data = await searchProducts(queryPage, query, queryLimit);
   let checkData: Product[] = [];
