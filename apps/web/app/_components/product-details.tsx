@@ -138,7 +138,7 @@ export const ProductDetails = ({ data }: Props) => {
     );
   };
   return (
-    <div className="flex w-full flex-col items-center bg-[#FFFBF5]">
+    <div className="flex w-full flex-col items-center bg-white">
       <div className="my-8 hidden w-full flex-row gap-8 px-8 md:flex">
         <div className="flex basis-[10%] flex-col gap-4">
           {currentImages.map((image, index) => {

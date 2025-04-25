@@ -2,15 +2,15 @@ import "./globals.css";
 import { Nunito } from "next/font/google";
 
 import type { Metadata } from "next";
-import { Footer } from "./_components/footer";
-import { Header } from "./_components/header";
 import { findProductHeader } from "@/actions/find-product-header";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { MyProvider } from "@/context";
 
 const nunito = Nunito({
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-nunito",
+  variable: "--font-nunito-sans", // optional for Tailwind
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -47,11 +47,11 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <main className={`${nunito.className} font-sans font-normal`}>
-          <div className="flex min-h-screen w-full flex-col items-center">
-            <Header data={sortedData} />
-            <NuqsAdapter>{children}</NuqsAdapter>
-            <Footer data={sortedData} />
+        <main className={`${nunito.className} font-normal`}>
+          <div className="relative min-h-screen w-full">
+            <MyProvider value={sortedData}>
+              <NuqsAdapter>{children}</NuqsAdapter>
+            </MyProvider>
           </div>
         </main>
       </body>

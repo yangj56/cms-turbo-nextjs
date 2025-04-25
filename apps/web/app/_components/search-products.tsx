@@ -1,47 +1,28 @@
 "use client";
 
-import type { Media, Product, ProductCategory } from "@/lib/payload-types";
+import type { Media, Product } from "@/lib/payload-types";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { parseAsInteger, parseAsString, useQueryStates } from "nuqs";
-import { Pagination } from "./pagingation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ImageLoader } from "./image-loader";
+import { Pagination } from "./pagingation";
 
 const ITEMS_PER_PAGE = 24;
 const ITEMS_PER_PAGE_BIG = 48;
 
 type Props = {
   products: Product[];
+  offset?: number;
+  limit?: number;
+  total?: number;
 };
 
-export const Products = ({ products }: Props) => {
-  const [tabParams, setTabParams] = useQueryStates(
-    {
-      page: parseAsInteger.withDefault(0),
-      limit: parseAsInteger.withDefault(ITEMS_PER_PAGE),
-      collection: parseAsString,
-    },
-    {
-      history: "push",
-    },
-  );
-  const { collection, limit, page } = tabParams;
-
-  const offset = page * limit;
-  let filteredProducts: Product[] = products;
-  if (collection) {
-    filteredProducts = products.filter((product) => {
-      return (product.category as ProductCategory).sku === collection;
-    });
-  }
-  const currentProducts = filteredProducts.slice(offset, offset + limit);
-  const pageCount = Math.ceil(filteredProducts.length / limit);
-
-  // Add state for selected colors for each product
+export const SearchProducts = ({ products, offset, limit, total }: Props) => {
   const [selectedColors, setSelectedColors] = useState<Record<string, string>>({});
+  const router = useRouter();
+  const totalPages = total && limit ? Math.ceil(total / limit) : 0;
 
-  // Function to handle color selection
   const handleColorSelect = (productId: string, colorCode: string) => {
     setSelectedColors((prev) => ({
       ...prev,
@@ -53,8 +34,7 @@ export const Products = ({ products }: Props) => {
     <div className="container mx-auto mb-8 mt-4 px-4">
       <div className="mb-6 flex items-center justify-between">
         <p className="text-sm text-black">
-          Displaying {offset + 1} - {Math.min(offset + limit, filteredProducts.length)} of{" "}
-          {filteredProducts.length} results
+          Displaying {offset || 0 + 1} - {products.length} of {total} results
         </p>
         <div className="flex items-center gap-2">
           <span className="text-sm">View per page:</span>
@@ -63,7 +43,7 @@ export const Products = ({ products }: Props) => {
               className="appearance-none bg-transparent pr-6 text-sm focus:outline-none"
               onChange={(e) => {
                 e.preventDefault();
-                setTabParams({ limit: parseInt(e.target.value), page: 0 });
+                router.push(`/search-products?limit=${e.target.value}&page=1`);
               }}
               value={limit}
             >
@@ -90,7 +70,7 @@ export const Products = ({ products }: Props) => {
       </div>
 
       <div className="grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-3">
-        {currentProducts.map((product) => {
+        {products.map((product) => {
           // Find the selected color or default to the first color
           const selectedColorCode = selectedColors[product.id];
           const selectedColorData =
@@ -165,16 +145,9 @@ export const Products = ({ products }: Props) => {
 
       <div className="mt-8">
         <Pagination
-          pageCount={pageCount}
+          pageCount={totalPages}
           onPageChange={({ selected }) =>
-            setTabParams(
-              {
-                page: selected,
-              },
-              {
-                scroll: true,
-              },
-            )
+            router.push(`/search-products?limit=${limit}&page=${selected}`)
           }
         />
       </div>

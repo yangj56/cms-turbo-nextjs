@@ -5,6 +5,7 @@ import type { JSX } from "react";
 import { useState, useRef, useEffect, useCallback } from "react";
 import type { Hero, Media } from "@/lib/payload-types";
 import { BLUR_DATA } from "@/lib/contant";
+import { Play, Pause } from "lucide-react";
 
 type Props = {
   data: Hero[];
@@ -13,6 +14,8 @@ type Props = {
 export const Heros = ({ data }: Props): JSX.Element => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -28,26 +31,27 @@ export const Heros = ({ data }: Props): JSX.Element => {
     }, 10000);
   }, [data.length]);
 
-  useEffect(() => {
-    startTimer();
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [startTimer]);
+  // useEffect(() => {
+  //   startTimer();
+  //   return () => {
+  //     if (timerRef.current) {
+  //       clearInterval(timerRef.current);
+  //     }
+  //   };
+  // }, [startTimer]);
 
   const handleBulletClick = (index: number) => {
     setCurrentIndex(index);
-    startTimer(); // Reset timer on manual navigation
+    // startTimer(); // Reset timer on manual navigation
   };
 
   return (
-    <div className="relative h-[60vh] max-h-[90vh] min-h-[400px] w-full overflow-hidden sm:h-[70vh] md:h-[80vh] lg:h-[90vh]">
+    <div className="relative h-[50vh] max-h-[90vh] min-h-[300px] w-full overflow-hidden md:h-[60vh] lg:h-[70vh]">
       {data.map((item, index) => {
         if (!item || !item.image) {
           return null;
         }
+        const isVideo = (item.image as Media).mimeType?.includes("mp4");
         return (
           <div
             key={item.id}
@@ -61,20 +65,72 @@ export const Heros = ({ data }: Props): JSX.Element => {
                 </div>
               </div>
             )}
-            <Image
-              src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
-              alt={item.title}
-              onLoad={() => {
-                setIsLoading(false);
-              }}
-              className="h-full w-full object-cover"
-              width={(item.image as Media).width || 1920}
-              height={(item.image as Media).height || 1080}
-              priority={true}
-              loading="eager"
-              placeholder="blur"
-              blurDataURL={BLUR_DATA}
-            />
+            {isVideo ? (
+              <div className="relative h-full w-full overflow-hidden">
+                {isLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
+                    <div className="h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-gray-600">
+                      <span className="sr-only">Loading video...</span>
+                    </div>
+                  </div>
+                )}
+                <video
+                  ref={videoRef}
+                  className="absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  onLoadedData={() => setIsLoading(false)}
+                >
+                  <source
+                    src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+                <button
+                  className="absolute bottom-8 right-8 z-20 text-white"
+                  onClick={() => {
+                    if (videoRef.current) {
+                      if (isPlaying) {
+                        videoRef.current.pause();
+                      } else {
+                        videoRef.current.play();
+                      }
+                      setIsPlaying(!isPlaying);
+                    }
+                  }}
+                >
+                  {isPlaying ? (
+                    <Pause
+                      size={56}
+                      className="rounded-full bg-black/30 p-4 font-thin text-white backdrop-blur-sm transition-all hover:bg-black/50"
+                    />
+                  ) : (
+                    <Play
+                      size={56}
+                      className="rounded-full bg-black/30 p-4 text-white backdrop-blur-sm transition-all hover:bg-black/50"
+                    />
+                  )}
+                </button>
+              </div>
+            ) : (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
+                alt={item.title}
+                onLoad={() => {
+                  setIsLoading(false);
+                }}
+                className="h-full w-full object-cover"
+                width={(item.image as Media).width || 1920}
+                height={(item.image as Media).height || 1080}
+                priority={true}
+                loading="eager"
+                placeholder="blur"
+                blurDataURL={BLUR_DATA}
+              />
+            )}
 
             {/* Content Overlay */}
             <div className="absolute inset-0 bg-black/40">

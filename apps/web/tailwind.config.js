@@ -30,13 +30,18 @@ module.exports = {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
+        fadeOut: {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
         spin: {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         }
       },
       animation: {
-        fadeIn: 'fadeIn 1s ease-in-out',
+        fadeIn: 'fadeIn 0.5s ease-in-out',
+        fadeOut: 'fadeOut 0.3s ease-in-out',
         spin: 'spin 1s linear infinite',
       },
       fontFamily: {

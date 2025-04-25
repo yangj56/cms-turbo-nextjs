@@ -14,17 +14,60 @@ export const Product: CollectionConfig = {
   admin: {
     useAsTitle: "title",
   },
+  endpoints: [
+    {
+      path: "/search",
+      method: "get",
+      handler: async (req) => {
+        const { query, page, limit } = req.query;
+        console.log(`1query`, query);
+        console.log(`1page`, page);
+        console.log(`limit`, limit);
+        const searchResults = await req.payload.find({
+          collection: "product",
+          where: {
+            and: [
+              {
+                title: {
+                  like: query as string,
+                },
+              },
+              {
+                sku: {
+                  like: query as string,
+                },
+              },
+            ],
+          },
+          limit: limit as number,
+          page: page as number,
+          sort: ["sequence:desc", "title:asc"],
+          select: {
+            title: true,
+            sku: true,
+            sequence: true,
+            description: true,
+            category: true,
+            color: true,
+          },
+        });
+        return Response.json(searchResults);
+      },
+    },
+  ],
   fields: [
     {
       name: "title",
       type: "text",
       required: true,
+      index: true,
     },
     {
       name: "sku",
       label: "SKU (no space or special characters *unique)",
       type: "text",
       required: true,
+      index: true,
     },
     {
       name: "description",

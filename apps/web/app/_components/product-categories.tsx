@@ -104,7 +104,7 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
             return (
               <div
                 key={item.id}
-                className="min-w-0 flex-[0_0_85%] sm:flex-[0_0_50%] md:flex-[0_0_33.333%] lg:flex-[0_0_25%]"
+                className="min-w-0 flex-[0_0_60%] md:flex-[0_0_33.333%] lg:flex-[0_0_25%]"
               >
                 <div className="mr-4 sm:mr-6">
                   <Link
