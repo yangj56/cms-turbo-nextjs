@@ -24,6 +24,7 @@ export const Header = ({
   const router = useRouter();
 
   const toggleMenu = () => {
+    setIsSearchOpen(false);
     setIsMenuOpen(!isMenuOpen);
   };
 
@@ -43,6 +44,11 @@ export const Header = ({
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const search = () => {
+    setIsSearchOpen(false);
+    router.push(`/search-products?query=${searchQuery}`);
+  };
 
   const displaySearch = (isDesktop: boolean) => {
     return (
@@ -181,21 +187,25 @@ export const Header = ({
           </div>
         </div>
         {isSearchOpen && (
-          <div className="mb-4 flex w-full animate-fadeIn items-center justify-center px-4 md:px-40">
+          <div className="mb-2 mt-8 flex w-full animate-fadeIn items-center justify-center px-4 md:px-40">
             <div className="relative flex w-full items-center justify-between bg-white">
               <input
                 className="w-full border-b border-black bg-transparent pb-4 text-xl text-black outline-none placeholder:text-black"
                 type="text"
                 placeholder="Search"
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    search();
+                  }
+                }}
                 autoFocus
               />
               <button className="p-2">
                 <Search
                   className="h-5 w-5 text-black"
                   onClick={() => {
-                    setIsSearchOpen(false);
-                    router.push(`/search-products?query=${searchQuery}`);
+                    search();
                   }}
                 />
               </button>
