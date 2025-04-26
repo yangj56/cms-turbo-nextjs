@@ -31,18 +31,18 @@ export const Heros = ({ data }: Props): JSX.Element => {
     }, 10000);
   }, [data.length]);
 
-  // useEffect(() => {
-  //   startTimer();
-  //   return () => {
-  //     if (timerRef.current) {
-  //       clearInterval(timerRef.current);
-  //     }
-  //   };
-  // }, [startTimer]);
+  useEffect(() => {
+    startTimer();
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [startTimer]);
 
   const handleBulletClick = (index: number) => {
     setCurrentIndex(index);
-    // startTimer(); // Reset timer on manual navigation
+    startTimer(); // Reset timer on manual navigation
   };
 
   return (
@@ -51,7 +51,9 @@ export const Heros = ({ data }: Props): JSX.Element => {
         if (!item || !item.image) {
           return null;
         }
-        const isVideo = (item.image as Media).mimeType?.includes("mp4");
+        const isVideo =
+          (item.image as Media).mimeType?.includes("mp4") ||
+          (item.image as Media).mimeType?.includes("webm");
         return (
           <div
             key={item.id}
