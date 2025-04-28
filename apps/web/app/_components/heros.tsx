@@ -28,7 +28,7 @@ export const Heros = ({ data }: Props): JSX.Element => {
     // Start new timer
     timerRef.current = setInterval(() => {
       setCurrentIndex((current) => (current + 1) % data.length);
-    }, 10000);
+    }, 7000);
   }, [data.length]);
 
   useEffect(() => {
@@ -53,7 +53,8 @@ export const Heros = ({ data }: Props): JSX.Element => {
         }
         const isVideo =
           (item.image as Media).mimeType?.includes("mp4") ||
-          (item.image as Media).mimeType?.includes("webm");
+          (item.image as Media).mimeType?.includes("webm") ||
+          (item.image as Media).mimeType?.includes("webp");
         return (
           <div
             key={item.id}
@@ -69,28 +70,20 @@ export const Heros = ({ data }: Props): JSX.Element => {
             )}
             {isVideo ? (
               <div className="relative h-full w-full overflow-hidden">
-                {isLoading && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
-                    <div className="h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-gray-600">
-                      <span className="sr-only">Loading video...</span>
-                    </div>
-                  </div>
-                )}
-                <video
-                  ref={videoRef}
-                  className="absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 object-cover"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  onLoadedData={() => setIsLoading(false)}
-                >
-                  <source
-                    src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
-                    type="video/mp4"
-                  />
-                  Your browser does not support the video tag.
-                </video>
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
+                  alt={item.title}
+                  onLoad={() => {
+                    setIsLoading(false);
+                  }}
+                  className="h-full w-full object-cover"
+                  width={(item.image as Media).width || 1920}
+                  height={(item.image as Media).height || 1080}
+                  priority={true}
+                  loading="eager"
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA}
+                />
                 <button
                   className="absolute bottom-8 right-8 z-20 text-white"
                   onClick={() => {
