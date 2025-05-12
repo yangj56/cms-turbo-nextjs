@@ -1,5 +1,6 @@
 import { anyone } from "@/access/anyone";
 import { authenticated } from "@/access/authenticated";
+import { skipResizeForWebP } from "@/utilities/skipResize";
 import type { CollectionConfig } from "payload";
 
 export const Media: CollectionConfig = {
@@ -16,5 +17,7 @@ export const Media: CollectionConfig = {
       type: "text",
     },
   ],
-  upload: true,
+  hooks: {
+    beforeChange: [skipResizeForWebP],
+  },
 };
