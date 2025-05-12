@@ -48,84 +48,48 @@ export const Heros = ({ data }: Props): JSX.Element => {
   return (
     <div className="relative h-[50vh] max-h-[90vh] min-h-[300px] w-full overflow-hidden md:h-[60vh] lg:h-[70vh]">
       {data.map((item, index) => {
-        if (!item || !item.image) {
-          return null;
-        }
-        const isVideo =
-          (item.image as Media).mimeType?.includes("mp4") ||
-          (item.image as Media).mimeType?.includes("webm") ||
-          (item.image as Media).mimeType?.includes("webp");
         return (
           <div
             key={item.id}
             className={`absolute h-full w-full transition-all duration-1000 ease-in-out
             ${index === currentIndex ? "opacity-100" : "opacity-0"}`}
           >
-            {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
-                <div className="h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-gray-600">
-                  <span className="sr-only">Loading image...</span>
-                </div>
-              </div>
-            )}
-            {isVideo ? (
-              <div className="relative h-full w-full overflow-hidden">
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
-                  alt={item.title}
-                  onLoad={() => {
-                    setIsLoading(false);
-                  }}
-                  className="h-full w-full object-cover"
-                  width={(item.image as Media).width || 1920}
-                  height={(item.image as Media).height || 1080}
-                  priority={true}
-                  loading="eager"
-                  placeholder="blur"
-                  blurDataURL={BLUR_DATA}
-                />
-                <button
-                  className="absolute bottom-8 right-8 z-20 text-white"
-                  onClick={() => {
-                    if (videoRef.current) {
-                      if (isPlaying) {
-                        videoRef.current.pause();
-                      } else {
-                        videoRef.current.play();
-                      }
-                      setIsPlaying(!isPlaying);
-                    }
-                  }}
-                >
-                  {isPlaying ? (
-                    <Pause
-                      size={56}
-                      className="rounded-full bg-black/30 p-4 font-thin text-white backdrop-blur-sm transition-all hover:bg-black/50"
-                    />
-                  ) : (
-                    <Play
-                      size={56}
-                      className="rounded-full bg-black/30 p-4 text-white backdrop-blur-sm transition-all hover:bg-black/50"
-                    />
-                  )}
-                </button>
-              </div>
-            ) : (
-              <Image
-                src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
-                alt={item.title}
-                onLoad={() => {
-                  setIsLoading(false);
-                }}
+            <div className="relative h-full w-full overflow-hidden">
+              <video
+                ref={videoRef}
+                src={`/hero.webm`}
+                autoPlay
+                muted
+                loop
+                playsInline
                 className="h-full w-full object-cover"
-                width={(item.image as Media).width || 1920}
-                height={(item.image as Media).height || 1080}
-                priority={true}
-                loading="eager"
-                placeholder="blur"
-                blurDataURL={BLUR_DATA}
               />
-            )}
+              <button
+                className="absolute bottom-8 right-8 z-20 text-white"
+                onClick={() => {
+                  if (videoRef.current) {
+                    if (isPlaying) {
+                      videoRef.current.pause();
+                    } else {
+                      videoRef.current.play();
+                    }
+                    setIsPlaying(!isPlaying);
+                  }
+                }}
+              >
+                {isPlaying ? (
+                  <Pause
+                    size={56}
+                    className="rounded-full bg-black/30 p-4 font-thin text-white backdrop-blur-sm transition-all hover:bg-black/50"
+                  />
+                ) : (
+                  <Play
+                    size={56}
+                    className="rounded-full bg-black/30 p-4 text-white backdrop-blur-sm transition-all hover:bg-black/50"
+                  />
+                )}
+              </button>
+            </div>
 
             {/* Content Overlay */}
             <div className="absolute inset-0 bg-black/40">

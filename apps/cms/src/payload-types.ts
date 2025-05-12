@@ -242,7 +242,6 @@ export interface User {
 export interface Hero {
   id: string;
   title: string;
-  image: string | Media;
   description?: string | null;
   buttonLabel?: string | null;
   url?: string | null;
@@ -462,7 +461,6 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface HeroSelect<T extends boolean = true> {
   title?: T;
-  image?: T;
   description?: T;
   buttonLabel?: T;
   url?: T;

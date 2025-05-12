@@ -21,12 +21,6 @@ export const Hero: CollectionConfig = {
       required: true,
     },
     {
-      name: "image",
-      type: "upload",
-      relationTo: "media",
-      required: true,
-    },
-    {
       name: "description",
       type: "textarea",
       required: false,
