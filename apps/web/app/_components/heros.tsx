@@ -46,7 +46,7 @@ export const Heros = ({ data }: Props): JSX.Element => {
   };
 
   return (
-    <div className="relative h-[50vh] max-h-[90vh] min-h-[300px] w-full overflow-hidden md:h-[60vh] lg:h-[70vh]">
+    <div className="relative h-[45vh] max-h-[90vh] min-h-[300px] w-full overflow-hidden md:h-[60vh] lg:h-[70vh]">
       {data.map((item, index) => {
         return (
           <div
@@ -92,7 +92,7 @@ export const Heros = ({ data }: Props): JSX.Element => {
             </div>
 
             {/* Content Overlay */}
-            <div className="absolute inset-0 bg-black/40">
+            <div className="absolute inset-0 bg-black/20">
               <div className="mx-auto flex h-full w-full flex-col items-center justify-center gap-4 p-4 text-center sm:gap-6 md:gap-8">
                 <h2 className="text-2xl font-semibold text-white opacity-100 transition-all duration-1000 ease-in-out sm:text-3xl md:text-4xl lg:text-5xl">
                   {item.title}

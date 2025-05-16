@@ -13,14 +13,14 @@ export const Footer = ({ data }: { data: ProductCategory[] }): JSX.Element => {
             <h3 className="text-md mb-8 font-normal">Products</h3>
             <ul className="space-y-1">
               <li>
-                <Link href="/products" className="text-sm font-thin hover:opacity-80">
+                <Link href="/collection-products" className="text-sm font-thin hover:opacity-80">
                   Shop All
                 </Link>
               </li>
               {data.map((category) => (
                 <li key={category.id}>
                   <Link
-                    href={`/products?collection=${category.sku}`}
+                    href={`/collection-products?collection=${category.sku}`}
                     className="text-sm font-thin hover:opacity-80"
                   >
                     {category.title}

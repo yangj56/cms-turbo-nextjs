@@ -5,7 +5,6 @@ import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState, type JSX } from "react";
 import type { ProductCategory, Media } from "@/lib/payload-types";
 import Link from "next/link";
-import { BLUR_DATA } from "@/lib/contant";
 import { ImageLoader } from "./image-loader";
 
 type Props = {
@@ -108,7 +107,7 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
               >
                 <div className="mr-4 sm:mr-6">
                   <Link
-                    href={`/products?collection=${item.sku}`}
+                    href={`/collection-products?collection=${item.sku}`}
                     className="group block"
                     title={`View ${item.title} products`}
                     aria-label={`Browse our ${item.title} collection`}

@@ -58,7 +58,7 @@ export const ProductDetails = ({ data }: Props) => {
   const scrollToSpecifications = () => {
     document.getElementById("specifications")?.scrollIntoView({
       behavior: "smooth",
-      block: "start",
+      block: "center",
     });
   };
 
@@ -350,7 +350,10 @@ export const ProductDetails = ({ data }: Props) => {
       </div>
       <div className="container mt-2 flex w-full flex-col md:mt-8">
         {/* Specifications */}
-        <div id="specifications" className="flex flex-col gap-12 md:flex-row md:gap-32">
+        <div
+          id="specifications"
+          className="flex scroll-mt-20 flex-col gap-12 md:flex-row md:gap-32"
+        >
           {data.labelValuePairs && (
             <div className="md:basis-2/3">
               <h4 className="mb-4 text-center text-sm font-medium uppercase">Specifications</h4>
