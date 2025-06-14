@@ -3,12 +3,13 @@
 import { PAGINATION_LIMIT } from "@/lib/contant";
 import type { Social } from "@/lib/payload-types";
 import type { PaginatedDocs } from "@/lib/types";
+import { cacheOptions } from "@/lib/utils";
 
 export async function findSocials(page = 1, limit = PAGINATION_LIMIT): Promise<Social[]> {
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/social?limit=${limit}&page=${page}`;
 
-    const response = await fetch(apiUrl);
+    const response = await fetch(apiUrl, cacheOptions);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch socials: ${response.statusText}`);

@@ -99,6 +99,9 @@ export const Products = ({ products }: Props) => {
           if (!image) {
             image = product.color?.[0]?.images?.[0]?.image as Media;
           }
+          if (!image) {
+            console.log(`no image`, product.id);
+          }
 
           return (
             <div key={product.id}>
@@ -109,16 +112,18 @@ export const Products = ({ products }: Props) => {
                 aria-label={`Browse our ${product.title} collection`}
               >
                 <div className="relative aspect-square w-full overflow-hidden">
-                  <div key={image.url} className="absolute inset-0 animate-fadeIn">
-                    <ImageLoader
-                      src={`${process.env.NEXT_PUBLIC_CMS_URL}${image.url}`}
-                      alt={`${product.title} in ${selectedColorData?.colorName || ""}`}
-                      className="object-cover transition-all duration-1000 group-hover:scale-110"
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      loading="lazy"
-                    />
-                  </div>
+                  {image?.url && (
+                    <div key={image.url} className="absolute inset-0 animate-fadeIn">
+                      <ImageLoader
+                        src={`${process.env.NEXT_PUBLIC_CMS_URL}${image.url}`}
+                        alt={`${product.title} in ${selectedColorData?.colorName || ""}`}
+                        className="object-cover transition-all duration-1000 group-hover:scale-110"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
                   {/* Translucent overlay that appears on hover */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-0 p-4 text-center text-white opacity-0 transition-all duration-300 hover:bg-opacity-30 hover:opacity-100">
                     <h3 className="mb-2 text-xl font-bold">{product.title}</h3>

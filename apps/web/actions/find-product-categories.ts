@@ -3,6 +3,7 @@
 import type { ProductCategory } from "@/lib/payload-types";
 import { PAGINATION_LIMIT } from "@/lib/contant";
 import type { PaginatedDocs } from "@/lib/types";
+import { cacheOptions } from "@/lib/utils";
 
 export async function findProductCategories(
   page = 1,
@@ -10,7 +11,7 @@ export async function findProductCategories(
 ): Promise<ProductCategory[]> {
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/product-category?limit=${limit}&page=${page}`;
-    const response = await fetch(apiUrl);
+    const response = await fetch(apiUrl, cacheOptions);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch product categories: ${response.statusText}`);
