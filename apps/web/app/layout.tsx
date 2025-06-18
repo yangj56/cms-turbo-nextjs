@@ -1,12 +1,12 @@
 import "./globals.css";
-import { Nunito } from "next/font/google";
+import { Roboto } from "next/font/google";
 
 import type { Metadata } from "next";
 import { findProductHeader } from "@/actions/find-product-header";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { MyProvider } from "@/context";
 
-const nunito = Nunito({
+const nunito = Roboto({
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-nunito-sans", // optional for Tailwind
