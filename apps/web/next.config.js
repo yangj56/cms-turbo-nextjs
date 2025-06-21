@@ -23,7 +23,7 @@ const nextConfig = {
         },
         {
           protocol: 'https',
-          hostname: 'web-zeta-lemon.vercel.app',
+          hostname: 'cms-ten-bay.vercel.app',
           pathname: '/api/media/**',
         },
         {
