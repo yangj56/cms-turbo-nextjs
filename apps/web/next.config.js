@@ -22,6 +22,11 @@ const nextConfig = {
           pathname: '/api/media/**',
         },
         {
+          protocol: 'https',
+          hostname: 'web-zeta-lemon.vercel.app',
+          pathname: '/api/media/**',
+        },
+        {
           protocol: 'http',
           hostname: 'localhost',
           port: '3000',
