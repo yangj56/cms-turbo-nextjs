@@ -124,13 +124,12 @@ export const Products = ({ products }: Props) => {
                       />
                     </div>
                   )}
-                  {/* Translucent overlay that appears on hover */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-0 p-4 text-center text-white opacity-0 transition-all duration-300 hover:bg-opacity-30 hover:opacity-100">
+                  {/* <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-0 p-4 text-center text-white opacity-0 transition-all duration-300 hover:bg-opacity-30 hover:opacity-100">
                     <h3 className="mb-2 text-xl font-bold">{product.title}</h3>
                     {selectedColorData?.colorName && (
                       <p className="text-sm">{selectedColorData.colorName}</p>
                     )}
-                  </div>
+                  </div> */}
                 </div>
                 <h4 className="mt-2 line-clamp-1 text-lg font-semibold">{product.title}</h4>
               </Link>

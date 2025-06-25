@@ -12,6 +12,8 @@ export async function POST(request: NextRequest) {
     }
 
     revalidatePath("/", "layout");
+    revalidatePath("/collection-products", "page");
+    revalidatePath("/product/[id]", "page");
 
     return NextResponse.json(
       { revalidated: true, message: "Revalidation triggered successfully" },

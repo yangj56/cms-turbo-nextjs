@@ -348,7 +348,7 @@ export const ProductDetails = ({ data }: Props) => {
           {displayOverview()}
         </div>
       </div>
-      <div className="container mt-2 flex w-full flex-col md:mt-8">
+      <div className="container mb-12 mt-2 flex w-full flex-col md:mt-8">
         {/* Specifications */}
         <div
           id="specifications"
@@ -377,7 +377,7 @@ export const ProductDetails = ({ data }: Props) => {
 
       {/* Compatible Products */}
       {data.compatibleProducts && data.compatibleProducts.length > 0 && (
-        <div className="mb-8 mt-8 flex w-full flex-col items-center justify-center gap-4">
+        <div className="mb-12 flex w-full flex-col items-center justify-center gap-4">
           <hr className="w-full" />
           <div className="container">
             <button
