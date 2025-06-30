@@ -89,6 +89,13 @@ export const Product: CollectionConfig = {
       required: true,
     },
     {
+      name: "collections",
+      type: "relationship",
+      relationTo: "product-collection",
+      hasMany: true,
+      required: false,
+    },
+    {
       name: "color",
       type: "array",
       fields: [

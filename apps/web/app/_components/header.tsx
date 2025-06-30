@@ -92,7 +92,7 @@ export const Header = ({
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden items-center gap-12 md:flex">
+          <div className="hidden items-center gap-12 lg:flex">
             {data.map((category) => (
               <Link
                 key={category.id}
@@ -106,7 +106,7 @@ export const Header = ({
             ))}
             {displaySearch(true)}
           </div>
-          <div className="flex flex-row items-center justify-center gap-4 md:hidden">
+          <div className="flex flex-row items-center justify-center gap-4 lg:hidden">
             {displaySearch(false)}
             {/* Mobile Menu Button */}
             <button className="p-2" onClick={toggleMenu} aria-label="Toggle menu">
@@ -133,12 +133,15 @@ export const Header = ({
         <div
           className={`fixed right-0 top-[80px] z-50 h-full w-full transform bg-white text-black transition-transform duration-300 ease-in-out ${
             isMenuOpen ? "translate-x-0" : "translate-x-full"
-          } md:hidden`}
+          } lg:hidden`}
         >
           <div className="flex flex-col">
             <div className="mt-6 px-8">
               <h3 className="mb-4 text-lg font-normal">Collections</h3>
-              <div className="flex flex-col space-y-4 divide-y divide-gray-200">
+              <div
+                className="flex flex-col space-y-4 divide-y divide-gray-200 overflow-y-auto"
+                style={{ maxHeight: "calc(100vh - 200px)" }}
+              >
                 {data?.map((category) => (
                   <Link
                     key={category.id}
@@ -187,7 +190,7 @@ export const Header = ({
           </div>
         </div>
         {isSearchOpen && (
-          <div className="mb-2 mt-8 flex w-full animate-fadeIn items-center justify-center px-4 md:px-40">
+          <div className="mb-2 mt-8 flex w-full animate-fadeIn items-center justify-center px-4 lg:px-40">
             <div className="relative flex w-full items-center justify-between bg-white">
               <div className="flex w-full flex-col">
                 <input

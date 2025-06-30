@@ -75,6 +75,7 @@ export interface Config {
     social: Social;
     introduction: Introduction;
     feature: Feature;
+    'product-collection': ProductCollection;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -93,6 +94,7 @@ export interface Config {
     social: SocialSelect<false> | SocialSelect<true>;
     introduction: IntroductionSelect<false> | IntroductionSelect<true>;
     feature: FeatureSelect<false> | FeatureSelect<true>;
+    'product-collection': ProductCollectionSelect<false> | ProductCollectionSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -287,6 +289,19 @@ export interface Feature {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-collection".
+ */
+export interface ProductCollection {
+  id: string;
+  title: string;
+  sequence?: number | null;
+  description?: string | null;
+  image: string | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -323,6 +338,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'feature';
         value: string | Feature;
+      } | null)
+    | ({
+        relationTo: 'product-collection';
+        value: string | ProductCollection;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -498,6 +517,18 @@ export interface FeatureSelect<T extends boolean = true> {
   title?: T;
   image?: T;
   url?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-collection_select".
+ */
+export interface ProductCollectionSelect<T extends boolean = true> {
+  title?: T;
+  sequence?: T;
+  description?: T;
+  image?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -14,6 +14,7 @@ import { Product } from "./collections/Product";
 import { Social } from "./collections/Social";
 import { Feature } from "./collections/Feature";
 import { s3Storage } from "@payloadcms/storage-s3";
+import { ProductCollection } from "./collections/ProductCollection";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -31,7 +32,17 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Media, ProductCategory, Product, Users, Hero, Social, Introduction, Feature],
+  collections: [
+    Media,
+    ProductCategory,
+    Product,
+    Users,
+    Hero,
+    Social,
+    Introduction,
+    Feature,
+    ProductCollection,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
