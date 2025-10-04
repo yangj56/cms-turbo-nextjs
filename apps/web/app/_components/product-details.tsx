@@ -453,8 +453,3 @@ export const ProductDetails = ({ data }: Props) => {
     </div>
   );
 };
-
-export async function generateStaticParams() {
-  // Implement this based on your data fetching needs
-  return [];
-}

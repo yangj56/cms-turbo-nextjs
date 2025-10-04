@@ -9,12 +9,12 @@ export async function findHeros(page = 1, limit = PAGINATION_LIMIT): Promise<Her
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/hero?limit=${limit}&page=${page}`;
     const response = await fetch(apiUrl, cacheOptions);
-
     if (!response.ok) {
       throw new Error(`Failed to fetch heroes: ${response.statusText}`);
     }
 
     const data = (await response.json()) as PaginatedDocs<Hero>;
+    console.log("data", data);
     return data.docs ?? [];
   } catch (error) {
     console.error("Error fetching heroes:", error);

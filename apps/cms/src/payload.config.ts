@@ -15,6 +15,7 @@ import { Social } from "./collections/Social";
 import { Feature } from "./collections/Feature";
 import { s3Storage } from "@payloadcms/storage-s3";
 import { ProductCollection } from "./collections/ProductCollection";
+import { BlogPost } from "./collections/BlogPost";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -42,6 +43,7 @@ export default buildConfig({
     Introduction,
     Feature,
     ProductCollection,
+    BlogPost,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",

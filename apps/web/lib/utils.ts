@@ -17,5 +17,5 @@ export function queryParamToString(param: string | string[] | undefined) {
 }
 
 export const cacheOptions: RequestInit = {
-  cache: "force-cache",
+  cache: "no-cache",
 };

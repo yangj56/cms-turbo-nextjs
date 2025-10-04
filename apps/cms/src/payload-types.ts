@@ -76,6 +76,7 @@ export interface Config {
     introduction: Introduction;
     feature: Feature;
     'product-collection': ProductCollection;
+    'blog-post': BlogPost;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -95,6 +96,7 @@ export interface Config {
     introduction: IntroductionSelect<false> | IntroductionSelect<true>;
     feature: FeatureSelect<false> | FeatureSelect<true>;
     'product-collection': ProductCollectionSelect<false> | ProductCollectionSelect<true>;
+    'blog-post': BlogPostSelect<false> | BlogPostSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -303,6 +305,49 @@ export interface Feature {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-post".
+ */
+export interface BlogPost {
+  id: string;
+  title: string;
+  /**
+   * URL path (e.g. "my-first-post")
+   */
+  slug: string;
+  /**
+   * Short summary for lists and SEO.
+   */
+  excerpt?: string | null;
+  heroImage?: (string | null) | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  status?: ('draft' | 'published') | null;
+  canonicalUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -343,6 +388,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'product-collection';
         value: string | ProductCollection;
+      } | null)
+    | ({
+        relationTo: 'blog-post';
+        value: string | BlogPost;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -533,6 +582,28 @@ export interface ProductCollectionSelect<T extends boolean = true> {
   image?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-post_select".
+ */
+export interface BlogPostSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  excerpt?: T;
+  heroImage?: T;
+  content?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  status?: T;
+  canonicalUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

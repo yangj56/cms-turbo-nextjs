@@ -76,6 +76,7 @@ export interface Config {
     introduction: Introduction;
     feature: Feature;
     'product-collection': ProductCollection;
+    'blog-post': BlogPost;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -95,6 +96,7 @@ export interface Config {
     introduction: IntroductionSelect<false> | IntroductionSelect<true>;
     feature: FeatureSelect<false> | FeatureSelect<true>;
     'product-collection': ProductCollectionSelect<false> | ProductCollectionSelect<true>;
+    'blog-post': BlogPostSelect<false> | BlogPostSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -179,6 +181,7 @@ export interface Product {
   sku: string;
   description: string;
   category: string | ProductCategory;
+  collections?: (string | ProductCollection)[] | null;
   color?:
     | {
         colorName?: string | null;
@@ -217,6 +220,19 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-collection".
+ */
+export interface ProductCollection {
+  id: string;
+  title: string;
+  sequence?: number | null;
+  description?: string | null;
+  image: string | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -289,16 +305,47 @@ export interface Feature {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "product-collection".
+ * via the `definition` "blog-post".
  */
-export interface ProductCollection {
+export interface BlogPost {
   id: string;
   title: string;
-  sequence?: number | null;
-  description?: string | null;
-  image: string | Media;
+  /**
+   * URL path (e.g. "my-first-post")
+   */
+  slug: string;
+  /**
+   * Short summary for lists and SEO.
+   */
+  excerpt?: string | null;
+  heroImage?: (string | null) | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  publishedAt?: string | null;
+  status?: ('draft' | 'published') | null;
+  canonicalURL?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -342,6 +389,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'product-collection';
         value: string | ProductCollection;
+      } | null)
+    | ({
+        relationTo: 'blog-post';
+        value: string | BlogPost;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -426,6 +477,7 @@ export interface ProductSelect<T extends boolean = true> {
   sku?: T;
   description?: T;
   category?: T;
+  collections?: T;
   color?:
     | T
     | {
@@ -531,6 +583,29 @@ export interface ProductCollectionSelect<T extends boolean = true> {
   image?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-post_select".
+ */
+export interface BlogPostSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  excerpt?: T;
+  heroImage?: T;
+  content?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  publishedAt?: T;
+  status?: T;
+  canonicalURL?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
