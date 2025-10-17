@@ -1,5 +1,4 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import React from "react";
 import ReactPaginate from "react-paginate";
 
 interface PaginationProps {
@@ -7,7 +6,10 @@ interface PaginationProps {
 	onPageChange: (selectedItem: { selected: number }) => void;
 }
 
-export const Pagination = ({ pageCount, onPageChange }: PaginationProps) => {
+export const Pagination = ({
+	pageCount,
+	onPageChange,
+}: PaginationProps): React.ReactNode => {
 	return (
 		<ReactPaginate
 			previousLabel={<ChevronLeft className="h-4 w-4" />}

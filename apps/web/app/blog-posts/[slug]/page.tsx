@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { findBlogPost } from "@/actions/find-blog-post";
 import { findBlogPosts } from "@/actions/find-blog-posts";
 import { BlogPostDetails } from "@/app/_components/blog-post-details";
-import { ALL_PRODUCTS_LIMIT } from "@/lib/contant";
 import type { BlogPost } from "@/lib/payload-types";
 
 export const dynamic = "force-static";
@@ -12,7 +11,7 @@ export default async function Page({
 	params,
 }: {
 	params: Promise<{ slug: string }>;
-}) {
+}): Promise<React.ReactNode> {
 	const slug = (await params).slug;
 	if (!slug) {
 		return notFound();

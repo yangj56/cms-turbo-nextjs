@@ -15,7 +15,7 @@ type Props = {
 	products: Product[];
 };
 
-export const Products = ({ products }: Props) => {
+export const Products = ({ products }: Props): React.ReactNode => {
 	const [tabParams, setTabParams] = useQueryStates(
 		{
 			page: parseAsInteger.withDefault(0),
@@ -52,9 +52,9 @@ export const Products = ({ products }: Props) => {
 	};
 
 	return (
-		<div className="container mx-auto mb-8 mt-4 px-4">
+		<div className="container mx-auto mt-4 mb-8 px-4">
 			<div className="mb-6 flex items-center justify-between">
-				<p className="text-sm text-black">
+				<p className="text-black text-sm">
 					Displaying {offset + 1} -{" "}
 					{Math.min(offset + limit, filteredProducts.length)} of{" "}
 					{filteredProducts.length} results
@@ -66,7 +66,10 @@ export const Products = ({ products }: Props) => {
 							className="appearance-none bg-transparent pr-6 text-sm focus:outline-none"
 							onChange={(e) => {
 								e.preventDefault();
-								setTabParams({ limit: parseInt(e.target.value), page: 0 });
+								setTabParams({
+									limit: Number.parseInt(e.target.value, 10) || 0,
+									page: 0,
+								});
 							}}
 							value={limit}
 						>
@@ -80,6 +83,7 @@ export const Products = ({ products }: Props) => {
 								stroke="currentColor"
 								viewBox="0 0 24 24"
 							>
+								<title>{`Select view per page`}</title>
 								<path
 									strokeLinecap="round"
 									strokeLinejoin="round"
@@ -138,38 +142,38 @@ export const Products = ({ products }: Props) => {
                     )}
                   </div> */}
 								</div>
-								<h4 className="mt-2 line-clamp-1 text-lg font-semibold">
+								<h4 className="mt-2 line-clamp-1 font-semibold text-lg">
 									{product.title}
 								</h4>
 							</Link>
 							<div className="flex flex-row gap-2">
-								{product.color &&
-									product.color?.map((color, index) => {
-										if (!color.colorCode) {
-											return null;
-										}
-										return (
-											<button
-												key={color.id}
-												onClick={() => {
-													if (color.colorCode) {
-														handleColorSelect(product.id, color.colorCode);
-													}
-												}}
-												className={cn(
-													"border-grey mt-2 h-6 w-6 border",
-													selectedColors[product.id] === color.colorCode &&
-														"ring-1 ring-gray-300 ring-offset-1",
-													index === 0 &&
-														!selectedColors[product.id] &&
-														"ring-1 ring-gray-300 ring-offset-1",
-												)}
-												style={{ backgroundColor: color.colorCode }}
-												title={color.colorName || "Color option"}
-												aria-label={`Select ${color.colorName || "color option"}`}
-											/>
-										);
-									})}
+								{product?.color?.map((color, index) => {
+									if (!color.colorCode) {
+										return null;
+									}
+									return (
+										<button
+											type="button"
+											key={color.id}
+											onClick={() => {
+												if (color.colorCode) {
+													handleColorSelect(product.id, color.colorCode);
+												}
+											}}
+											className={cn(
+												"mt-2 h-6 w-6 border border-grey",
+												selectedColors[product.id] === color.colorCode &&
+													"ring-1 ring-gray-300 ring-offset-1",
+												index === 0 &&
+													!selectedColors[product.id] &&
+													"ring-1 ring-gray-300 ring-offset-1",
+											)}
+											style={{ backgroundColor: color.colorCode }}
+											title={color.colorName || "Color option"}
+											aria-label={`Select ${color.colorName || "color option"}`}
+										/>
+									);
+								})}
 							</div>
 						</div>
 					);

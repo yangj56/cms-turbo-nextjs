@@ -6,7 +6,7 @@ import { Products } from "../_components/products";
 export const dynamic = "force-static";
 export const revalidate = 60;
 
-export default async function Page() {
+export default async function Page(): Promise<React.ReactNode> {
 	const data = await findProducts(1, ALL_PRODUCTS_LIMIT);
 
 	if (!data) {
@@ -32,9 +32,5 @@ export default async function Page() {
 		return a.title.localeCompare(b.title);
 	});
 
-	return (
-		<>
-			<Products products={sortedData} />
-		</>
-	);
+	return <Products products={sortedData} />;
 }

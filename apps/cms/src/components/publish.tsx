@@ -32,6 +32,7 @@ export function PublishButton() {
 	return (
 		<div className="flex w-full flex-row items-end justify-end">
 			<button
+				type="button"
 				onClick={handlePublish}
 				className="w-[200px] rounded bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
 			>

@@ -1,11 +1,9 @@
 "use client";
 
 import { Pause, Play } from "lucide-react";
-import Image from "next/image";
 import type { JSX } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { BLUR_DATA } from "@/lib/contant";
-import type { Hero, Media } from "@/lib/payload-types";
+import type { Hero } from "@/lib/payload-types";
 
 type Props = {
 	data: Hero[];
@@ -13,7 +11,6 @@ type Props = {
 
 export const Heros = ({ data }: Props): JSX.Element => {
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const [isLoading, setIsLoading] = useState(true);
 	const [isPlaying, setIsPlaying] = useState(true);
 	const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -51,8 +48,7 @@ export const Heros = ({ data }: Props): JSX.Element => {
 				return (
 					<div
 						key={item.id}
-						className={`absolute h-full w-full transition-all duration-1000 ease-in-out
-            ${index === currentIndex ? "opacity-100" : "opacity-0"}`}
+						className={`absolute h-full w-full transition-all duration-1000 ease-in-out ${index === currentIndex ? "opacity-100" : "opacity-0"}`}
 					>
 						<div className="relative h-full w-full overflow-hidden">
 							<video
@@ -65,7 +61,8 @@ export const Heros = ({ data }: Props): JSX.Element => {
 								className="h-full w-full object-cover"
 							/>
 							<button
-								className="absolute bottom-8 right-8 z-20 text-white"
+								type="button"
+								className="absolute right-8 bottom-8 z-20 text-white"
 								onClick={() => {
 									if (videoRef.current) {
 										if (isPlaying) {
@@ -94,7 +91,7 @@ export const Heros = ({ data }: Props): JSX.Element => {
 						{/* Content Overlay */}
 						<div className="absolute inset-0 bg-black/20">
 							<div className="mx-auto flex h-full w-full flex-col items-center justify-center gap-4 p-4 text-center sm:gap-6 md:gap-8">
-								<h2 className="text-2xl font-semibold text-white opacity-100 transition-all duration-1000 ease-in-out sm:text-3xl md:text-4xl lg:text-5xl">
+								<h2 className="font-semibold text-2xl text-white opacity-100 transition-all duration-1000 ease-in-out sm:text-3xl md:text-4xl lg:text-5xl">
 									{item.title}
 								</h2>
 								{item.description && (
@@ -104,12 +101,8 @@ export const Heros = ({ data }: Props): JSX.Element => {
 								)}
 								{item.buttonLabel && item.url && (
 									<button
-										className="transform border border-white 
-                bg-transparent px-6 py-2
-                text-sm
-                text-white 
-                opacity-100 transition-all duration-1000 ease-in-out hover:bg-accent hover:text-black
-                sm:px-8 sm:py-3 sm:text-base md:px-10 md:py-4 md:text-lg"
+										type="button"
+										className="transform border border-white bg-transparent px-6 py-2 text-sm text-white opacity-100 transition-all duration-1000 ease-in-out hover:bg-accent hover:text-black sm:px-8 sm:py-3 sm:text-base md:px-10 md:py-4 md:text-lg"
 										onClick={() => {
 											if (item.url) {
 												window.open(item.url, "_blank");
@@ -125,14 +118,13 @@ export const Heros = ({ data }: Props): JSX.Element => {
 				);
 			})}
 
-			{/* Bullet Navigation */}
 			{data.length > 1 && (
-				<div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-2">
-					{data.map((_, index) => (
+				<div className="-translate-x-1/2 absolute bottom-8 left-1/2 z-10 flex gap-2">
+					{data.map((dataItem, index) => (
 						<button
-							key={index}
-							className={`h-2 w-2 rounded-full transition-all duration-300
-              ${currentIndex === index ? "w-8 bg-white" : "bg-white/50 hover:bg-white/75"}`}
+							type="button"
+							key={`${dataItem.id}`}
+							className={`h-2 w-2 rounded-full transition-all duration-300 ${currentIndex === index ? "w-8 bg-white" : "bg-white/50 hover:bg-white/75"}`}
 							onClick={() => handleBulletClick(index)}
 						/>
 					))}

@@ -6,7 +6,18 @@
 		"useIgnoreFile": false
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"includes": [
+			"**",
+			"!node_modules",
+			"!dist",
+			"!build",
+			"!.next",
+			"!coverage",
+			"!*.min.js",
+			"!*.min.css",
+			"!**/payload-types.ts"
+		]
 	},
 	"formatter": {
 		"enabled": true,
@@ -15,7 +26,6 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"react/react-in-jsx-scope": "off",
 			"recommended": true,
 			"nursery": {
 				"useSortedClasses": "error"

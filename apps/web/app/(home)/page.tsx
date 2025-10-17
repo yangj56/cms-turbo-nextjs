@@ -46,7 +46,7 @@ export default async function HomePage(): Promise<JSX.Element> {
 	return (
 		<>
 			<Heros data={heros} />
-			<div className="container mb-20 mt-12 space-y-20 divide-y [&>*+*]:pt-12">
+			<div className="container mt-12 mb-20 space-y-20 divide-y [&>*+*]:pt-12">
 				<ProductCategories data={sortedProductCategories} />
 				<LandingIntroduction data={introduction} />
 			</div>

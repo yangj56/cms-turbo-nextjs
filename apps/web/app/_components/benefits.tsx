@@ -1,7 +1,6 @@
 import { Heart, Sun, Zap } from "lucide-react";
-import React from "react";
 
-export const Benefits = () => {
+export const Benefits = (): React.ReactNode => {
 	return (
 		<div className="w-full">
 			<div className="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -9,7 +8,7 @@ export const Benefits = () => {
 					<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
 						<Sun className="h-8 w-8 text-blue-600" />
 					</div>
-					<h3 className="mb-2 text-xl font-semibold">Smart Controls</h3>
+					<h3 className="mb-2 font-semibold text-xl">Smart Controls</h3>
 					<p className="text-gray-600">
 						Control your lighting from anywhere with our smart app
 					</p>
@@ -18,7 +17,7 @@ export const Benefits = () => {
 					<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
 						<Zap className="h-8 w-8 text-blue-600" />
 					</div>
-					<h3 className="mb-2 text-xl font-semibold">Energy Efficient</h3>
+					<h3 className="mb-2 font-semibold text-xl">Energy Efficient</h3>
 					<p className="text-gray-600">
 						Save energy and reduce your carbon footprint
 					</p>
@@ -27,7 +26,7 @@ export const Benefits = () => {
 					<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
 						<Heart className="h-8 w-8 text-blue-600" />
 					</div>
-					<h3 className="mb-2 text-xl font-semibold">Modern Design</h3>
+					<h3 className="mb-2 font-semibold text-xl">Modern Design</h3>
 					<p className="text-gray-600">
 						Beautiful fixtures that complement your space
 					</p>

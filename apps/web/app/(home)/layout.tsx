@@ -1,15 +1,16 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { useMyContext } from "@/context";
 import { Footer } from "../_components/footer";
 import { Header } from "../_components/header";
 
 type PageLayoutProps = {
-	children: ReactNode;
+	children: React.ReactNode;
 };
 
-export default function PageLayout({ children }: PageLayoutProps) {
+export default function PageLayout({
+	children,
+}: PageLayoutProps): React.ReactNode {
 	const sortedData = useMyContext();
 	return (
 		<div className="relative flex w-full flex-col items-center justify-center pt-0">

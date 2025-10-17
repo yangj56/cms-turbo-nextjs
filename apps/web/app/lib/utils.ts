@@ -13,6 +13,6 @@ export function queryParamToNumber(
 	if (!param) return defaultValue;
 	const value = Array.isArray(param) ? param[0] : param;
 	if (!value) return defaultValue;
-	const num = parseInt(value, 10);
-	return isNaN(num) ? defaultValue : num;
+	const num = Number.parseInt(value, 10);
+	return Number.isNaN(num) ? defaultValue : num;
 }

@@ -6,7 +6,7 @@ interface Props {
 	data: BlogPost;
 }
 
-export const BlogPostDetails = async ({ data }: Props) => {
+export const BlogPostDetails = ({ data }: Props): React.ReactNode => {
 	// Helper function to format date
 	const formatDate = (dateString: string) => {
 		return new Date(dateString).toLocaleDateString("en-US", {
@@ -42,25 +42,20 @@ export const BlogPostDetails = async ({ data }: Props) => {
 		<article className="mx-auto max-w-4xl px-4 py-8">
 			{/* Header */}
 			<header className="mb-8">
-				<h1 className="mb-4 text-4xl font-bold text-gray-900">{data.title}</h1>
+				<h1 className="mb-4 font-bold text-4xl text-gray-900">{data.title}</h1>
 
 				{/* Excerpt */}
 				{data.excerpt && (
-					<p className="mb-6 text-xl leading-relaxed text-gray-600">
+					<p className="mb-6 text-gray-600 text-xl leading-relaxed">
 						{data.excerpt}
 					</p>
 				)}
 
 				{/* Meta information */}
-				<div className="mb-6 flex flex-wrap items-center gap-4 text-sm text-gray-500">
-					{data.publishedAt && (
-						<time dateTime={data.publishedAt}>
-							Published on {formatDate(data.publishedAt)}
-						</time>
-					)}
-					{data.updatedAt && data.updatedAt !== data.publishedAt && (
-						<time dateTime={data.updatedAt}>
-							Updated on {formatDate(data.updatedAt)}
+				<div className="mb-6 flex flex-wrap items-center gap-4 text-gray-500 text-sm">
+					{data.createdAt && (
+						<time dateTime={data.createdAt}>
+							Published on {formatDate(data.createdAt)}
 						</time>
 					)}
 				</div>
@@ -71,7 +66,7 @@ export const BlogPostDetails = async ({ data }: Props) => {
 						{data.tags.map((tag, index) => (
 							<span
 								key={tag.id || index}
-								className="inline-block rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-800"
+								className="inline-block rounded-full bg-blue-100 px-2 py-1 text-blue-800 text-xs"
 							>
 								{tag.tag}
 							</span>
@@ -97,23 +92,23 @@ export const BlogPostDetails = async ({ data }: Props) => {
 			{data.content ? (
 				<div className="prose max-w-none">
 					<div>content here</div>
-					<RichTextRenderer content={data.content as any} />
+					<RichTextRenderer content={data.content} />
 				</div>
 			) : null}
 
 			{/* Footer */}
-			<footer className="mt-12 border-t border-gray-200 pt-8">
-				<div className="text-sm text-gray-500">
+			<footer className="mt-12 border-gray-200 border-t pt-8">
+				<div className="text-gray-500 text-sm">
 					<p>Blog post ID: {data.id}</p>
 					<p>Slug: {data.slug}</p>
-					{data.canonicalURL && (
+					{data.canonicalUrl && (
 						<p>
 							Canonical URL:{" "}
 							<a
-								href={data.canonicalURL}
+								href={data.canonicalUrl}
 								className="text-blue-600 hover:underline"
 							>
-								{data.canonicalURL}
+								{data.canonicalUrl}
 							</a>
 						</p>
 					)}

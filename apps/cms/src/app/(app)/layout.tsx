@@ -1,11 +1,10 @@
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/utilities/utils";
 import "./globals.css";
-import type { ReactNode } from "react";
-import React from "react";
+import type React from "react";
 
 type LayoutProps = {
-	children: ReactNode;
+	children: React.ReactNode;
 };
 
 const fontSans = FontSans({

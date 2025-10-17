@@ -7,8 +7,10 @@ export function cn(...inputs: ClassValue[]) {
 
 export function queryParamToNumber(param: string | string[] | undefined) {
 	if (!param) return undefined;
-	const num = parseInt(param as string);
-	return isNaN(num) ? undefined : num;
+	const value = Array.isArray(param) ? param[0] : param;
+	if (!value) return undefined;
+	const num = Number.parseInt(value, 10);
+	return Number.isNaN(num) ? undefined : num;
 }
 
 export function queryParamToString(param: string | string[] | undefined) {

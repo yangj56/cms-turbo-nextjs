@@ -1,8 +1,6 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { BLUR_DATA } from "@/lib/contant";
 import type { Media } from "@/lib/payload-types";
 import { ImageLoader } from "./image-loader";
 
@@ -20,7 +18,10 @@ type BoxDisplayProps = {
 	showDescription?: boolean;
 };
 
-export const BoxDisplay = ({ label, data }: BoxDisplayProps) => {
+export const BoxDisplay = ({
+	label,
+	data,
+}: BoxDisplayProps): React.ReactNode => {
 	return (
 		<div className="w-full py-8">
 			<div className="mb-6">

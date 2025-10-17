@@ -17,14 +17,14 @@ export const LandingIntroduction = ({ data }: Props): JSX.Element => {
 					{data.url && data.buttonLabel && (
 						<Link
 							href={data.url}
-							className="mt-4 inline-block border border-black px-12 py-6 text-2xl font-light"
+							className="mt-4 inline-block border border-black px-12 py-6 font-light text-2xl"
 						>
 							{data.buttonLabel}
 						</Link>
 					)}
 				</div>
 				<div className="md:w-3/5">
-					<p className="text-xl font-thin">{data.description}</p>
+					<p className="font-thin text-xl">{data.description}</p>
 				</div>
 			</div>
 		</div>

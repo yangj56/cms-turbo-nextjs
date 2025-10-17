@@ -46,8 +46,8 @@ export const Product: CollectionConfig = {
 							},
 						],
 					},
-					limit: isNaN(limitNumber) ? 10 : limitNumber,
-					page: isNaN(pageNumber) ? 1 : pageNumber,
+					limit: Number.isNaN(limitNumber) ? 10 : limitNumber,
+					page: Number.isNaN(pageNumber) ? 1 : pageNumber,
 					sort: ["sequence:desc", "title:asc"],
 					select: {
 						title: true,

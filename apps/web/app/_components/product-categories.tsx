@@ -4,6 +4,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { type JSX, useCallback, useEffect, useState } from "react";
+import type { CarouselApi } from "@/components/carousel";
 import type { Media, ProductCategory } from "@/lib/payload-types";
 import { ImageLoader } from "./image-loader";
 
@@ -30,7 +31,8 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
 		if (emblaApi) emblaApi.scrollNext();
 	}, [emblaApi]);
 
-	const onSelect = useCallback((emblaApi: any) => {
+	const onSelect = useCallback((emblaApi: CarouselApi) => {
+		if (!emblaApi) return;
 		setCanScrollPrev(emblaApi.canScrollPrev());
 		setCanScrollNext(emblaApi.canScrollNext());
 	}, []);
@@ -74,16 +76,16 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
 				{shouldShowNavigation && (
 					<div className="flex gap-2">
 						<button
-							className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 
-                  transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+							type="button"
+							className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
 							onClick={scrollPrev}
 							disabled={!canScrollPrev}
 						>
 							<ChevronLeft className="h-5 w-5" />
 						</button>
 						<button
-							className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 
-                  transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+							type="button"
+							className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
 							onClick={scrollNext}
 							disabled={!canScrollNext}
 						>
@@ -95,7 +97,7 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
 
 			{/* Carousel */}
 			<div className="w-full overflow-hidden" ref={emblaRef}>
-				<div className="-mr-4 ml-0 flex sm:-mr-6">
+				<div className="-mr-4 sm:-mr-6 ml-0 flex">
 					{data.map((item) => {
 						if (!item || !item.image) {
 							return null;
@@ -124,7 +126,7 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
 												/>
 											</div>
 										</div>
-										<h5 className="relative inline-block text-sm font-normal after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full sm:text-base">
+										<h5 className="relative inline-block font-normal text-sm after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full sm:text-base">
 											{item.title}
 										</h5>
 									</Link>

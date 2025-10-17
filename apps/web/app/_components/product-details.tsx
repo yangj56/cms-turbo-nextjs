@@ -8,8 +8,8 @@ import {
 	DownloadIcon,
 	PlayCircleIcon,
 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import type React from "react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/button";
 import type { CarouselApi } from "@/components/carousel";
@@ -20,7 +20,6 @@ import {
 	CarouselNext,
 	CarouselPrevious,
 } from "@/components/carousel";
-import { BLUR_DATA } from "@/lib/contant";
 import type { Media, Product } from "@/lib/payload-types";
 import { cn } from "@/lib/utils";
 import { ImageLoader } from "./image-loader";
@@ -29,7 +28,7 @@ interface Props {
 	data: Product;
 }
 
-export const ProductDetails = ({ data }: Props) => {
+export const ProductDetails = ({ data }: Props): React.ReactNode => {
 	const [currentColor, setCurrentColor] = useState(
 		data.color?.[0]?.colorName || null,
 	);
@@ -90,7 +89,7 @@ export const ProductDetails = ({ data }: Props) => {
 								>
 									{spec.data}
 									{index !== length - 1 && (
-										<div className="px-2 text-xl font-thin text-gray-500">
+										<div className="px-2 font-thin text-gray-500 text-xl">
 											l
 										</div>
 									)}
@@ -100,6 +99,7 @@ export const ProductDetails = ({ data }: Props) => {
 					</div>
 					<div className="mt-2 flex basis-2/5 justify-end">
 						<button
+							type="button"
 							onClick={scrollToSpecifications}
 							className="flex h-[30px] flex-row items-center gap-1 border px-2 text-sm"
 						>
@@ -116,7 +116,7 @@ export const ProductDetails = ({ data }: Props) => {
 		if (!data.datasheet && !data.instruction && !data.youtubeUrl) return null;
 		return (
 			<div className="md:basis-1/3">
-				<h4 className="mb-4 text-center text-sm font-medium uppercase">
+				<h4 className="mb-4 text-center font-medium text-sm uppercase">
 					Downloads
 				</h4>
 				<div className="space-y-2">
@@ -167,11 +167,12 @@ export const ProductDetails = ({ data }: Props) => {
 						}
 						return (
 							<button
-								key={index}
+								type="button"
+								key={`${image}`}
 								onClick={() => setMainImageIndex(index)}
 								className={`relative aspect-square overflow-hidden rounded-sm transition-shadow duration-200 ${
 									mainImageIndex === index
-										? "ring-muted-foreground-500 ring-1 ring-offset-1"
+										? "ring-1 ring-muted-foreground-500 ring-offset-1"
 										: "hover:ring-1 hover:ring-gray-300"
 								}`}
 							>
@@ -204,7 +205,7 @@ export const ProductDetails = ({ data }: Props) => {
 									variant={"secondary"}
 									size={"icon"}
 									className={cn(
-										"absolute left-1 top-1/2 z-10 h-10 w-10 -translate-y-1/2 rounded-full",
+										"-translate-y-1/2 absolute top-1/2 left-1 z-10 h-10 w-10 rounded-full",
 									)}
 									disabled={mainImageIndex === 0}
 									onClick={() => {
@@ -218,7 +219,7 @@ export const ProductDetails = ({ data }: Props) => {
 									variant={"secondary"}
 									size={"icon"}
 									className={cn(
-										"absolute right-1 top-1/2 z-10 h-10 w-10 -translate-y-1/2 rounded-full",
+										"-translate-y-1/2 absolute top-1/2 right-1 z-10 h-10 w-10 rounded-full",
 									)}
 									disabled={mainImageIndex === currentImages.length - 1}
 									onClick={() => {
@@ -280,12 +281,12 @@ export const ProductDetails = ({ data }: Props) => {
 			<div className="mx-4 my-8 flex flex-col gap-8 md:hidden">
 				<Carousel className="w-full" setApi={setApi}>
 					<CarouselContent>
-						{currentImages.map((image, index) => {
+						{currentImages.map((image) => {
 							if (!image) {
 								return null;
 							}
 							return (
-								<CarouselItem key={index}>
+								<CarouselItem key={`${image}`}>
 									<div className="relative aspect-square w-full overflow-hidden rounded-sm">
 										<ImageLoader
 											src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
@@ -311,7 +312,8 @@ export const ProductDetails = ({ data }: Props) => {
 						}
 						return (
 							<button
-								key={index}
+								type="button"
+								key={`${image}`}
 								onClick={() => {
 									if (!api) return;
 									api.scrollTo(index);
@@ -319,7 +321,7 @@ export const ProductDetails = ({ data }: Props) => {
 								}}
 								className={`relative aspect-square overflow-hidden rounded-sm transition-shadow duration-200 ${
 									mainImageIndex === index
-										? "ring-muted-foreground-500 ring-1 ring-offset-1"
+										? "ring-1 ring-muted-foreground-500 ring-offset-1"
 										: "hover:ring-1 hover:ring-gray-300"
 								}`}
 							>
@@ -347,13 +349,14 @@ export const ProductDetails = ({ data }: Props) => {
 									(color) =>
 										color.colorName && (
 											<button
+												type="button"
 												key={color.id}
 												onClick={() =>
 													handleColorChange(color.colorName || null)
 												}
 												className={`relative h-[20px] w-[20px] ${
 													currentColor === color.colorName
-														? "ring-muted-foreground-500 ring-1 ring-offset-1"
+														? "ring-1 ring-muted-foreground-500 ring-offset-1"
 														: "ring-1 ring-gray-300 hover:ring-1 hover:ring-gray-300"
 												}`}
 												style={{ backgroundColor: color.colorCode || "#000" }}
@@ -370,15 +373,15 @@ export const ProductDetails = ({ data }: Props) => {
 					{displayOverview()}
 				</div>
 			</div>
-			<div className="container mb-12 mt-2 flex w-full flex-col md:mt-8">
+			<div className="container mt-2 mb-12 flex w-full flex-col md:mt-8">
 				{/* Specifications */}
 				<div
-					id="specifications"
+					id={`specifications-${data.id}`}
 					className="flex scroll-mt-20 flex-col gap-12 md:flex-row md:gap-32"
 				>
 					{data.labelValuePairs && (
 						<div className="md:basis-2/3">
-							<h4 className="mb-4 text-center text-sm font-medium uppercase">
+							<h4 className="mb-4 text-center font-medium text-sm uppercase">
 								Specifications
 							</h4>
 							<div className="flex flex-col divide-y divide-gray-200">
@@ -387,7 +390,7 @@ export const ProductDetails = ({ data }: Props) => {
 								).map(([key, value]) => (
 									<div key={key} className="mb-2 flex flex-row pt-2">
 										<div className="basis-1/2 text-sm md:basis-1/3">{key}</div>
-										<div className="basis-1/2 text-sm font-light md:basis-2/3">
+										<div className="basis-1/2 font-light text-sm md:basis-2/3">
 											{value}
 										</div>
 									</div>
@@ -407,12 +410,13 @@ export const ProductDetails = ({ data }: Props) => {
 					<hr className="w-full" />
 					<div className="container">
 						<button
-							className="group flex w-full items-center justify-center py-4 text-xl font-medium"
+							type="button"
+							className="group flex w-full items-center justify-center py-4 font-medium text-xl"
 							onClick={() =>
 								setIsCompatibleProductsOpen(!isCompatibleProductsOpen)
 							}
 						>
-							<div className="text-md pr-4 font-base">
+							<div className="pr-4 font-base text-md">
 								View <span className="font-bold">Compatible Products</span>
 							</div>
 							<ChevronDownIcon
@@ -466,10 +470,10 @@ export const ProductDetails = ({ data }: Props) => {
 														/>
 													</div>
 													<div>
-														<div className="text-sm font-medium">
+														<div className="font-medium text-sm">
 															{product.title}
 														</div>
-														<div className="text-xs text-gray-500">
+														<div className="text-gray-500 text-xs">
 															Near | Zigbee
 														</div>
 													</div>

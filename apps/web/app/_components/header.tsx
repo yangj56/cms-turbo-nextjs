@@ -53,8 +53,9 @@ export const Header = ({
 	const displaySearch = (isDesktop: boolean) => {
 		return (
 			<button
+				type="button"
 				className={cn(
-					"relative flex items-center gap-4 text-lg font-semibold after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 after:ease-in-out hover:opacity-100 hover:after:w-full",
+					"relative flex items-center gap-4 font-semibold text-lg after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 after:ease-in-out hover:opacity-100 hover:after:w-full",
 				)}
 				onClick={() => {
 					setIsMenuOpen(false);
@@ -71,7 +72,7 @@ export const Header = ({
 		<header
 			className={cn(
 				"group top-0 z-50 flex w-full flex-col items-center justify-center transition-colors duration-300 hover:bg-white hover:text-black",
-				sticky ? "border-b border-gray-200" : "",
+				sticky ? "border-gray-200 border-b" : "",
 				isScrolled || isSearchOpen || sticky
 					? "bg-white text-black"
 					: "bg-transparent text-white",
@@ -100,7 +101,7 @@ export const Header = ({
 								key={category.id}
 								href={`/collection-products?collection=${category.sku}`}
 								className={cn(
-									"relative text-lg font-semibold after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 after:ease-in-out hover:opacity-100 hover:after:w-full",
+									"relative font-semibold text-lg after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 after:ease-in-out hover:opacity-100 hover:after:w-full",
 								)}
 							>
 								{category.title}
@@ -112,6 +113,7 @@ export const Header = ({
 						{displaySearch(false)}
 						{/* Mobile Menu Button */}
 						<button
+							type="button"
 							className="p-2"
 							onClick={toggleMenu}
 							aria-label="Toggle menu"
@@ -124,7 +126,9 @@ export const Header = ({
 								strokeWidth="2"
 								viewBox="0 0 24 24"
 								stroke="currentColor"
+								aria-label="Toggle menu"
 							>
+								<title>{`Toggle menu`}</title>
 								{isMenuOpen ? (
 									<path d="M6 18L18 6M6 6l12 12" />
 								) : (
@@ -137,13 +141,13 @@ export const Header = ({
 
 				{/* Mobile Menu */}
 				<div
-					className={`fixed right-0 top-[80px] z-50 h-full w-full transform bg-white text-black transition-transform duration-300 ease-in-out ${
+					className={`fixed top-[80px] right-0 z-50 h-full w-full transform bg-white text-black transition-transform duration-300 ease-in-out ${
 						isMenuOpen ? "translate-x-0" : "translate-x-full"
 					} lg:hidden`}
 				>
 					<div className="flex flex-col">
 						<div className="mt-6 px-8">
-							<h3 className="mb-4 text-lg font-normal">Collections</h3>
+							<h3 className="mb-4 font-normal text-lg">Collections</h3>
 							<div
 								className="flex flex-col space-y-4 divide-y divide-gray-200 overflow-y-auto"
 								style={{ maxHeight: "calc(100vh - 200px)" }}
@@ -159,6 +163,7 @@ export const Header = ({
 									>
 										<span>{category.title}</span>
 										<svg
+											aria-label="Toggle menu"
 											className="ml-1 h-4 w-4"
 											fill="none"
 											strokeLinecap="round"
@@ -167,6 +172,7 @@ export const Header = ({
 											viewBox="0 0 24 24"
 											stroke="currentColor"
 										>
+											<title>{`Toggle menu`}</title>
 											<path d="M9 5l7 7-7 7" />
 										</svg>
 									</Link>
@@ -180,6 +186,7 @@ export const Header = ({
 								>
 									View all
 									<svg
+										aria-label="Toggle menu"
 										className="ml-1 h-4 w-4"
 										fill="none"
 										strokeLinecap="round"
@@ -188,6 +195,7 @@ export const Header = ({
 										viewBox="0 0 24 24"
 										stroke="currentColor"
 									>
+										<title>{`Toggle menu`}</title>
 										<path d="M9 5l7 7-7 7" />
 									</svg>
 								</Link>
@@ -196,11 +204,11 @@ export const Header = ({
 					</div>
 				</div>
 				{isSearchOpen && (
-					<div className="mb-2 mt-8 flex w-full animate-fadeIn items-center justify-center px-4 lg:px-40">
+					<div className="mt-8 mb-2 flex w-full animate-fadeIn items-center justify-center px-4 lg:px-40">
 						<div className="relative flex w-full items-center justify-between bg-white">
 							<div className="flex w-full flex-col">
 								<input
-									className="w-full appearance-none bg-transparent text-xl text-black outline-none placeholder:text-black"
+									className="w-full appearance-none bg-transparent text-black text-xl outline-none placeholder:text-black"
 									type="text"
 									placeholder="Search"
 									onChange={(e) => setSearchQuery(e.target.value)}
@@ -209,11 +217,10 @@ export const Header = ({
 											search();
 										}
 									}}
-									autoFocus
 								/>
 								<hr className="mt-2 border-black" />
 							</div>
-							<button className="p-2">
+							<button type="button" className="p-2">
 								<Search
 									className="h-5 w-5 text-black"
 									onClick={() => {
