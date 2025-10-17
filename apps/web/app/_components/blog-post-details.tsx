@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { RichTextRenderer } from "@/components/rich-text/rich";
 import type { BlogPost } from "@/lib/payload-types";
+import { BlogPostBlock } from "./blog-post-block";
 
 interface Props {
 	data: BlogPost;

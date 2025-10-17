@@ -18,7 +18,12 @@ type Props = {
 	total?: number;
 };
 
-export const SearchProducts = ({ products, offset, limit, total }: Props) => {
+export const SearchProducts = ({
+	products,
+	offset,
+	limit,
+	total,
+}: Props): React.ReactNode => {
 	const [selectedColors, setSelectedColors] = useState<Record<string, string>>(
 		{},
 	);
@@ -33,9 +38,9 @@ export const SearchProducts = ({ products, offset, limit, total }: Props) => {
 	};
 
 	return (
-		<div className="container mx-auto mb-8 mt-4 px-4">
+		<div className="container mx-auto mt-4 mb-8 px-4">
 			<div className="mb-6 flex items-center justify-between">
-				<p className="text-sm text-black">
+				<p className="text-black text-sm">
 					Displaying {offset || 0 + 1} - {products.length} of {total} results
 				</p>
 				<div className="flex items-center gap-2">
@@ -59,6 +64,7 @@ export const SearchProducts = ({ products, offset, limit, total }: Props) => {
 								stroke="currentColor"
 								viewBox="0 0 24 24"
 							>
+								<title>{`Select view per page`}</title>
 								<path
 									strokeLinecap="round"
 									strokeLinejoin="round"
@@ -107,44 +113,44 @@ export const SearchProducts = ({ products, offset, limit, total }: Props) => {
 									</div>
 									{/* Translucent overlay that appears on hover */}
 									<div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-0 p-4 text-center text-white opacity-0 transition-all duration-300 hover:bg-opacity-30 hover:opacity-100">
-										<h3 className="mb-2 text-xl font-bold">{product.title}</h3>
+										<h3 className="mb-2 font-bold text-xl">{product.title}</h3>
 										{selectedColorData?.colorName && (
 											<p className="text-sm">{selectedColorData.colorName}</p>
 										)}
 									</div>
 								</div>
-								<h4 className="mt-2 line-clamp-1 text-lg font-semibold">
+								<h4 className="mt-2 line-clamp-1 font-semibold text-lg">
 									{product.title}
 								</h4>
 							</Link>
 							<div className="flex flex-row gap-2">
-								{product.color &&
-									product.color?.map((color, index) => {
-										if (!color.colorCode) {
-											return null;
-										}
-										return (
-											<button
-												key={color.id}
-												onClick={() => {
-													if (color.colorCode) {
-														handleColorSelect(product.id, color.colorCode);
-													}
-												}}
-												className={cn(
-													"border-grey mt-2 h-6 w-6 border",
-													selectedColors[product.id] === color.colorCode &&
-														"ring-1 ring-gray-300 ring-offset-1",
-													index === 0 &&
-														!selectedColors[product.id] &&
-														"ring-1 ring-gray-300 ring-offset-1",
-												)}
-												style={{ backgroundColor: color.colorCode }}
-												title={color.colorName || "Color option"}
-												aria-label={`Select ${color.colorName || "color option"}`}
-											/>
-										);
-									})}
+								{product?.color?.map((color, index) => {
+									if (!color.colorCode) {
+										return null;
+									}
+									return (
+										<button
+											type="button"
+											key={color.id}
+											onClick={() => {
+												if (color.colorCode) {
+													handleColorSelect(product.id, color.colorCode);
+												}
+											}}
+											className={cn(
+												"mt-2 h-6 w-6 border border-grey",
+												selectedColors[product.id] === color.colorCode &&
+													"ring-1 ring-gray-300 ring-offset-1",
+												index === 0 &&
+													!selectedColors[product.id] &&
+													"ring-1 ring-gray-300 ring-offset-1",
+											)}
+											style={{ backgroundColor: color.colorCode }}
+											title={color.colorName || "Color option"}
+											aria-label={`Select ${color.colorName || "color option"}`}
+										/>
+									);
+								})}
 							</div>
 						</div>
 					);

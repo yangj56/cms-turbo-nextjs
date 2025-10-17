@@ -1,4 +1,5 @@
 import {
+	BlocksFeature,
 	BoldFeature,
 	HeadingFeature,
 	HorizontalRuleFeature,
@@ -7,11 +8,16 @@ import {
 	lexicalEditor,
 	StrikethroughFeature,
 	UnderlineFeature,
-	UploadFeature,
 } from "@payloadcms/richtext-lexical";
 import type { CollectionConfig } from "payload";
 import { anyone } from "@/access/anyone";
 import { authenticated } from "@/access/authenticated";
+import {
+	FullWidthImageBlock,
+	SubtitleBlock,
+	TextBlock,
+	TitleBlock,
+} from "./Block";
 
 export const BlogPost: CollectionConfig = {
 	slug: "blog-post",
@@ -152,14 +158,9 @@ export const BlogPost: CollectionConfig = {
 					LinkFeature({
 						enabledCollections: ["media"],
 					}),
-					UploadFeature({
-						collections: {
-							media: {
-								fields: [
-									// extra per-upload fields inside the editor (optional)
-								],
-							},
-						},
+					BlocksFeature({
+						// Same reference can be reused anywhere, even in the lexical editor, without incurred performance hit
+						blocks: [TitleBlock, SubtitleBlock, TextBlock, FullWidthImageBlock],
 					}),
 				],
 			}),

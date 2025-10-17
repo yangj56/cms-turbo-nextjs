@@ -1,14 +1,12 @@
-// app/components/RichTextRenderer.tsx
-
 import Image from "next/image";
 import React from "react";
-import { ImageLoader } from "@/app/_components/image-loader";
 import type { Media } from "@/lib/payload-types";
 
-type AnyNode = { type?: string; children?: AnyNode[]; [k: string]: any };
+type AnyNode = { type?: string; children?: AnyNode[]; [k: string]: unknown };
 
 function renderInline(node: AnyNode, key: React.Key) {
-	let el: React.ReactNode = node.text ?? "";
+	let el: string | React.ReactNode =
+		(node.text as string | React.ReactNode) ?? "";
 
 	// Lexical flags often also appear as booleans on text nodes
 	if (node.code) el = <code>{el}</code>;
@@ -34,8 +32,12 @@ function renderNode(node: AnyNode, key: React.Key): React.ReactNode {
 			return <p key={key}>{renderChildren(node.children)}</p>;
 
 		case "heading": {
-			const Tag = (node.tag as any) || "h2";
-			return React.createElement(Tag, { key }, renderChildren(node.children));
+			const Tag = node.tag || "h2";
+			return React.createElement(
+				Tag as string,
+				{ key },
+				renderChildren(node.children),
+			);
 		}
 
 		case "list": {
@@ -57,20 +59,21 @@ function renderNode(node: AnyNode, key: React.Key): React.ReactNode {
 			);
 
 		case "link": {
-			const href = node.url ?? node.fields?.url ?? "#";
+			const data = node.fields as { url?: string };
+			const href = data ? (data.url as string) : "#";
 			const rel = node.target === "_blank" ? "noopener noreferrer" : undefined;
 			return (
-				<a key={key} href={href} target={node.target} rel={rel}>
+				<a key={key} href={href} target={node.target as string} rel={rel}>
 					{renderChildren(node.children)}
 				</a>
 			);
 		}
 
 		case "upload": {
-			const src = node.value?.url;
+			const src = (node.value as { url?: string })?.url;
 			console.log(`src`, src);
 			if (!src) return null;
-			const alt = node.value?.alt || "";
+			const alt = (node.value as { alt?: string })?.alt || "";
 			console.log(`alt`, alt);
 			const urls = `${process.env.NEXT_PUBLIC_CMS_URL}${
 				(node.value as unknown as Media).url
@@ -79,8 +82,10 @@ function renderNode(node: AnyNode, key: React.Key): React.ReactNode {
 			return (
 				<figure key={key}>
 					<Image src={src} alt={alt} width={100} height={100} />
-					{node.value?.caption ? (
-						<figcaption>{node.value.caption}</figcaption>
+					{(node.value as { caption?: string })?.caption ? (
+						<figcaption>
+							{(node.value as { caption?: string })?.caption}
+						</figcaption>
 					) : null}
 				</figure>
 			);
@@ -91,6 +96,49 @@ function renderNode(node: AnyNode, key: React.Key): React.ReactNode {
 
 		case "text":
 			return renderInline(node, key);
+
+		case "block": {
+			const fields = node.fields as {
+				blockType?: string;
+				id?: string;
+				value?: string;
+				caption?: string;
+			};
+			if (!fields.blockType) return null;
+			switch (fields.blockType) {
+				case "titleBlock":
+					return <h2 key={`${fields.id}`}>{fields.value}</h2>;
+				case "subtitleBlock":
+					return <h3 key={`${fields.id}`}>{fields.value}</h3>;
+				case "textBlock":
+					return <p key={`${fields.id}`}>{fields.value}</p>;
+				case "fullWidthImageBlock": {
+					const imageValue = fields.value as unknown as Media;
+					const caption = fields.caption || "";
+					const imageUrl = `${process.env.NEXT_PUBLIC_CMS_URL}${imageValue.url}`;
+					return (
+						<div key={`${fields.id}`}>
+							<Image src={imageUrl} alt={caption} width={100} height={100} />
+							{(node.value as { caption?: string })?.caption ? (
+								<figcaption>
+									{(node.value as { caption?: string })?.caption}
+								</figcaption>
+							) : null}
+						</div>
+					);
+				}
+			}
+			return null;
+		}
+
+		case "titleBlock":
+			return <h2 key={key}>{renderChildren(node.children)}</h2>;
+		case "subtitleBlock":
+			return <h3 key={key}>{renderChildren(node.children)}</h3>;
+		case "textBlock":
+			return <p key={key}>{renderChildren(node.children)}</p>;
+		case "fullWidthImageBlock":
+			return <div>text here</div>;
 
 		default:
 			// Unknown node → try to render its children rather than crash
@@ -110,8 +158,8 @@ export function RichTextRenderer({
 	className?: string;
 }) {
 	if (!content) return null;
-	const root = (content as any).root
-		? (content as any).root
-		: (content as AnyNode);
-	return <div className={className}>{renderNode(root, "root")}</div>;
+	const root = (content as unknown as AnyNode).root
+		? (content as unknown as AnyNode).root
+		: (content as unknown as AnyNode);
+	return <div className={className}>{renderNode(root as AnyNode, "root")}</div>;
 }
