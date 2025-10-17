@@ -15,6 +15,7 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
+			"react/react-in-jsx-scope": "off",
 			"recommended": true,
 			"nursery": {
 				"useSortedClasses": "error"
