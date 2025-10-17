@@ -1,22 +1,29 @@
 {
-  "name": "cms-turbo-nextjs",
-  "private": true,
-  "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "start": "turbo start",
-    "generate:types": "turbo generate:types",
-    "generate:importmap": "turbo generate:importmap",
-    "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
-  },
-  "devDependencies": {
-    "prettier": "^3.6.2",
-    "turbo": "^2.5.4",
-    "typescript": "^5.8.3"
-  },
-  "packageManager": "pnpm@10.12.4",
-  "engines": {
-    "node": ">=18"
-  }
+	"name": "cms-turbo-nextjs",
+	"private": true,
+	"scripts": {
+		"build": "turbo build",
+		"dev": "turbo dev",
+		"start": "turbo start",
+		"generate:types": "turbo generate:types",
+		"generate:importmap": "turbo generate:importmap",
+		"lint": "turbo lint",
+		"format": "turbo format"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.2.6",
+		"@tailwindcss/postcss": "^4.1.14",
+		"@tailwindcss/typography": "^0.5.15",
+		"@types/node": "^22.10.3",
+		"@types/react": "^19.2.2",
+		"@types/react-dom": "^19.2.2",
+		"postcss": "^8.5.6",
+		"turbo": "^2.5.4",
+		"typescript": "^5.9.3",
+		"tailwindcss": "^4.1.14"
+	},
+	"packageManager": "pnpm@10.12.4",
+	"engines": {
+		"node": ">=18"
+	}
 }

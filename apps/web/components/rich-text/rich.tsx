@@ -1,4 +1,7 @@
 // app/components/RichTextRenderer.tsx
+import { ImageLoader } from "@/app/_components/image-loader";
+import { Media } from "@/lib/payload-types";
+import Image from "next/image";
 import React from "react";
 
 type AnyNode = { type?: string; children?: AnyNode[]; [k: string]: any };
@@ -64,11 +67,17 @@ function renderNode(node: AnyNode, key: React.Key): React.ReactNode {
 
     case "upload": {
       const src = node.value?.url;
+      console.log(`src`, src);
       if (!src) return null;
       const alt = node.value?.alt || "";
+      console.log(`alt`, alt);
+      const urls = `${process.env.NEXT_PUBLIC_CMS_URL}${
+                (node.value as unknown as Media).url
+      }`;
+      console.log(`urls`, urls);
       return (
         <figure key={key}>
-          <img src={src} alt={alt} />
+          <Image src={src} alt={alt} width={100} height={100} />
           {node.value?.caption ? <figcaption>{node.value.caption}</figcaption> : null}
         </figure>
       );

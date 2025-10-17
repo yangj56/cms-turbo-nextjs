@@ -340,9 +340,8 @@ export interface BlogPost {
         id?: string | null;
       }[]
     | null;
-  publishedAt?: string | null;
   status?: ('draft' | 'published') | null;
-  canonicalURL?: string | null;
+  canonicalUrl?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -600,9 +599,8 @@ export interface BlogPostSelect<T extends boolean = true> {
         tag?: T;
         id?: T;
       };
-  publishedAt?: T;
   status?: T;
-  canonicalURL?: T;
+  canonicalUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -646,4 +644,5 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Auth {
   [k: string]: unknown;
 }
+
 
