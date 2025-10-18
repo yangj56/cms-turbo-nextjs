@@ -30,12 +30,7 @@ export function formatDate(dateString: string) {
 const isMedia = (
 	imageUrl: string | null | undefined | Media,
 ): imageUrl is Media => {
-	if (
-		imageUrl &&
-		typeof imageUrl === "object" &&
-		"url" in imageUrl &&
-		"alt" in imageUrl
-	) {
+	if (imageUrl && typeof imageUrl === "object" && "url" in imageUrl) {
 		return true;
 	}
 	return false;
@@ -62,7 +57,10 @@ export function formatImageAlt(
 		return imageAlt;
 	}
 	if (isMedia(imageAlt)) {
-		return imageAlt.alt || "";
+		if (imageAlt.alt) {
+			return imageAlt.alt;
+		}
+		return imageAlt.filename || "";
 	}
 	return "";
 }

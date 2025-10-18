@@ -8,7 +8,8 @@
 		"generate:types": "turbo generate:types",
 		"generate:importmap": "turbo generate:importmap",
 		"lint": "turbo lint",
-		"lint:fix": "turbo lint:fix"
+		"lint:fix": "turbo lint:fix",
+		"typecheck": "turbo typecheck"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.2.6",

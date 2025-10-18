@@ -21,7 +21,7 @@ import {
 	CarouselPrevious,
 } from "@/components/carousel";
 import type { Media, Product } from "@/lib/payload-types";
-import { cn } from "@/lib/utils";
+import { cn, formatImageAlt, formatImageUrl } from "@/lib/utils";
 import { ImageLoader } from "./image-loader";
 
 interface Props {
@@ -56,6 +56,10 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 	};
 
 	const currentImages = getCurrentColorImages();
+	console.log(`currentImages --> `, currentImages);
+	const currentImage = currentImages[mainImageIndex];
+	const currentImageUrl = formatImageUrl(currentImage);
+	const currentImageAlt = formatImageAlt(currentImage);
 
 	// Reset main image index when color changes
 	const handleColorChange = (colorName: string | null) => {
@@ -114,6 +118,8 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 
 	const displayDownloads = () => {
 		if (!data.datasheet && !data.instruction && !data.youtubeUrl) return null;
+		const datasheetUrl = formatImageUrl(data.datasheet);
+		const instructionUrl = formatImageUrl(data.instruction);
 		return (
 			<div className="md:basis-1/3">
 				<h4 className="mb-4 text-center font-medium text-sm uppercase">
@@ -122,7 +128,7 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 				<div className="space-y-2">
 					{data.datasheet && (
 						<a
-							href={`${process.env.NEXT_PUBLIC_CMS_URL}${(data.datasheet as Media).url}`}
+							href={datasheetUrl}
 							className="flex items-center justify-between rounded border p-3 hover:bg-gray-50"
 							target="_blank"
 							rel="noopener noreferrer"
@@ -133,7 +139,7 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 					)}
 					{data.instruction && (
 						<a
-							href={`${process.env.NEXT_PUBLIC_CMS_URL}${(data.instruction as Media).url}`}
+							href={instructionUrl}
 							className="flex items-center justify-between rounded border p-3 hover:bg-gray-50"
 							target="_blank"
 							rel="noopener noreferrer"
@@ -165,10 +171,12 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 						if (!image) {
 							return null;
 						}
+						const imageUrl = formatImageUrl(image);
+						const imageAlt = formatImageAlt(image);
 						return (
 							<button
 								type="button"
-								key={`${image}`}
+								key={`${imageUrl}`}
 								onClick={() => setMainImageIndex(index)}
 								className={`relative aspect-square overflow-hidden rounded-sm transition-shadow duration-200 ${
 									mainImageIndex === index
@@ -178,8 +186,8 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 							>
 								{/* Placeholder that shows while image is loading */}
 								<ImageLoader
-									src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
-									alt={`${data.title} in ${currentColor || ""} view ${index + 1}`}
+									src={imageUrl}
+									alt={imageAlt}
 									fill
 									className="object-cover transition-all duration-300"
 									priority={true}
@@ -231,10 +239,8 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 								</Button>
 								{/* Placeholder that shows while image is loading */}
 								<ImageLoader
-									src={`${process.env.NEXT_PUBLIC_CMS_URL}${
-										(currentImages[mainImageIndex] as Media).url
-									}`}
-									alt={`${data.title} in ${currentColor || ""}`}
+									src={currentImageUrl}
+									alt={currentImageAlt}
 									fill
 									className="object-cover transition-all duration-300"
 									priority={true}
@@ -285,12 +291,14 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 							if (!image) {
 								return null;
 							}
+							const imageUrl = formatImageUrl(image);
+							const imageAlt = formatImageAlt(image);
 							return (
-								<CarouselItem key={`${image}`}>
+								<CarouselItem key={`${imageUrl}`}>
 									<div className="relative aspect-square w-full overflow-hidden rounded-sm">
 										<ImageLoader
-											src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
-											alt={`${data.title} in ${currentColor || ""}`}
+											src={imageUrl}
+											alt={imageAlt}
 											fill
 											className="object-cover transition-all duration-300"
 											priority={true}
@@ -310,10 +318,14 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 						if (!image) {
 							return null;
 						}
+						const imageUrl = formatImageUrl(image);
+						const imageAlt = formatImageAlt(image);
+						console.log(`imageAlt --> `, imageAlt);
+						console.log(`imageUrl --> `, imageUrl);
 						return (
 							<button
 								type="button"
-								key={`${image}`}
+								key={`${imageUrl}`}
 								onClick={() => {
 									if (!api) return;
 									api.scrollTo(index);
@@ -326,8 +338,8 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 								}`}
 							>
 								<ImageLoader
-									src={`${process.env.NEXT_PUBLIC_CMS_URL}${(image as Media).url}`}
-									alt={`${data.title} in ${currentColor || ""} view ${index + 1}`}
+									src={imageUrl}
+									alt={imageAlt}
 									fill
 									className="object-cover transition-all duration-300"
 									priority={true}
@@ -453,6 +465,8 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 											) {
 												return null;
 											}
+											const imageUrl = formatImageUrl(image);
+											const imageAlt = formatImageAlt(image);
 
 											return (
 												<Link
@@ -462,8 +476,8 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 												>
 													<div className="relative h-16 w-16 overflow-hidden rounded">
 														<ImageLoader
-															src={`${process.env.NEXT_PUBLIC_CMS_URL}${image.url}`}
-															alt={product.title}
+															src={imageUrl}
+															alt={imageAlt}
 															fill
 															className="object-cover transition-all duration-300"
 															priority={true}

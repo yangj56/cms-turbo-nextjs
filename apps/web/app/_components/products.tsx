@@ -4,7 +4,7 @@ import Link from "next/link";
 import { parseAsInteger, parseAsString, useQueryStates } from "nuqs";
 import { useState } from "react";
 import type { Media, Product, ProductCategory } from "@/lib/payload-types";
-import { cn } from "@/lib/utils";
+import { cn, formatImageAlt, formatImageUrl } from "@/lib/utils";
 import { ImageLoader } from "./image-loader";
 import { Pagination } from "./pagingation";
 
@@ -110,11 +110,12 @@ export const Products = ({ products }: Props): React.ReactNode => {
 					if (!image) {
 						console.log(`no image`, product.id);
 					}
-
+					const imageUrl = formatImageUrl(image);
+					const imageAlt = formatImageAlt(image);
 					return (
 						<div key={product.id}>
 							<Link
-								href={`/product/${product.id}`}
+								href={`/product/${product.sku}`}
 								className="group block"
 								title={`View ${product.title} products`}
 								aria-label={`Browse our ${product.title} collection`}
@@ -126,8 +127,8 @@ export const Products = ({ products }: Props): React.ReactNode => {
 											className="absolute inset-0 animate-fadeIn"
 										>
 											<ImageLoader
-												src={`${process.env.NEXT_PUBLIC_CMS_URL}${image.url}`}
-												alt={`${product.title} in ${selectedColorData?.colorName || ""}`}
+												src={imageUrl}
+												alt={imageAlt}
 												className="object-cover transition-all duration-1000 group-hover:scale-110"
 												fill
 												sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -135,12 +136,6 @@ export const Products = ({ products }: Props): React.ReactNode => {
 											/>
 										</div>
 									)}
-									{/* <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-0 p-4 text-center text-white opacity-0 transition-all duration-300 hover:bg-opacity-30 hover:opacity-100">
-                    <h3 className="mb-2 text-xl font-bold">{product.title}</h3>
-                    {selectedColorData?.colorName && (
-                      <p className="text-sm">{selectedColorData.colorName}</p>
-                    )}
-                  </div> */}
 								</div>
 								<h4 className="mt-2 line-clamp-1 font-semibold text-lg">
 									{product.title}

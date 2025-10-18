@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import type { Media } from "@/lib/payload-types";
+import { formatImageAlt, formatImageUrl } from "@/lib/utils";
 
 type AnyNode = { type?: string; children?: AnyNode[]; [k: string]: unknown };
 
@@ -70,18 +71,12 @@ function renderNode(node: AnyNode, key: React.Key): React.ReactNode {
 		}
 
 		case "upload": {
-			const src = (node.value as { url?: string })?.url;
-			console.log(`src`, src);
-			if (!src) return null;
-			const alt = (node.value as { alt?: string })?.alt || "";
-			console.log(`alt`, alt);
-			const urls = `${process.env.NEXT_PUBLIC_CMS_URL}${
-				(node.value as unknown as Media).url
-			}`;
-			console.log(`urls`, urls);
+			const imageUrl = formatImageUrl(node.value as unknown as Media);
+			const imageAlt = formatImageAlt(node.value as unknown as Media);
+			console.log(`imageUrl`, imageUrl);
 			return (
 				<figure key={key}>
-					<Image src={src} alt={alt} width={100} height={100} />
+					<Image src={imageUrl} alt={imageAlt} width={100} height={100} />
 					{(node.value as { caption?: string })?.caption ? (
 						<figcaption>
 							{(node.value as { caption?: string })?.caption}
@@ -114,11 +109,11 @@ function renderNode(node: AnyNode, key: React.Key): React.ReactNode {
 					return <p key={`${fields.id}`}>{fields.value}</p>;
 				case "fullWidthImageBlock": {
 					const imageValue = fields.value as unknown as Media;
-					const caption = fields.caption || "";
-					const imageUrl = `${process.env.NEXT_PUBLIC_CMS_URL}${imageValue.url}`;
+					const imageUrl = formatImageUrl(imageValue);
+					const imageAlt = formatImageAlt(imageValue);
 					return (
 						<div key={`${fields.id}`}>
-							<Image src={imageUrl} alt={caption} width={100} height={100} />
+							<Image src={imageUrl} alt={imageAlt} width={100} height={100} />
 							{(node.value as { caption?: string })?.caption ? (
 								<figcaption>
 									{(node.value as { caption?: string })?.caption}

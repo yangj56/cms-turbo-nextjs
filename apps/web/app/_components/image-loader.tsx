@@ -7,7 +7,6 @@ import { useState } from "react";
 export const ImageLoader = (props: ImageProps): React.ReactNode => {
 	const [isLoading, setIsLoading] = useState(true);
 	const isFill = props.fill === true;
-	console.log(`props`, props);
 	// For fill images (responsive, used with parent container dimensions)
 	if (isFill) {
 		return (

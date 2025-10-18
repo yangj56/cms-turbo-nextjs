@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { findProduct } from "@/actions/find-product";
+import { findProductBySku } from "@/actions/find-product-by-sku";
 import { findProducts } from "@/actions/find-products";
 import { ProductDetails } from "@/app/_components/product-details";
 import { ALL_PRODUCTS_LIMIT } from "@/lib/contant";
@@ -11,14 +12,14 @@ export const revalidate = 60;
 export default async function Page({
 	params,
 }: {
-	params: Promise<{ id: string }>;
+	params: Promise<{ sku: string }>;
 }) {
-	const id = (await params).id;
-	if (!id) {
+	const sku = (await params).sku;
+	if (!sku) {
 		return notFound();
 	}
 
-	const product = await findProduct(id);
+	const product = await findProductBySku(sku);
 	if (!product) {
 		return notFound();
 	}
@@ -29,6 +30,6 @@ export default async function Page({
 export async function generateStaticParams() {
 	const products: Product[] = await findProducts(1, ALL_PRODUCTS_LIMIT);
 	return products.map((product) => ({
-		id: product.id,
+		sku: product.sku,
 	}));
 }

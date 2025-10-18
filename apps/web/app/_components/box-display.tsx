@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { Media } from "@/lib/payload-types";
+import { formatImageAlt, formatImageUrl } from "@/lib/utils";
 import { ImageLoader } from "./image-loader";
 
 type BoxDisplayProps = {
@@ -51,12 +52,14 @@ const BoxItem = ({
 	if (!item || !item.image) {
 		return null;
 	}
+	const imageUrl = formatImageUrl(item.image);
+	const imageAlt = formatImageAlt(item.image);
 	const content = (
 		<div className="aspect-square w-full overflow-hidden rounded-sm">
 			<div className="relative h-full w-full">
 				<ImageLoader
-					src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
-					alt={item.title}
+					src={imageUrl}
+					alt={imageAlt}
 					className="object-cover transition-all duration-300 group-hover:scale-105"
 					fill
 					sizes="(max-width: 640px) 85vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"

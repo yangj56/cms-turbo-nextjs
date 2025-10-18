@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { Media, Product } from "@/lib/payload-types";
-import { cn } from "@/lib/utils";
+import { cn, formatImageAlt, formatImageUrl } from "@/lib/utils";
 import { ImageLoader } from "./image-loader";
 import { Pagination } from "./pagingation";
 
@@ -88,11 +88,12 @@ export const SearchProducts = ({
 					if (!image) {
 						image = product.color?.[0]?.images?.[0]?.image as Media;
 					}
-
+					const imageUrl = formatImageUrl(image);
+					const imageAlt = formatImageAlt(image);
 					return (
 						<div key={product.id}>
 							<Link
-								href={`/product/${product.id}`}
+								href={`/product/${product.sku}`}
 								className="group block"
 								title={`View ${product.title} products`}
 								aria-label={`Browse our ${product.title} collection`}
@@ -103,8 +104,8 @@ export const SearchProducts = ({
 										className="absolute inset-0 animate-fadeIn"
 									>
 										<ImageLoader
-											src={`${process.env.NEXT_PUBLIC_CMS_URL}${image.url}`}
-											alt={`${product.title} in ${selectedColorData?.colorName || ""}`}
+											src={imageUrl}
+											alt={imageAlt}
 											className="object-cover transition-all duration-1000 group-hover:scale-110"
 											fill
 											sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

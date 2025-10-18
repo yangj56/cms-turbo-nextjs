@@ -6,6 +6,7 @@ import Link from "next/link";
 import { type JSX, useCallback, useEffect, useState } from "react";
 import type { CarouselApi } from "@/components/carousel";
 import type { Media, ProductCategory } from "@/lib/payload-types";
+import { formatImageAlt, formatImageUrl } from "@/lib/utils";
 import { ImageLoader } from "./image-loader";
 
 type Props = {
@@ -102,6 +103,8 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
 						if (!item || !item.image) {
 							return null;
 						}
+						const imageUrl = formatImageUrl(item.image);
+						const imageAlt = formatImageAlt(item.image);
 						return (
 							<div
 								key={item.id}
@@ -117,8 +120,8 @@ export const ProductCategories = ({ data }: Props): JSX.Element => {
 										<div className="mb-3 aspect-square w-full overflow-hidden rounded-sm">
 											<div className="relative h-full w-full">
 												<ImageLoader
-													src={`${process.env.NEXT_PUBLIC_CMS_URL}${(item.image as Media).url}`}
-													alt={item.title}
+													src={imageUrl}
+													alt={imageAlt}
 													className="object-cover transition-all duration-1000 group-hover:scale-110"
 													fill
 													sizes="(max-width: 640px) 85vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"

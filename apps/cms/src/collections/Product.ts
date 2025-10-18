@@ -16,6 +16,39 @@ export const Product: CollectionConfig = {
 	},
 	endpoints: [
 		{
+			path: "/sku/:sku",
+			method: "get",
+			handler: async (req) => {
+				const sku = (await req.routeParams?.sku) as string;
+				if (!sku) {
+					return Response.json({ error: "sku is required" }, { status: 400 });
+				}
+				console.log("sku", sku);
+				const product = await req.payload.find({
+					collection: "product",
+					where: { sku: { equals: sku } },
+				});
+				if (!product.docs.length) {
+					return Response.json({ error: "product not found" }, { status: 404 });
+				}
+				if (product.docs.length > 1) {
+					return Response.json(
+						{ error: "product is not unique" },
+						{ status: 404 },
+					);
+				}
+				const data = product.docs[0];
+				if (!data) {
+					return Response.json(
+						{ error: "product missing data" },
+						{ status: 404 },
+					);
+				}
+				console.log("data", data);
+				return Response.json(data);
+			},
+		},
+		{
 			path: "/search",
 			method: "get",
 			handler: async (req) => {

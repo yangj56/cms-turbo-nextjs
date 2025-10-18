@@ -9,7 +9,7 @@
 		"start": "next start -p 3001",
 		"lint": "biome check app components lib public",
 		"lint:fix": "biome check --write app components lib public",
-		"check-types": "tsc --noEmit"
+		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@payloadcms/richtext-lexical": "3.37.0",
