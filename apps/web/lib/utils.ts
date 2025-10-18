@@ -67,4 +67,7 @@ export function formatImageAlt(
 
 export const cacheOptions: RequestInit = {
 	cache: "no-cache",
+	headers: {
+		"x-vercel-protection-bypass": "mmMdkTtHgOvtQdBp4UaZYtJtwMb8cyws",
+	},
 };
