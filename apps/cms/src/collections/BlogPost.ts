@@ -132,6 +132,7 @@ export const BlogPost: CollectionConfig = {
 		{
 			name: "excerpt",
 			type: "textarea",
+			required: true,
 			admin: { description: "Short summary for lists and SEO." },
 		},
 		{
@@ -139,6 +140,7 @@ export const BlogPost: CollectionConfig = {
 			label: "Hero Image",
 			type: "upload",
 			relationTo: "media",
+			required: true,
 		},
 		{
 			name: "content",
@@ -179,17 +181,6 @@ export const BlogPost: CollectionConfig = {
 				{ label: "Draft", value: "draft" },
 				{ label: "Published", value: "published" },
 			],
-		},
-		// Optional: computed canonical URL (for convenience)
-		{
-			name: "canonicalUrl",
-			type: "text",
-			admin: { readOnly: true },
-			hooks: {
-				afterRead: [
-					({ data }) => (data?.slug ? `/blog/${data.slug}` : undefined),
-				],
-			},
 		},
 	],
 };

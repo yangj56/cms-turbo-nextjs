@@ -317,8 +317,8 @@ export interface BlogPost {
   /**
    * Short summary for lists and SEO.
    */
-  excerpt?: string | null;
-  heroImage?: (string | null) | Media;
+  excerpt: string;
+  heroImage: string | Media;
   content: {
     root: {
       type: string;
@@ -341,7 +341,6 @@ export interface BlogPost {
       }[]
     | null;
   status?: ('draft' | 'published') | null;
-  canonicalUrl?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -600,7 +599,6 @@ export interface BlogPostSelect<T extends boolean = true> {
         id?: T;
       };
   status?: T;
-  canonicalUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

@@ -1,59 +1,98 @@
 @import "tailwindcss";
 
+/* 1) tokens */
+@theme {
+	--color-primary: #2e3b96;
+	--color-primary-foreground: #fafafa;
+	--color-secondary: #f4f4f5;
+	--color-secondary-foreground: #18181b;
+	--color-background: #ffffff;
+	--color-foreground: #09090b;
+	--color-card: #ffffff;
+	--color-card-foreground: #09090b;
+	--color-popover: #ffffff;
+	--color-popover-foreground: #09090b;
+	--color-muted: #f4f4f5;
+	--color-muted-foreground: #71717a;
+	--color-accent: #e2e2e4;
+	--color-accent-foreground: #18181b;
+	--color-destructive: #ef4444;
+	--color-destructive-foreground: #fafafa;
+	--color-border: #e4e4e7;
+	--color-input: #e4e4e7;
+	--color-ring: #18181b;
+	--color-chart-1: #f97316;
+	--color-chart-2: #14b8a6;
+	--color-chart-3: #1e293b;
+	--color-chart-4: #eab308;
+	--color-chart-5: #f43f5e;
+	--radius: 0.5rem;
+
+	--container-xs: 320px;
+	--container-sm: 640px;
+	--container-md: 768px;
+	--container-lg: 1024px;
+	--container-xl: 1280px;
+	--container-2xl: 1440px; /* custom width */
+}
+
+@layer components {
+	.container {
+		@apply mx-auto;
+		padding-inline: 1rem; /* = 16px */
+	}
+
+	@media (min-width: 640px) {
+		/* sm */
+		.container {
+			padding-inline: 1.5rem; /* = 24px */
+		}
+	}
+
+	@media (min-width: 1024px) {
+		/* lg */
+		.container {
+			padding-inline: 2rem; /* = 32px */
+		}
+	}
+
+	/* Optional: cap the width at your largest container token */
+	.container {
+		max-width: var(--container-xl);
+	}
+}
+
+/* 2) bridge: map generic vars to tokens (no dark block needed) */
 @layer base {
 	:root {
-		--background: #ffffff;
-		--foreground: #09090b;
-		--card: #ffffff;
-		--card-foreground: #09090b;
-		--popover: #ffffff;
-		--popover-foreground: #09090b;
-		--primary: #2e3b96;
-		--primary-foreground: #fafafa;
-		--secondary: #f4f4f5;
-		--secondary-foreground: #18181b;
-		--muted: #f4f4f5;
-		--muted-foreground: #71717a;
-		--accent: #e2e2e4;
-		--accent-foreground: #18181b;
-		--destructive: #ef4444;
-		--destructive-foreground: #fafafa;
-		--border: #e4e4e7;
-		--input: #e4e4e7;
-		--ring: #18181b;
-		--chart-1: #f97316;
-		--chart-2: #14b8a6;
-		--chart-3: #1e293b;
-		--chart-4: #eab308;
-		--chart-5: #f97316;
-		--radius: 0.5rem;
+		--background: var(--color-background);
+		--foreground: var(--color-foreground);
+		--card: var(--color-card);
+		--card-foreground: var(--color-card-foreground);
+		--popover: var(--color-popover);
+		--popover-foreground: var(--color-popover-foreground);
+		--primary: var(--color-primary);
+		--primary-foreground: var(--color-primary-foreground);
+		--secondary: var(--color-secondary);
+		--secondary-foreground: var(--color-secondary-foreground);
+		--muted: var(--color-muted);
+		--muted-foreground: var(--color-muted-foreground);
+		--accent: var(--color-accent);
+		--accent-foreground: var(--color-accent-foreground);
+		--destructive: var(--color-destructive);
+		--destructive-foreground: var(--color-destructive-foreground);
+		--border: var(--color-border);
+		--input: var(--color-input);
+		--ring: var(--color-ring);
+		--chart-1: var(--color-chart-1);
+		--chart-2: var(--color-chart-2);
+		--chart-3: var(--color-chart-3);
+		--chart-4: var(--color-chart-4);
+		--chart-5: var(--color-chart-5);
+		--radius: var(--radius);
 	}
-	.dark {
-		--background: #09090b;
-		--foreground: #fafafa;
-		--card: #09090b;
-		--card-foreground: #fafafa;
-		--popover: #09090b;
-		--popover-foreground: #fafafa;
-		--primary: #fafafa;
-		--primary-foreground: #18181b;
-		--secondary: #27272a;
-		--secondary-foreground: #fafafa;
-		--muted: #27272a;
-		--muted-foreground: #a1a1aa;
-		--accent: #27272a;
-		--accent-foreground: #fafafa;
-		--destructive: #7f1d1d;
-		--destructive-foreground: #fafafa;
-		--border: #27272a;
-		--input: #27272a;
-		--ring: #d4d4d8;
-		--chart-1: #3b82f6;
-		--chart-2: #2dd4bf;
-		--chart-3: #fb923c;
-		--chart-4: #a855f7;
-		--chart-5: #f43f5e;
-	}
+
+	/* optional global type */
 	h1 {
 		@apply text-5xl font-bold;
 	}
