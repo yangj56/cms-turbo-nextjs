@@ -41,8 +41,8 @@ export function formatImageUrl(imageUrl: string | null | undefined | Media): str
 	}
 	if (isMedia(imageUrl)) {
 		const filePath = imageUrl.url?.startsWith("/") ? imageUrl.url?.slice(1) : imageUrl.url;
-
-		if (process.env.NEXT_PUBLIC_ENV === "staging" && filePath) {
+		const vercelEnv = process.env.VERCEL_ENV;
+		if (vercelEnv === "staging" && filePath) {
 			return `/api/cms-media/${filePath.replace(/^api\/media\/file\//, "file/")}`;
 		}
 

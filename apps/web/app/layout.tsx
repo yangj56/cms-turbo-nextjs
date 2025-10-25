@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { findProductHeader } from "@/actions/find-product-header";
+import WhatsappButton from "@/components/whatsapp-button";
 import { MyProvider } from "@/context";
 
 const nunito = Roboto({
@@ -50,6 +51,7 @@ export default async function RootLayout({
 					<div className="relative min-h-screen w-full">
 						<MyProvider value={sortedData}>
 							<NuqsAdapter>{children}</NuqsAdapter>
+							<WhatsappButton phone="6597271719" />
 						</MyProvider>
 					</div>
 				</main>
