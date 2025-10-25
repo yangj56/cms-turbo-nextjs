@@ -17,9 +17,6 @@ export default async function HomePage(): Promise<JSX.Element> {
 	]);
 
 	if (!heros.length || !introduction || !productCategories.length) {
-		console.log("heros", heros.length);
-		console.log("introduction", introduction?.title);
-		console.log("productCategories", productCategories.length);
 		return notFound();
 	}
 

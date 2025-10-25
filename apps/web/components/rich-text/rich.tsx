@@ -6,8 +6,7 @@ import { formatImageAlt, formatImageUrl } from "@/lib/utils";
 type AnyNode = { type?: string; children?: AnyNode[]; [k: string]: unknown };
 
 function renderInline(node: AnyNode, key: React.Key) {
-	let el: string | React.ReactNode =
-		(node.text as string | React.ReactNode) ?? "";
+	let el: string | React.ReactNode = (node.text as string | React.ReactNode) ?? "";
 
 	// Lexical flags often also appear as booleans on text nodes
 	if (node.code) el = <code>{el}</code>;
@@ -34,11 +33,7 @@ function renderNode(node: AnyNode, key: React.Key): React.ReactNode {
 
 		case "heading": {
 			const Tag = node.tag || "h2";
-			return React.createElement(
-				Tag as string,
-				{ key },
-				renderChildren(node.children),
-			);
+			return React.createElement(Tag as string, { key }, renderChildren(node.children));
 		}
 
 		case "list": {
@@ -73,14 +68,11 @@ function renderNode(node: AnyNode, key: React.Key): React.ReactNode {
 		case "upload": {
 			const imageUrl = formatImageUrl(node.value as unknown as Media);
 			const imageAlt = formatImageAlt(node.value as unknown as Media);
-			console.log(`imageUrl`, imageUrl);
 			return (
 				<figure key={key}>
 					<Image src={imageUrl} alt={imageAlt} width={100} height={100} />
 					{(node.value as { caption?: string })?.caption ? (
-						<figcaption>
-							{(node.value as { caption?: string })?.caption}
-						</figcaption>
+						<figcaption>{(node.value as { caption?: string })?.caption}</figcaption>
 					) : null}
 				</figure>
 			);
@@ -115,9 +107,7 @@ function renderNode(node: AnyNode, key: React.Key): React.ReactNode {
 						<div key={`${fields.id}`}>
 							<Image src={imageUrl} alt={imageAlt} width={100} height={100} />
 							{(node.value as { caption?: string })?.caption ? (
-								<figcaption>
-									{(node.value as { caption?: string })?.caption}
-								</figcaption>
+								<figcaption>{(node.value as { caption?: string })?.caption}</figcaption>
 							) : null}
 						</div>
 					);
@@ -137,11 +127,7 @@ function renderNode(node: AnyNode, key: React.Key): React.ReactNode {
 
 		default:
 			// Unknown node → try to render its children rather than crash
-			return (
-				<React.Fragment key={key}>
-					{renderChildren(node.children)}
-				</React.Fragment>
-			);
+			return <React.Fragment key={key}>{renderChildren(node.children)}</React.Fragment>;
 	}
 }
 

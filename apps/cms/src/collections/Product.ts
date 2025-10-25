@@ -23,7 +23,7 @@ export const Product: CollectionConfig = {
 				if (!sku) {
 					return Response.json({ error: "sku is required" }, { status: 400 });
 				}
-				console.log("sku", sku);
+				console.log("getting product by sku", sku);
 				const product = await req.payload.find({
 					collection: "product",
 					where: { sku: { equals: sku } },
@@ -41,7 +41,6 @@ export const Product: CollectionConfig = {
 				if (!data) {
 					return Response.json({ error: "product missing data" }, { status: 404, statusText: "product missing data" });
 				}
-				console.log("data", data);
 				return Response.json(data);
 			},
 		},

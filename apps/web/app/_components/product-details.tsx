@@ -1,25 +1,13 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import {
-	ArrowLeft,
-	ArrowRight,
-	ChevronDownIcon,
-	DownloadIcon,
-	PlayCircleIcon,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDownIcon, DownloadIcon, PlayCircleIcon } from "lucide-react";
 import Link from "next/link";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/button";
 import type { CarouselApi } from "@/components/carousel";
-import {
-	Carousel,
-	CarouselContent,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
-} from "@/components/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/carousel";
 import type { Media, Product } from "@/lib/payload-types";
 import { cn, formatImageAlt, formatImageUrl } from "@/lib/utils";
 import { ImageLoader } from "./image-loader";
@@ -29,12 +17,9 @@ interface Props {
 }
 
 export const ProductDetails = ({ data }: Props): React.ReactNode => {
-	const [currentColor, setCurrentColor] = useState(
-		data.color?.[0]?.colorName || null,
-	);
+	const [currentColor, setCurrentColor] = useState(data.color?.[0]?.colorName || null);
 	const [mainImageIndex, setMainImageIndex] = useState(0);
-	const [isCompatibleProductsOpen, setIsCompatibleProductsOpen] =
-		useState(true);
+	const [isCompatibleProductsOpen, setIsCompatibleProductsOpen] = useState(true);
 	const [api, setApi] = useState<CarouselApi>();
 
 	useEffect(() => {
@@ -56,7 +41,6 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 	};
 
 	const currentImages = getCurrentColorImages();
-	console.log(`currentImages --> `, currentImages);
 	const currentImage = currentImages[mainImageIndex];
 	const currentImageUrl = formatImageUrl(currentImage);
 	const currentImageAlt = formatImageAlt(currentImage);
@@ -75,11 +59,7 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 	};
 
 	const displayOverview = () => {
-		if (
-			!data.specificationOverviewInfo ||
-			data.specificationOverviewInfo.length === 0
-		)
-			return null;
+		if (!data.specificationOverviewInfo || data.specificationOverviewInfo.length === 0) return null;
 		return (
 			<div className="mt-4 rounded border p-4">
 				<h5 className="text-sm uppercase">Spec Overview</h5>
@@ -87,16 +67,9 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 					<div className="mt-2 flex basis-3/5 flex-row flex-wrap">
 						{data.specificationOverviewInfo?.map((spec, index) => {
 							return (
-								<div
-									key={spec.id}
-									className="flex flex-row items-center text-sm"
-								>
+								<div key={spec.id} className="flex flex-row items-center text-sm">
 									{spec.data}
-									{index !== length - 1 && (
-										<div className="px-2 font-thin text-gray-500 text-xl">
-											l
-										</div>
-									)}
+									{index !== length - 1 && <div className="px-2 font-thin text-gray-500 text-xl">l</div>}
 								</div>
 							);
 						})}
@@ -122,9 +95,7 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 		const instructionUrl = formatImageUrl(data.instruction);
 		return (
 			<div className="md:basis-1/3">
-				<h4 className="mb-4 text-center font-medium text-sm uppercase">
-					Downloads
-				</h4>
+				<h4 className="mb-4 text-center font-medium text-sm uppercase">Downloads</h4>
 				<div className="space-y-2">
 					{data.datasheet && (
 						<a
@@ -212,9 +183,7 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 								<Button
 									variant={"secondary"}
 									size={"icon"}
-									className={cn(
-										"-translate-y-1/2 absolute top-1/2 left-1 z-10 h-10 w-10 rounded-full",
-									)}
+									className={cn("-translate-y-1/2 absolute top-1/2 left-1 z-10 h-10 w-10 rounded-full")}
 									disabled={mainImageIndex === 0}
 									onClick={() => {
 										if (mainImageIndex === 0) return;
@@ -226,9 +195,7 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 								<Button
 									variant={"secondary"}
 									size={"icon"}
-									className={cn(
-										"-translate-y-1/2 absolute top-1/2 right-1 z-10 h-10 w-10 rounded-full",
-									)}
+									className={cn("-translate-y-1/2 absolute top-1/2 right-1 z-10 h-10 w-10 rounded-full")}
 									disabled={mainImageIndex === currentImages.length - 1}
 									onClick={() => {
 										if (mainImageIndex === currentImages.length - 1) return;
@@ -320,8 +287,6 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 						}
 						const imageUrl = formatImageUrl(image);
 						const imageAlt = formatImageAlt(image);
-						console.log(`imageAlt --> `, imageAlt);
-						console.log(`imageUrl --> `, imageUrl);
 						return (
 							<button
 								type="button"
@@ -363,9 +328,7 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 											<button
 												type="button"
 												key={color.id}
-												onClick={() =>
-													handleColorChange(color.colorName || null)
-												}
+												onClick={() => handleColorChange(color.colorName || null)}
 												className={`relative h-[20px] w-[20px] ${
 													currentColor === color.colorName
 														? "ring-1 ring-muted-foreground-500 ring-offset-1"
@@ -387,24 +350,15 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 			</div>
 			<div className="container mt-2 mb-12 flex w-full flex-col md:mt-8">
 				{/* Specifications */}
-				<div
-					id={`specifications-${data.id}`}
-					className="flex scroll-mt-20 flex-col gap-12 md:flex-row md:gap-32"
-				>
+				<div id={`specifications-${data.id}`} className="flex scroll-mt-20 flex-col gap-12 md:flex-row md:gap-32">
 					{data.labelValuePairs && (
 						<div className="md:basis-2/3">
-							<h4 className="mb-4 text-center font-medium text-sm uppercase">
-								Specifications
-							</h4>
+							<h4 className="mb-4 text-center font-medium text-sm uppercase">Specifications</h4>
 							<div className="flex flex-col divide-y divide-gray-200">
-								{Object.entries(
-									data.labelValuePairs as Record<string, string>,
-								).map(([key, value]) => (
+								{Object.entries(data.labelValuePairs as Record<string, string>).map(([key, value]) => (
 									<div key={key} className="mb-2 flex flex-row pt-2">
 										<div className="basis-1/2 text-sm md:basis-1/3">{key}</div>
-										<div className="basis-1/2 font-light text-sm md:basis-2/3">
-											{value}
-										</div>
+										<div className="basis-1/2 font-light text-sm md:basis-2/3">{value}</div>
 									</div>
 								))}
 							</div>
@@ -424,17 +378,13 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 						<button
 							type="button"
 							className="group flex w-full items-center justify-center py-4 font-medium text-xl"
-							onClick={() =>
-								setIsCompatibleProductsOpen(!isCompatibleProductsOpen)
-							}
+							onClick={() => setIsCompatibleProductsOpen(!isCompatibleProductsOpen)}
 						>
 							<div className="pr-4 font-base text-md">
 								View <span className="font-bold">Compatible Products</span>
 							</div>
 							<ChevronDownIcon
-								className={`h-5 w-5 transition-transform duration-300 ${
-									isCompatibleProductsOpen ? "rotate-180" : ""
-								}`}
+								className={`h-5 w-5 transition-transform duration-300 ${isCompatibleProductsOpen ? "rotate-180" : ""}`}
 							/>
 						</button>
 						<AnimatePresence>
@@ -450,8 +400,7 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 										{data.compatibleProducts.map((item) => {
 											const product = item.product as Product;
 											if (!product) return null;
-											const image = product.color?.[0]?.images?.[0]
-												?.image as Media;
+											const image = product.color?.[0]?.images?.[0]?.image as Media;
 											if (
 												!product ||
 												!product.title ||
@@ -484,12 +433,8 @@ export const ProductDetails = ({ data }: Props): React.ReactNode => {
 														/>
 													</div>
 													<div>
-														<div className="font-medium text-sm">
-															{product.title}
-														</div>
-														<div className="text-gray-500 text-xs">
-															Near | Zigbee
-														</div>
+														<div className="font-medium text-sm">{product.title}</div>
+														<div className="text-gray-500 text-xs">Near | Zigbee</div>
 													</div>
 												</Link>
 											);

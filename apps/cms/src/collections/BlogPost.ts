@@ -55,7 +55,7 @@ export const BlogPost: CollectionConfig = {
 			handler: async (req) => {
 				const { slug } = req.query;
 
-				console.log(`slug`, slug);
+				console.log(`getting blog post slug`, slug);
 
 				if (!slug) {
 					return Response.json({ error: "Slug is required" }, { status: 400 });
@@ -71,13 +71,10 @@ export const BlogPost: CollectionConfig = {
 						},
 						limit: 1,
 					});
-					console.log(`result`, result);
 
 					if (result.docs.length === 0) {
 						return Response.json({ error: "Blog post not found" }, { status: 404, statusText: "Blog post not found" });
 					}
-
-					console.log(`result.docs[0]`, result.docs[0]);
 
 					return Response.json(result.docs[0]);
 				} catch (error) {

@@ -13,7 +13,6 @@ export async function findBlogPost(slug: string): Promise<BlogPost | null> {
 		}
 
 		const result = (await response.json()) as BlogPost;
-		console.log(`result`, result);
 		return result || null;
 	} catch (error) {
 		console.error("Error fetching blog post:", error);
