@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
-import { buildConfig } from "payload";
+import { buildConfig, type PayloadRequest } from "payload";
 import sharp from "sharp";
 import { BlogPost } from "./collections/BlogPost";
 import { Feature } from "./collections/Feature";
@@ -32,6 +32,38 @@ export default buildConfig({
 			baseDir: path.resolve(dirname),
 		},
 	},
+	endpoints: [
+		{
+			path: "/revalidate",
+			method: "post",
+			handler: async (req: PayloadRequest): Promise<Response> => {
+				try {
+					if (!req.user) {
+						console.log("cms unauthorized");
+						return Response.json({ ok: false, message: "Unauthorized" }, { status: 401 });
+					}
+					const token = process.env.REVALIDATE_TOKEN;
+					if (!token) {
+						console.log("cms revalidate token not set");
+						return Response.json({ ok: false, message: "REVALIDATE_TOKEN is not set" }, { status: 500 });
+					}
+
+					const upstream = await fetch(`${process.env.NEXT_PUBLIC_WEB_URL}/api/revalidate`, {
+						method: "POST",
+						headers: {
+							"x-revalidate-token": token,
+							"content-type": "application/json",
+						},
+					});
+
+					const data = await upstream.json().catch(() => ({}));
+					return Response.json(data, { status: upstream.status });
+				} catch (e) {
+					return Response.json({ ok: false, error: `${e}` }, { status: 500 });
+				}
+			},
+		},
+	],
 	collections: [
 		Media,
 		ProductCategory,

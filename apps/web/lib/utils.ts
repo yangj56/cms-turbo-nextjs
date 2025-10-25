@@ -27,18 +27,14 @@ export function formatDate(dateString: string) {
 	});
 }
 
-const isMedia = (
-	imageUrl: string | null | undefined | Media,
-): imageUrl is Media => {
+const isMedia = (imageUrl: string | null | undefined | Media): imageUrl is Media => {
 	if (imageUrl && typeof imageUrl === "object" && "url" in imageUrl) {
 		return true;
 	}
 	return false;
 };
 
-export function formatImageUrl(
-	imageUrl: string | null | undefined | Media,
-): string {
+export function formatImageUrl(imageUrl: string | null | undefined | Media): string {
 	if (!imageUrl) return "";
 	if (typeof imageUrl === "string") {
 		return imageUrl;
@@ -49,9 +45,7 @@ export function formatImageUrl(
 	return "";
 }
 
-export function formatImageAlt(
-	imageAlt: string | null | undefined | Media,
-): string {
+export function formatImageAlt(imageAlt: string | null | undefined | Media): string {
 	if (!imageAlt) return "";
 	if (typeof imageAlt === "string") {
 		return imageAlt;
@@ -66,8 +60,11 @@ export function formatImageAlt(
 }
 
 export const cacheOptions: RequestInit = {
-	cache: "no-cache",
+	cache: "force-cache",
 	headers: {
 		"x-vercel-protection-bypass": "mmMdkTtHgOvtQdBp4UaZYtJtwMb8cyws",
+	},
+	next: {
+		revalidate: 60 * 60 * 24, // 1 day
 	},
 };

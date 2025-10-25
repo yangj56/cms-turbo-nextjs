@@ -49,18 +49,15 @@ export const ProductCategory: CollectionConfig = {
 					},
 				});
 				if (!category) {
-					return Response.json(
-						{ error: "category not found" },
-						{ status: 404 },
-					);
+					return Response.json({ error: "category not found" }, { status: 404, statusText: "category not found" });
 				}
 				if (!category.docs.length) {
-					return Response.json({ error: "category is empty" }, { status: 404 });
+					return Response.json({ error: "category is empty" }, { status: 404, statusText: "category is empty" });
 				}
 				if (category.docs.length > 1) {
 					return Response.json(
 						{ error: "category is not unique" },
-						{ status: 404 },
+						{ status: 404, statusText: "category is not unique" },
 					);
 				}
 
@@ -68,7 +65,7 @@ export const ProductCategory: CollectionConfig = {
 				if (!data) {
 					return Response.json(
 						{ error: "category missing data" },
-						{ status: 404 },
+						{ status: 404, statusText: "category missing data" },
 					);
 				}
 				const products = await req.payload.find({

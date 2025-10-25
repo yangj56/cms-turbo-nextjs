@@ -14,8 +14,12 @@ const nunito = Roboto({
 });
 
 export const metadata: Metadata = {
-	title: "Honest lighting",
-	description: "Whole Home Lighting at Honest Prices",
+	metadataBase: new URL("https://www.honestlighting.sg"),
+	title: {
+		default: "Honest lighting",
+		template: "%s | Honest lighting",
+	},
+	description: "Official site of Honest lighting",
 };
 
 export default async function RootLayout({
@@ -27,12 +31,7 @@ export default async function RootLayout({
 
 	const sortedData = data.sort((a, b) => {
 		// If both items have sequence, sort by sequence
-		if (
-			a.sequence !== undefined &&
-			b.sequence !== undefined &&
-			a.sequence !== null &&
-			b.sequence !== null
-		) {
+		if (a.sequence !== undefined && b.sequence !== undefined && a.sequence !== null && b.sequence !== null) {
 			return b.sequence - a.sequence;
 		}
 

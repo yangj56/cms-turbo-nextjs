@@ -4,18 +4,18 @@ import type { Product } from "@/lib/payload-types";
 import { cacheOptions } from "@/lib/utils";
 
 export async function findProduct(id: string): Promise<Product | null> {
-  try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/product/${id}`;
-    const response = await fetch(apiUrl, cacheOptions);
+	try {
+		const apiUrl = `${process.env.NEXT_PUBLIC_CMS_URL}/api/product/${id}`;
+		const response = await fetch(apiUrl, cacheOptions);
+		console.log("response", response);
+		if (!response.ok) {
+			throw new Error(`Failed to fetch product: ${response.statusText}`);
+		}
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch product: ${response.statusText}`);
-    }
-
-    const result = (await response.json()) as Product;
-    return result || null;
-  } catch (error) {
-    console.error("Error fetching product:", error);
-    return null;
-  }
+		const result = (await response.json()) as Product;
+		return result || null;
+	} catch (error) {
+		console.error("Error fetching product:", error);
+		return null;
+	}
 }

@@ -12,12 +12,7 @@ import {
 import type { CollectionConfig } from "payload";
 import { anyone } from "@/access/anyone";
 import { authenticated } from "@/access/authenticated";
-import {
-	FullWidthImageBlock,
-	SubtitleBlock,
-	TextBlock,
-	TitleBlock,
-} from "./Block";
+import { FullWidthImageBlock, SubtitleBlock, TextBlock, TitleBlock } from "./Block";
 
 export const BlogPost: CollectionConfig = {
 	slug: "blog-post",
@@ -79,10 +74,7 @@ export const BlogPost: CollectionConfig = {
 					console.log(`result`, result);
 
 					if (result.docs.length === 0) {
-						return Response.json(
-							{ error: "Blog post not found" },
-							{ status: 404 },
-						);
+						return Response.json({ error: "Blog post not found" }, { status: 404, statusText: "Blog post not found" });
 					}
 
 					console.log(`result.docs[0]`, result.docs[0]);
@@ -92,7 +84,7 @@ export const BlogPost: CollectionConfig = {
 					console.error("Error fetching blog post by slug:", error);
 					return Response.json(
 						{ error: "Internal server error" },
-						{ status: 500 },
+						{ status: 500, statusText: "Internal server error" },
 					);
 				}
 			},

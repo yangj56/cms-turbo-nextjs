@@ -7,20 +7,13 @@ import type { BlogPost } from "@/lib/payload-types";
 import { formatImageUrl } from "@/lib/utils";
 
 export const dynamic = "force-static";
-export const revalidate = 60;
 
-export async function generateMetadata({
-	params,
-}: {
-	params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
 	const { slug } = await params;
 	const blogPost = await findBlogPost(slug);
 	if (!blogPost) return {};
 
-	const imageUrl = blogPost.heroImage
-		? formatImageUrl(blogPost.heroImage)
-		: undefined;
+	const imageUrl = blogPost.heroImage ? formatImageUrl(blogPost.heroImage) : undefined;
 
 	return {
 		title: blogPost.title,
@@ -41,11 +34,7 @@ export async function generateMetadata({
 }
 
 /* ✅ Main blog post page */
-export default async function Page({
-	params,
-}: {
-	params: Promise<{ slug: string }>;
-}): Promise<React.ReactNode> {
+export default async function Page({ params }: { params: Promise<{ slug: string }> }): Promise<React.ReactNode> {
 	const { slug } = await params;
 	if (!slug) return notFound();
 

@@ -13,7 +13,6 @@ export async function findProductBySku(sku: string): Promise<Product | null> {
 		}
 
 		const result = (await response.json()) as Product;
-		console.log("result", result);
 		return result || null;
 	} catch (error) {
 		console.error("Error fetching product by sku:", error);

@@ -29,20 +29,17 @@ export const Product: CollectionConfig = {
 					where: { sku: { equals: sku } },
 				});
 				if (!product.docs.length) {
-					return Response.json({ error: "product not found" }, { status: 404 });
+					return Response.json({ error: "product not found" }, { status: 404, statusText: "product not found" });
 				}
 				if (product.docs.length > 1) {
 					return Response.json(
 						{ error: "product is not unique" },
-						{ status: 404 },
+						{ status: 404, statusText: "product is not unique" },
 					);
 				}
 				const data = product.docs[0];
 				if (!data) {
-					return Response.json(
-						{ error: "product missing data" },
-						{ status: 404 },
-					);
+					return Response.json({ error: "product missing data" }, { status: 404, statusText: "product missing data" });
 				}
 				console.log("data", data);
 				return Response.json(data);
@@ -56,12 +53,8 @@ export const Product: CollectionConfig = {
 
 				// Convert query parameters to proper types
 				const searchQuery = Array.isArray(query) ? query[0] : query;
-				const pageNumber = Array.isArray(page)
-					? parseInt(page[0], 10)
-					: parseInt(page as string, 10);
-				const limitNumber = Array.isArray(limit)
-					? parseInt(limit[0], 10)
-					: parseInt(limit as string, 10);
+				const pageNumber = Array.isArray(page) ? parseInt(page[0], 10) : parseInt(page as string, 10);
+				const limitNumber = Array.isArray(limit) ? parseInt(limit[0], 10) : parseInt(limit as string, 10);
 
 				const searchResults = await req.payload.find({
 					collection: "product",
@@ -105,10 +98,28 @@ export const Product: CollectionConfig = {
 		},
 		{
 			name: "sku",
-			label: "SKU (no space or special characters *unique)",
+			label: "SKU (alphanumeric only, up to 30 characters, unique)",
 			type: "text",
 			required: true,
 			index: true,
+			unique: true,
+			validate: (value: string | string[] | null | undefined): string | true => {
+				if (!value) {
+					return "SKU is required";
+				}
+				if (typeof value !== "string") {
+					return "SKU must be a string";
+				}
+				// Check format - alphanumeric only, no spaces or special characters
+				const alphanumericRegex = /^[A-Za-z0-9._\-()]+$/;
+				if (!alphanumericRegex.test(value)) {
+					return "SKU must contain only letters and numbers (no spaces or special characters)";
+				}
+				if (value.length > 30) {
+					return "SKU must be less than 30 characters long";
+				}
+				return true;
+			},
 		},
 		{
 			name: "description",

@@ -4,7 +4,6 @@ import { ALL_PRODUCTS_LIMIT } from "@/lib/contant";
 import { Products } from "../_components/products";
 
 export const dynamic = "force-static";
-export const revalidate = 60;
 
 export default async function Page(): Promise<React.ReactNode> {
 	const data = await findProducts(1, ALL_PRODUCTS_LIMIT);
@@ -15,12 +14,7 @@ export default async function Page(): Promise<React.ReactNode> {
 
 	const sortedData = data.sort((a, b) => {
 		// If both items have sequence, sort by sequence
-		if (
-			a.sequence !== undefined &&
-			b.sequence !== undefined &&
-			a.sequence !== null &&
-			b.sequence !== null
-		) {
+		if (a.sequence !== undefined && b.sequence !== undefined && a.sequence !== null && b.sequence !== null) {
 			return b.sequence - a.sequence;
 		}
 

@@ -8,7 +8,6 @@ import { LandingIntroduction } from "../_components/landing-introduction";
 import { ProductCategories } from "../_components/product-categories";
 
 export const dynamic = "force-static";
-export const revalidate = 60;
 
 export default async function HomePage(): Promise<JSX.Element> {
 	const [heros, introduction, productCategories] = await Promise.all([
@@ -26,12 +25,7 @@ export default async function HomePage(): Promise<JSX.Element> {
 
 	const sortedProductCategories = productCategories.sort((a, b) => {
 		// If both items have sequence, sort by sequence
-		if (
-			a.sequence !== undefined &&
-			b.sequence !== undefined &&
-			a.sequence !== null &&
-			b.sequence !== null
-		) {
+		if (a.sequence !== undefined && b.sequence !== undefined && a.sequence !== null && b.sequence !== null) {
 			return b.sequence - a.sequence;
 		}
 
